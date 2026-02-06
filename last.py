@@ -12,49 +12,214 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# --- თარგმანების ლექსიკონი (Translations) ---
+translations = {
+    "KA": {
+        "sidebar_title": "📚 ნავიგაცია",
+        "nav_options": [
+            "I. გეომეტრიული არსი",
+            "II. ალგებრული კალკულატორი",
+            "III. ტოპოლოგია (3D)",
+            "IV. ტრიგონომეტრია",
+            "V. ლოგარითმული ანალიზი",
+            "VI. ფიზიკა (კინემატიკა)",
+            "VII. განსაკუთრებული შემთხვევები"
+        ],
+        "title": "დავით კაპანაძის ალგებრული ანალიზის ლაბორატორია",
+        "core_title": "⚠️ მთავარი პრინციპი",
+        "core_text": "ბატონი დავითის თეორია ითვლის წარმოებულს <b>ზღვრების (<span style='font-size:1.2em'>$\lim$</span>) გარეშე!</b>",
+        "core_sub": "ჩვენ ვიყენებთ სუფთა ალგებრულ მეთოდს: ნაშთის კვადრატზე გაყოფას.",
+        # Tab 1
+        "t1_header": "თავი I: როგორ იქცევა მკვეთი მხებად?",
+        "t1_info": "მხები არის მდგომარეობა, როდესაც ორი წერტილი ($A$ და $B$) ერთიანდება **ორჯერად ფესვად**.",
+        "func_label": "ფუნქცია",
+        "point_a": "წერტილი A",
+        "point_b_dist": "წერტილი B-ს დაშორება (h)",
+        "secant": "მკვეთი",
+        "tangent": "მხები",
+        "viz_title": "ნახაზის ვიზუალიზაცია",
+        # Tab 2
+        "t2_header": "თავი II: ნაშთის კვადრატზე გაყოფის მეთოდი",
+        "t2_thm_title": "კაპანაძის მთავარი თეორემა:",
+        "t2_thm_text": "წრფე $y = k(x-x_0) + f(x_0)$ არის მხები **მაშინ და მხოლოდ მაშინ**, თუ სხვაობა ფუნქციასა და წრფეს შორის იყოფა $(x-x_0)^2$-ზე.",
+        "t2_thm_sub": "ეს ნიშნავს, რომ ნაშთის გრაფიკი $x_0$-თან ახლოს არ უნდა გარბოდეს უსასრულობაში.",
+        "touch_point": "შეხების წერტილი x0",
+        "calc_btn": "გამოთვლა და დამტკიცება",
+        "result": "შედეგი",
+        "slope_found": "ნაპოვნია დახრილობა",
+        "tan_eq": "მხების განტოლება",
+        "proof_title": "მტკიცებულება: ნაშთი / (x-x0)²",
+        "vis_touch": "ვიზუალური შეხება",
+        "residue": "ნაშთი",
+        "success_msg": "✔ თეორია დამტკიცდა: მწვანე ხაზი უწყვეტია (არ მიდის უსასრულობაში).",
+        "error_msg": "შეცდომა",
+        # Tab 3
+        "t3_header": "თავი III: კაპანაძის თეორია სივრცეში",
+        "t3_info": "3D-ში ვეძებთ მხებ სიბრტყეს, რომელთანაც სხვაობა კვადრატული რიგის მცირეა.",
+        "surface_label": "ზედაპირი",
+        "build_3d": "აგება 3D",
+        "found_partials": "ნაპოვნია",
+        "surface": "ზედაპირი",
+        "tan_plane": "მხები სიბრტყე",
+        # Tab 4
+        "t4_header": "თავი XII: ტრიგონომეტრიული ფუნქციები",
+        "t4_info": "სინუსის 'სიჩქარე' (წარმოებული) არის კოსინუსი. ეს ჩანს ერთეულოვან წრეწირზე მოძრაობისას.",
+        "angle": "კუთხე",
+        "slope": "დახრილობა",
+        "unit_circle": "ერთეულოვანი წრეწირი",
+        # Tab 5
+        "t5_header": "📈 ლოგარითმული ფუნქციები",
+        "t5_formula": "კაპანაძის მეთოდით: $f(x) = \log_a(x) \Rightarrow f'(x) = \\frac{1}{x \\ln(a)}$",
+        "base_select": "აირჩიეთ ფუძე",
+        "calc_log": "გამოთვლა (Log)",
+        "bases": ["e (ნატურალური ln)", "10 (ათობითი)", "2 (ორობითი)"],
+        "residue_analysis": "ნაშთის ანალიზი",
+        "graph": "გრაფიკი",
+        # Tab 6
+        "t6_header": "თავი XIII: ფიზიკური ინტერპრეტაცია",
+        "t6_info": "კაპანაძის მეთოდით, მხები არის ის წრფე, რომელსაც სხეული გაყვებოდა, მასზე მოქმედი ძალები რომ უცებ გამქრალიყო.",
+        "time": "დრო",
+        "velocity_vec": "სიჩქარის ვექტორი",
+        "trajectory": "ტრაექტორია",
+        "body": "სხეული",
+        "inertia": "ინერცია",
+        "ground": "მიწა",
+        "ballistic": "ბალისტიკური მოძრაობა",
+        # Tab 7
+        "t7_header": "🔬 თეორიის გამოყენების არეალი",
+        "t7_info": "აქ განხილულია ფუნქციები, სადაც 'ნაშთის კვადრატზე გაყოფის' მეთოდი სპეციფიკურ შედეგს იძლევა.",
+        "select_case": "აირჩიეთ შემთხვევა",
+        "case_options": ["|x|^1.5 (ნაკლები სიგლუვე)", "x^2 * sin(1/x) (ოსცილაცია)"],
+        "case_1_text": "ფუნქციას აქვს წარმოებული, მაგრამ ნაშთი არ მცირდება საკმარისად სწრაფად.",
+        "case_2_text": "ფუნქცია ირხევა ძალიან სწრაფად, რის გამოც ნაშთი არ სტაბილურდება.",
+        "conclusion": "დასკვნა: ამ კონკრეტულ შემთხვევაში მეთოდი პირდაპირ არ გამოიყენება, რადგან ნაშთი არ აკმაყოფილებს კაპანაძის პირობას."
+    },
+    "EN": {
+        "sidebar_title": "📚 Navigation",
+        "nav_options": [
+            "I. Geometric Essence",
+            "II. Algebraic Calculator",
+            "III. Topology (3D)",
+            "IV. Trigonometry",
+            "V. Logarithmic Analysis",
+            "VI. Physics (Kinematics)",
+            "VII. Special Cases"
+        ],
+        "title": "David Kapanadze's Algebraic Calculus Laboratory",
+        "core_title": "⚠️ Core Principle",
+        "core_text": "David Kapanadze's theory calculates derivatives **without Limits (<span style='font-size:1.2em'>$\lim$</span>)!**",
+        "core_sub": "We use a pure algebraic method: dividing the remainder by the square.",
+        # Tab 1
+        "t1_header": "Chapter I: How Secant becomes Tangent?",
+        "t1_info": "A tangent is a state where two intersection points ($A$ and $B$) merge into a **double root**.",
+        "func_label": "Function",
+        "point_a": "Point A",
+        "point_b_dist": "Distance to Point B (h)",
+        "secant": "Secant",
+        "tangent": "Tangent",
+        "viz_title": "Visualization",
+        # Tab 2
+        "t2_header": "Chapter II: Method of Dividing Remainder by Square",
+        "t2_thm_title": "Kapanadze's Main Theorem:",
+        "t2_thm_text": "The line $y = k(x-x_0) + f(x_0)$ is a tangent **if and only if** the difference between the function and the line is divisible by $(x-x_0)^2$.",
+        "t2_thm_sub": "This means the remainder graph near $x_0$ must not fly off to infinity.",
+        "touch_point": "Touch Point x0",
+        "calc_btn": "Calculate & Prove",
+        "result": "Result",
+        "slope_found": "Slope found",
+        "tan_eq": "Tangent Equation",
+        "proof_title": "Proof: Remainder / (x-x0)²",
+        "vis_touch": "Visual Touch",
+        "residue": "Remainder",
+        "success_msg": "✔ Theory Proven: Green line is continuous (finite).",
+        "error_msg": "Error",
+        # Tab 3
+        "t3_header": "Chapter III: Kapanadze's Theory in Space",
+        "t3_info": "In 3D, we look for a tangent plane where the difference is of quadratic order smallness.",
+        "surface_label": "Surface",
+        "build_3d": "Build 3D",
+        "found_partials": "Found",
+        "surface": "Surface",
+        "tan_plane": "Tangent Plane",
+        # Tab 4
+        "t4_header": "Chapter XII: Trigonometric Functions",
+        "t4_info": "The 'velocity' (derivative) of Sine is Cosine. This is visible when moving on a unit circle.",
+        "angle": "Angle",
+        "slope": "Slope",
+        "unit_circle": "Unit Circle",
+        # Tab 5
+        "t5_header": "📈 Logarithmic Functions",
+        "t5_formula": "By Kapanadze's method: $f(x) = \log_a(x) \Rightarrow f'(x) = \\frac{1}{x \\ln(a)}$",
+        "base_select": "Select Base",
+        "calc_log": "Calculate (Log)",
+        "bases": ["e (Natural ln)", "10 (Decimal)", "2 (Binary)"],
+        "residue_analysis": "Remainder Analysis",
+        "graph": "Graph",
+        # Tab 6
+        "t6_header": "Chapter XIII: Physical Interpretation",
+        "t6_info": "According to Kapanadze, the tangent is the line the body would follow if forces acting on it suddenly vanished.",
+        "time": "Time",
+        "velocity_vec": "Velocity Vector",
+        "trajectory": "Trajectory",
+        "body": "Body",
+        "inertia": "Inertia",
+        "ground": "Ground",
+        "ballistic": "Ballistic Motion",
+        # Tab 7
+        "t7_header": "🔬 Scope of Theory",
+        "t7_info": "Here we examine functions where the 'remainder division by square' method yields specific results.",
+        "select_case": "Select Case",
+        "case_options": ["|x|^1.5 (Less Smoothness)", "x^2 * sin(1/x) (Oscillation)"],
+        "case_1_text": "The function has a derivative, but the remainder does not decrease fast enough.",
+        "case_2_text": "The function oscillates too quickly, so the remainder does not stabilize.",
+        "conclusion": "Conclusion: In this specific case, the method is not directly applicable as the remainder does not satisfy Kapanadze's condition."
+    }
+}
+
 # --- CSS დიზაინი ---
 st.markdown("""
 <style>
-    h1 { margin-top: -50px; }
-    .stAlert { font-size: 16px; }
-    .math-box { background-color: #f0f2f6; padding: 15px; border-radius: 10px; border-left: 5px solid #2E86C1; }
-    .core-message { 
-        background-color: #ffeebb; 
-        padding: 20px; 
+    .block-container { padding-top: 2rem; }
+    .math-box { 
+        background-color: rgba(46, 134, 193, 0.1); 
+        padding: 15px; 
         border-radius: 10px; 
-        border: 2px solid #ffcc00; 
+        border-left: 5px solid #2E86C1; 
+        margin-bottom: 10px;
+    }
+    .core-message {
+        background-color: rgba(255, 193, 7, 0.2);
+        border: 1px solid #ffc107;
+        padding: 15px;
+        border-radius: 10px;
         text-align: center;
-        font-size: 20px;
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
     }
 </style>
 """, unsafe_allow_html=True)
 
 # ==========================================
-# 1. მათემატიკური ძრავა (SymPy)
+# ენის არჩევა (Language Selector)
 # ==========================================
+st.sidebar.markdown("### 🌐 Language / ენა")
+lang_choice = st.sidebar.radio("", ["ქართული", "English"], horizontal=True)
+lang = "KA" if lang_choice == "ქართული" else "EN"
+txt = translations[lang] # მიმდინარე ენის ტექსტები
 
+# ==========================================
+# მათემატიკური ძრავა
+# ==========================================
 def algebraic_derivative(func_str, x0):
     x, k = sp.symbols('x k')
     try:
         f = sp.sympify(func_str)
         f_x0 = f.subs(x, x0)
-        
-        # კაპანაძის განტოლება
         diff = f - (f_x0 + k * (x - x0))
-        
-        # ნაშთის გაშლა (ალგებრული ოპერაცია, ზღვრის გარეშე)
         series = sp.series(diff, x, x0, n=2).removeO()
         linear_term = series.coeff(x - x0)
-        
-        # ამოხსნა k-სთვის
         solution = sp.solve(linear_term, k)
-        
         if not solution:
-            return None, None, "ვერ მოიძებნა k"
-            
+            return None, None, "k not found / k ვერ მოიძებნა"
         k_val = solution[0]
         tangent_eq = f_x0 + k_val * (x - x0)
         return f, k_val, tangent_eq
@@ -74,42 +239,37 @@ def solve_kapanadze_3d(func_str, x0_val, y0_val):
         return None, None, None, str(e)
 
 # ==========================================
-# 2. ინტერფეისი (ნავიგაცია)
+# ინტერფეისი
 # ==========================================
 
-st.sidebar.markdown("# 📚 ნავიგაცია")
-tab_selection = st.sidebar.radio("აირჩიეთ განყოფილება:", 
-    ["I. გეომეტრიული არსი", 
-     "II. ალგებრული კალკულატორი", 
-     "III. ტოპოლოგია (3D)",
-     "IV. ტრიგონომეტრია",
-     "V. ლოგარითმული ანალიზი", 
-     "VI. ფიზიკა (კინემატიკა)",
-     "VII. განსაკუთრებული შემთხვევები"])
+st.sidebar.title(txt["sidebar_title"])
+# ნავიგაციის ოფციები ენის მიხედვით
+tab_selection = st.sidebar.radio("", txt["nav_options"])
 
-st.title("დავით კაპანაძის ალგებრული ანალიზის ლაბორატორია")
+st.title(txt["title"])
 
-# --- მთავარი შეტყობინება (ზღვრის გარეშე) ---
-st.markdown("""
+# --- მთავარი შეტყობინება ---
+st.markdown(r"""
 <div class="core-message">
-    ⚠️ მთავარი პრინციპი: ბატონი დავითის თეორია ითვლის წარმოებულს ზღვრების ($\lim$) გარეშე!
-    <br><span style="font-size:16px; font-weight:normal">ჩვენ ვიყენებთ სუფთა ალგებრულ მეთოდს: ნაშთის კვადრატზე გაყოფას.</span>
+    <h3>{title}</h3>
+    <p>{text}</p>
+    <p style="font-size:0.9em">{sub}</p>
 </div>
-""", unsafe_allow_html=True)
+""".format(title=txt["core_title"], text=txt["core_text"], sub=txt["core_sub"]), unsafe_allow_html=True)
 
 st.markdown("---")
 
 # -----------------------------------------------------------------------------
 # TAB 1: გეომეტრია
 # -----------------------------------------------------------------------------
-if tab_selection == "I. გეომეტრიული არსი":
-    st.header("თავი I: როგორ იქცევა მკვეთი მხებად?")
+if tab_selection == txt["nav_options"][0]:
+    st.header(txt["t1_header"])
     col1, col2 = st.columns([1, 2])
     with col1:
-        st.info("მხები არის მდგომარეობა, როდესაც ორი წერტილი ($A$ და $B$) ერთიანდება **ორჯერად ფესვად**.")
-        func_input = st.text_input("ფუნქცია:", "x^2", key="geom_func")
-        x_a = st.number_input("წერტილი A:", value=1.0, step=0.1)
-        h = st.slider("წერტილი B-ს დაშორება (h):", 0.01, 2.0, 1.0, 0.01)
+        st.info(txt["t1_info"])
+        func_input = st.text_input(f"{txt['func_label']} f(x):", "x^2", key="geom_func")
+        x_a = st.number_input(f"{txt['point_a']}:", value=1.0, step=0.1)
+        h = st.slider(f"{txt['point_b_dist']}:", 0.01, 2.0, 1.0, 0.01)
     with col2:
         x = sp.symbols('x')
         try:
@@ -122,71 +282,84 @@ if tab_selection == "I. გეომეტრიული არსი":
             x_range = np.linspace(xA - 2, xB + 2, 500)
             fig = go.Figure()
             fig.add_trace(go.Scatter(x=x_range, y=f_lamb(x_range), name="f(x)", line=dict(color='#1f77b4', width=3)))
-            fig.add_trace(go.Scatter(x=x_range, y=yA + slope_secant * (x_range - xA), name="მკვეთი", line=dict(color='#ff7f0e', dash='dash')))
-            fig.add_trace(go.Scatter(x=x_range, y=yA + slope_tangent * (x_range - xA), name="მხები", line=dict(color='#2ca02c', width=2)))
+            fig.add_trace(go.Scatter(x=x_range, y=yA + slope_secant * (x_range - xA), name=txt["secant"], line=dict(color='#ff7f0e', dash='dash')))
+            fig.add_trace(go.Scatter(x=x_range, y=yA + slope_tangent * (x_range - xA), name=txt["tangent"], line=dict(color='#2ca02c', width=2)))
             fig.add_trace(go.Scatter(x=[xA, xB], y=[yA, yB], mode='markers+text', text=["A", "B"], marker=dict(size=12, color=['black', 'red'])))
-            fig.update_layout(title="ნახაზის ვიზუალიზაცია", height=500)
+            fig.update_layout(title=txt["viz_title"], height=500)
             st.plotly_chart(fig, use_container_width=True)
         except Exception as e: st.error(e)
 
 # -----------------------------------------------------------------------------
 # TAB 2: ალგებრული კალკულატორი
 # -----------------------------------------------------------------------------
-elif tab_selection == "II. ალგებრული კალკულატორი":
-    st.header("თავი II: ნაშთის კვადრატზე გაყოფის მეთოდი")
+elif tab_selection == txt["nav_options"][1]:
+    st.header(txt["t2_header"])
     
-    st.warning("""
-    **რევოლუციური მიდგომა:** ტრადიციული ანალიზისგან განსხვავებით, აქ **არ გამოიყენება ზღვრები ($\lim_{h \\to 0}$).**
-    ჩვენ ვიყენებთ ნაშთის კვადრატზე გაყოფის პრინციპს, რაც წმინდა ალგებრული ოპერაციაა.
-    """)
-    
+    with st.container():
+        st.markdown(f"""
+        > **{txt['t2_thm_title']}**
+        > {txt['t2_thm_text']}
+        >
+        > *{txt['t2_thm_sub']}*
+        """)
+
     col1, col2 = st.columns([1, 2])
     with col1:
-        f_in = st.text_input("ფუნქცია:", "sin(x) * exp(0.5*x)", key="alg_func")
-        x0_in = st.number_input("x0:", value=1.0, step=0.1)
-        calc_btn = st.button("გამოთვლა (Lim-ის გარეშე)", type="primary")
+        f_in = st.text_input(f"{txt['func_label']} f(x):", "sin(x) * exp(0.5*x)", key="alg_func")
+        x0_in = st.number_input(f"{txt['touch_point']}:", value=1.0, step=0.1)
+        calc_btn = st.button(txt["calc_btn"], type="primary")
+        
     if calc_btn:
         with col2:
             func_sym, k_res, tan_sym = algebraic_derivative(f_in, x0_in)
             if func_sym:
+                st.markdown(f"""
+                <div class="math-box">
+                    <strong>{txt['result']}:</strong> {txt['slope_found']} <code>k = {float(k_res):.4f}</code>
+                </div>
+                """, unsafe_allow_html=True)
+                
                 st.latex(rf"f'(x) = {sp.latex(k_res)}")
+                st.latex(rf"\text{{{txt['tan_eq']}}}: y = {sp.latex(tan_sym)}")
+                
                 x_range = np.linspace(x0_in - 2, x0_in + 2, 600)
                 f_lamb, t_lamb = sp.lambdify('x', func_sym, 'numpy'), sp.lambdify('x', tan_sym, 'numpy')
                 y_f, y_t = f_lamb(x_range), t_lamb(x_range)
                 with np.errstate(divide='ignore', invalid='ignore'): remainder = (y_f - y_t) / (x_range - x0_in)**2
-                fig = make_subplots(rows=2, cols=1, subplot_titles=("ვიზუალური შეხება", "მტკიცებულება: ნაშთი / (x-x0)²"))
-                fig.add_trace(go.Scatter(x=x_range, y=y_f, name="ფუნქცია", line=dict(color='#1f77b4')), row=1, col=1)
-                fig.add_trace(go.Scatter(x=x_range, y=y_t, name="მხები", line=dict(color='#d62728', dash='dash')), row=1, col=1)
-                fig.add_trace(go.Scatter(x=x_range, y=remainder, name="ნაშთი", line=dict(color='#2ca02c', width=2)), row=2, col=1)
+                
+                fig = make_subplots(rows=2, cols=1, subplot_titles=(txt["vis_touch"], txt["proof_title"]))
+                fig.add_trace(go.Scatter(x=x_range, y=y_f, name="f(x)", line=dict(color='#1f77b4')), row=1, col=1)
+                fig.add_trace(go.Scatter(x=x_range, y=y_t, name=txt["tangent"], line=dict(color='#d62728', dash='dash')), row=1, col=1)
+                fig.add_trace(go.Scatter(x=x_range, y=remainder, name=txt["residue"], line=dict(color='#2ca02c', width=2)), row=2, col=1)
                 fig.update_layout(height=700)
                 st.plotly_chart(fig, use_container_width=True)
-                st.success("თუ მწვანე ხაზი უწყვეტია, თეორია დამტკიცდა!")
-            else: st.error(f"შეცდომა: {tan_sym}")
+                st.success(txt["success_msg"])
+            else: st.error(f"{txt['error_msg']}: {tan_sym}")
 
 # -----------------------------------------------------------------------------
 # TAB 3: ტოპოლოგია (3D)
 # -----------------------------------------------------------------------------
-elif tab_selection == "III. ტოპოლოგია (3D)":
-    st.header("თავი III: კაპანაძის თეორია სივრცეში")
-    st.info("3D-ში ვეძებთ მხებ სიბრტყეს, რომელთანაც სხვაობა კვადრატული რიგის მცირეა.")
+elif tab_selection == txt["nav_options"][2]:
+    st.header(txt["t3_header"])
+    st.info(txt["t3_info"])
     col1, col2 = st.columns([1, 3])
     with col1:
-        f3_str = st.text_input("z = f(x,y):", "x^2 + y^2 - 0.5*x*y")
+        f3_str = st.text_input(f"{txt['surface_label']} z = f(x,y):", "x^2 + y^2 - 0.5*x*y")
         x0, y0 = st.number_input("x0:", 0.0), st.number_input("y0:", 0.0)
-        btn_3d = st.button("აგება 3D", type="primary")
+        btn_3d = st.button(txt["build_3d"], type="primary")
     if btn_3d:
         with col2:
             func_sym, kx, ky, z0 = solve_kapanadze_3d(f3_str, x0, y0)
             if func_sym:
-                st.markdown(f"<div class='math-box'>ნაპოვნია: kx={float(kx):.2f}, ky={float(ky):.2f}</div>", unsafe_allow_html=True)
+                st.markdown(f"<div class='math-box'>{txt['found_partials']}: kx={float(kx):.2f}, ky={float(ky):.2f}</div>", unsafe_allow_html=True)
                 x_v = np.linspace(x0-2, x0+2, 40)
                 X, Y = np.meshgrid(x_v, x_v)
                 x_sym, y_sym = sp.symbols('x y')
                 Z = sp.lambdify((x_sym, y_sym), func_sym, 'numpy')(X, Y)
                 Z_plane = float(z0) + float(kx)*(X-x0) + float(ky)*(Y-y0)
                 fig = go.Figure()
-                fig.add_trace(go.Surface(z=Z, x=X, y=Y, colorscale='Viridis', opacity=0.8, name='Surface'))
-                fig.add_trace(go.Surface(z=Z_plane, x=X, y=Y, colorscale=[[0,'red'],[1,'red']], opacity=0.5, showscale=False))
+                fig.add_trace(go.Surface(z=Z, x=X, y=Y, colorscale='Viridis', opacity=0.8, name=txt["surface"]))
+                fig.add_trace(go.Surface(z=Z_plane, x=X, y=Y, colorscale=[[0,'red'],[1,'red']], opacity=0.5, showscale=False, name=txt["tan_plane"]))
                 fig.add_trace(go.Scatter3d(x=[x0], y=[y0], z=[float(z0)], mode='markers', marker=dict(size=10, color='black')))
                 fig.update_layout(height=700)
                 st.plotly_chart(fig, use_container_width=True)
@@ -194,21 +367,21 @@ elif tab_selection == "III. ტოპოლოგია (3D)":
 # -----------------------------------------------------------------------------
 # TAB 4: ტრიგონომეტრია
 # -----------------------------------------------------------------------------
-elif tab_selection == "IV. ტრიგონომეტრია":
-    st.header("თავი XII: ტრიგონომეტრიული ფუნქციები")
-    st.info("სინუსის 'სიჩქარე' (წარმოებული) არის კოსინუსი. ეს ჩანს ერთეულოვან წრეწირზე მოძრაობისას.")
+elif tab_selection == txt["nav_options"][3]:
+    st.header(txt["t4_header"])
+    st.info(txt["t4_info"])
     col1, col2 = st.columns([1, 2])
     with col1:
-        angle = st.slider("კუთხე (rad):", 0.0, 2*np.pi, 1.0, 0.1)
+        angle = st.slider(f"{txt['angle']} (rad):", 0.0, 2*np.pi, 1.0, 0.1)
         st.markdown(f"**sin(t):** {np.sin(angle):.2f}")
-        st.markdown(f"**cos(t):** {np.cos(angle):.2f} (დახრილობა)")
+        st.markdown(f"**cos(t):** {np.cos(angle):.2f} ({txt['slope']})")
     with col2:
         t_vals = np.linspace(0, 2*np.pi, 100)
         circle_x, circle_y = np.cos(t_vals), np.sin(t_vals)
         P_x, P_y = np.cos(angle), np.sin(angle)
         tan_x = [P_x - 0.5*(-P_y), P_x + 0.5*(-P_y)]
         tan_y = [P_y - 0.5*(P_x), P_y + 0.5*(P_x)]
-        fig = make_subplots(rows=1, cols=2, subplot_titles=("ერთეულოვანი წრეწირი", "y = sin(x)"))
+        fig = make_subplots(rows=1, cols=2, subplot_titles=(txt["unit_circle"], "y = sin(x)"))
         fig.add_trace(go.Scatter(x=circle_x, y=circle_y, line=dict(color='black')), row=1, col=1)
         fig.add_trace(go.Scatter(x=tan_x, y=tan_y, line=dict(color='red', width=3)), row=1, col=1)
         fig.add_trace(go.Scatter(x=[P_x], y=[P_y], mode='markers', marker=dict(color='blue')), row=1, col=1)
@@ -224,20 +397,25 @@ elif tab_selection == "IV. ტრიგონომეტრია":
 # -----------------------------------------------------------------------------
 # TAB 5: ლოგარითმული ანალიზი
 # -----------------------------------------------------------------------------
-elif tab_selection == "V. ლოგარითმული ანალიზი":
-    st.header("📈 ლოგარითმული ფუნქციები")
-    st.info("კაპანაძის მეთოდით: $f(x) = \\log_a(x) \\Rightarrow f'(x) = \\frac{1}{x \\ln(a)}$")
+elif tab_selection == txt["nav_options"][4]:
+    st.header(txt["t5_header"])
+    st.markdown(txt["t5_formula"])
+    
     col1, col2 = st.columns([1, 2])
     with col1:
-        base_type = st.selectbox("აირჩიეთ ფუძე:", ["e (ნატურალური ln)", "10 (ათობითი)", "2 (ორობითი)"])
-        x0_log = st.number_input("წერტილი x0 (x > 0):", value=1.0, step=0.1, min_value=0.01)
-        if "e" in base_type:
+        base_type = st.selectbox(f"{txt['base_select']}:", txt["bases"])
+        x0_log = st.number_input(f"{txt['touch_point']} (x > 0):", value=1.0, step=0.1, min_value=0.01)
+        # ინდექსის მიხედვით ვიგებთ რომელ ფორმულას ირჩევს, რადგან ტექსტი იცვლება
+        base_index = txt["bases"].index(base_type)
+        
+        if base_index == 0: # e
             log_func_str, display_str = "log(x)", "ln(x)"
-        elif "10" in base_type:
+        elif base_index == 1: # 10
             log_func_str, display_str = "log(x, 10)", "log_{10}(x)"
-        else:
+        else: # 2
             log_func_str, display_str = "log(x, 2)", "log_{2}(x)"
-        if st.button("გამოთვლა (Log)", type="primary"):
+            
+        if st.button(txt["calc_log"], type="primary"):
             func_sym, k_res, tan_sym = algebraic_derivative(log_func_str, x0_log)
             if func_sym:
                 with col2:
@@ -248,28 +426,28 @@ elif tab_selection == "V. ლოგარითმული ანალიზ�
                     t_lamb = sp.lambdify('x', tan_sym, 'numpy')
                     y_f, y_t = f_lamb(x_range), t_lamb(x_range)
                     with np.errstate(divide='ignore', invalid='ignore'): remainder = (y_f - y_t) / (x_range - x0_log)**2
-                    fig = make_subplots(rows=2, cols=1, subplot_titles=(f"გრაფიკი: {display_str}", "ნაშთის ანალიზი"))
+                    fig = make_subplots(rows=2, cols=1, subplot_titles=(f"{txt['graph']}: {display_str}", txt['residue_analysis']))
                     fig.add_trace(go.Scatter(x=x_range, y=y_f, name=display_str, line=dict(color='purple')), row=1, col=1)
-                    fig.add_trace(go.Scatter(x=x_range, y=y_t, name="მხები", line=dict(color='orange', dash='dash')), row=1, col=1)
+                    fig.add_trace(go.Scatter(x=x_range, y=y_t, name=txt["tangent"], line=dict(color='orange', dash='dash')), row=1, col=1)
                     fig.add_trace(go.Scatter(x=[x0_log], y=[f_lamb(x0_log)], mode='markers', marker=dict(color='black', size=10), name='Point'), row=1, col=1)
-                    fig.add_trace(go.Scatter(x=x_range, y=remainder, name="ნაშთი", line=dict(color='green')), row=2, col=1)
+                    fig.add_trace(go.Scatter(x=x_range, y=remainder, name=txt["residue"], line=dict(color='green')), row=2, col=1)
                     fig.update_layout(height=800)
                     st.plotly_chart(fig, use_container_width=True)
-            else: st.error("შეცდომა გამოთვლისას.")
+            else: st.error(txt["error_msg"])
 
 # -----------------------------------------------------------------------------
 # TAB 6: ფიზიკა
 # -----------------------------------------------------------------------------
-elif tab_selection == "VI. ფიზიკა (კინემატიკა)":
-    st.header("თავი XIII: ფიზიკური ინტერპრეტაცია")
-    st.info("კაპანაძის მეთოდით, მხები არის ის წრფე, რომელსაც სხეული გაყვებოდა, მასზე მოქმედი ძალები რომ უცებ გამქრალიყო.")
+elif tab_selection == txt["nav_options"][5]:
+    st.header(txt["t6_header"])
+    st.info(txt["t6_info"])
     col1, col2 = st.columns([1, 2])
     with col1:
-        t = st.slider("დრო (t):", 0.0, 2.0, 0.5, 0.05)
+        t = st.slider(f"{txt['time']} (t):", 0.0, 2.0, 0.5, 0.05)
         x_val = t
         y_val = -(t**2) + 2
         vy = -2 * t
-        st.markdown(f"**სიჩქარის ვექტორი:** (1, {vy:.2f})")
+        st.markdown(f"**{txt['velocity_vec']}:** (1, {vy:.2f})")
     with col2:
         t_range = np.linspace(0, 2, 100)
         x_traj = t_range
@@ -278,27 +456,34 @@ elif tab_selection == "VI. ფიზიკა (კინემატიკა)":
         x_tan = np.linspace(x_val, x_val + 0.5, 10)
         y_tan = y_val + slope * (x_tan - x_val)
         fig = go.Figure()
-        fig.add_trace(go.Scatter(x=x_traj, y=y_traj, name="ტრაექტორია", line=dict(color='blue')))
-        fig.add_trace(go.Scatter(x=[x_val], y=[y_val], mode='markers', marker=dict(size=15, color='black'), name='სხეული'))
-        fig.add_trace(go.Scatter(x=x_tan, y=y_tan, name="ინერცია", line=dict(color='red', width=3), mode='lines+markers', marker=dict(symbol='arrow', size=10)))
-        fig.add_trace(go.Scatter(x=[0, 2], y=[-2, -2], line=dict(color='green', width=5), name='მიწა'))
-        fig.update_layout(title="ბალისტიკური მოძრაობა", height=500, yaxis=dict(range=[-2.5, 2.5], scaleanchor="x", scaleratio=1))
+        fig.add_trace(go.Scatter(x=x_traj, y=y_traj, name=txt["trajectory"], line=dict(color='blue')))
+        fig.add_trace(go.Scatter(x=[x_val], y=[y_val], mode='markers', marker=dict(size=15, color='black'), name=txt["body"]))
+        fig.add_trace(go.Scatter(x=x_tan, y=y_tan, name=txt["inertia"], line=dict(color='red', width=3), mode='lines+markers', marker=dict(symbol='arrow', size=10)))
+        fig.add_trace(go.Scatter(x=[0, 2], y=[-2, -2], line=dict(color='green', width=5), name=txt["ground"]))
+        fig.update_layout(title=txt["ballistic"], height=500, yaxis=dict(range=[-2.5, 2.5], scaleanchor="x", scaleratio=1))
         st.plotly_chart(fig, use_container_width=True)
 
 # -----------------------------------------------------------------------------
 # TAB 7: განსაკუთრებული შემთხვევები
 # -----------------------------------------------------------------------------
-elif tab_selection == "VII. განსაკუთრებული შემთხვევები":
-    st.header("🔬 თეორიის გამოყენების არეალი")
-    st.info("აქ განხილულია ფუნქციები, სადაც 'ნაშთის კვადრატზე გაყოფის' მეთოდი სპეციფიკურ შედეგს იძლევა.")
+elif tab_selection == txt["nav_options"][6]:
+    st.header(txt["t7_header"])
+    st.info(txt["t7_info"])
     col1, col2 = st.columns([1, 2])
     with col1:
-        problem_type = st.selectbox("ტიპი:", ["|x|^1.5 (ნაკლები სიგლუვე)", "x^2 * sin(1/x) (ოსცილაცია)"])
-        if "1.5" in problem_type: st.markdown("ფუნქციას აქვს წარმოებული, მაგრამ ნაშთი არ მცირდება საკმარისად სწრაფად.")
-        else: st.markdown("ფუნქცია ირხევა ძალიან სწრაფად, რის გამოც ნაშთი არ სტაბილურდება.")
+        # ინდექსის მიხედვით არჩევა
+        case_idx = 0
+        problem_label = st.selectbox(f"{txt['select_case']}:", txt["case_options"])
+        if problem_label == txt["case_options"][0]:
+            st.markdown(txt["case_1_text"])
+            problem_type = "1.5"
+        else:
+            st.markdown(txt["case_2_text"])
+            problem_type = "osc"
+            
     with col2:
         x = np.linspace(-0.5, 0.5, 1000)
-        if "1.5" in problem_type:
+        if problem_type == "1.5":
             y = np.abs(x)**1.5
             tangent = np.zeros_like(x)
             with np.errstate(divide='ignore', invalid='ignore'): remainder = y / (x**2)
@@ -306,12 +491,12 @@ elif tab_selection == "VII. განსაკუთრებული შემ
             y = (x**2) * np.sin(1/(x + 1e-9))
             tangent = np.zeros_like(x)
             with np.errstate(divide='ignore', invalid='ignore'): remainder = np.sin(1/(x + 1e-9))
-        fig = make_subplots(rows=2, cols=1, subplot_titles=("ფუნქცია და მხები", "ნაშთის ანალიზი"))
-        fig.add_trace(go.Scatter(x=x, y=y, name="ფუნქცია", line=dict(color='blue')), row=1, col=1)
-        fig.add_trace(go.Scatter(x=x, y=tangent, name="მხები", line=dict(color='red', dash='dash')), row=1, col=1)
-        fig.add_trace(go.Scatter(x=x, y=remainder, name="ნაშთი", line=dict(color='purple')), row=2, col=1)
+        fig = make_subplots(rows=2, cols=1, subplot_titles=(txt["func_label"], txt["residue_analysis"]))
+        fig.add_trace(go.Scatter(x=x, y=y, name="f(x)", line=dict(color='blue')), row=1, col=1)
+        fig.add_trace(go.Scatter(x=x, y=tangent, name=txt["tangent"], line=dict(color='red', dash='dash')), row=1, col=1)
+        fig.add_trace(go.Scatter(x=x, y=remainder, name=txt["residue"], line=dict(color='purple')), row=2, col=1)
         fig.update_layout(height=600)
-        if "ოსცილაცია" in problem_type: fig.update_yaxes(range=[-2, 2], row=2, col=1)
+        if problem_type == "osc": fig.update_yaxes(range=[-2, 2], row=2, col=1)
         else: fig.update_yaxes(range=[0, 20], row=2, col=1)
         st.plotly_chart(fig, use_container_width=True)
-        st.info("დასკვნა: ამ კონკრეტულ შემთხვევაში მეთოდი პირდაპირ არ გამოიყენება, რადგან ნაშთი არ აკმაყოფილებს კაპანაძის პირობას.")
+        st.info(txt["conclusion"])
