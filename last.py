@@ -6,29 +6,45 @@ from plotly.subplots import make_subplots
 
 # --- გვერდის კონფიგურაცია ---
 st.set_page_config(
-    page_title="Kapanadze Analytical Suite",
+    page_title="Kapanadze Analytical Laboratory",
     page_icon="📐",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# --- თარგმანების ლექსიკონი (Translations) ---
+# --- CSS დიზაინი ---
+st.markdown("""
+<style>
+    h1 { font-size: 2.2rem !important; font-weight: 700 !important; }
+    h2 { font-size: 1.8rem !important; }
+    .info-box {
+        padding: 20px;
+        border-radius: 10px;
+        background-color: rgba(255, 193, 7, 0.15);
+        border-left: 5px solid #ffc107;
+        margin-bottom: 20px;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# --- თარგმანების ლექსიკონი ---
 translations = {
     "KA": {
-        "sidebar_title": "📚 ნავიგაცია",
+        "sidebar_title": "ნავიგაცია",
         "nav_options": [
             "I. გეომეტრიული არსი",
             "II. ალგებრული კალკულატორი",
             "III. ტოპოლოგია (3D)",
             "IV. ტრიგონომეტრია",
-            "V. მაჩვენებლიანი და ლოგარითმული", # შეცვლილი სათაური
+            "V. მაჩვენებლიანი და ლოგარითმული",
             "VI. ფიზიკა (კინემატიკა)",
             "VII. განსაკუთრებული შემთხვევები"
         ],
-        "title": "დავით კაპანაძის ალგებრული ანალიზის ლაბორატორია",
-        "core_title": "⚠️ მთავარი პრინციპი",
-        "core_text": "ბატონი დავითის თეორია ითვლის წარმოებულს <b>ზღვრების (<span style='font-size:1.2em'>$\lim$</span>) გარეშე!</b>",
+        "title": "დავით კაპანაძის ალგებრული და გეომეტრიული ანალიზის ლაბორატორია",
+        "core_title": "⚠️ რევოლუციური პრინციპი",
+        "core_text": "ბატონი დავითის თეორია ითვლის წარმოებულს **ზღვრების ($\lim$) გარეშე!**",
         "core_sub": "ჩვენ ვიყენებთ სუფთა ალგებრულ მეთოდს: ნაშთის კვადრატზე გაყოფას.",
+        "bases": ["e (ნატურალური ln)", "10 (ათობითი)", "2 (ორობითი)"],
         # Tab 1
         "t1_header": "თავი I: როგორ იქცევა მკვეთი მხებად?",
         "t1_info": "მხები არის მდგომარეობა, როდესაც ორი წერტილი ($A$ და $B$) ერთიანდება **ორჯერად ფესვად**.",
@@ -67,12 +83,21 @@ translations = {
         "angle": "კუთხე",
         "slope": "დახრილობა",
         "unit_circle": "ერთეულოვანი წრეწირი",
-        # Tab 5 (Exponential & Logarithmic)
+        "trig_mode_select": "აირჩიეთ რეჟიმი",
+        "trig_standard": "ჩვეულებრივი (კუთხე -> მნიშვნელობა)",
+        "trig_inverse": "შებრუნებული (მნიშვნელობა -> კუთხე)",
+        "input_val": "შეიყვანეთ მნიშვნელობა (x)",
+        "inv_res": "შედეგები (კუთხეები)",
+        # Tab 5
         "t5_header": "📈 მაჩვენებლიანი და ლოგარითმული ფუნქციები",
         "t5_select_mode": "აირჩიეთ ფუნქცია",
         "t5_exp_info": "ფუნქცია $e^x$ უნიკალურია: მისი წარმოებული (სიჩქარე) ტოლია თავისივე მნიშვნელობის. $f'(x) = e^x$.",
         "t5_log_info": "კაპანაძის მეთოდით: $f(x) = \log_a(x) \Rightarrow f'(x) = \\frac{1}{x \\ln(a)}$",
         "value_eq_slope": "ფუნქციის მნიშვნელობა და დახრა ტოლია!",
+        "base_select": "აირჩიეთ ფუძე",
+        "calc_log": "გამოთვლა (Log)",
+        "residue_analysis": "ნაშთის ანალიზი",
+        "graph": "გრაფიკი",
         # Tab 6
         "t6_header": "თავი XIII: ფიზიკური ინტერპრეტაცია",
         "t6_info": "კაპანაძის მეთოდით, მხები არის ის წრფე, რომელსაც სხეული გაყვებოდა, მასზე მოქმედი ძალები რომ უცებ გამქრალიყო.",
@@ -96,7 +121,7 @@ translations = {
         "right_tan": "მარჯვენა მხები"
     },
     "EN": {
-        "sidebar_title": "📚 Navigation",
+        "sidebar_title": "Navigation",
         "nav_options": [
             "I. Geometric Essence",
             "II. Algebraic Calculator",
@@ -106,10 +131,11 @@ translations = {
             "VI. Physics (Kinematics)",
             "VII. Special Cases"
         ],
-        "title": "David Kapanadze's Algebraic Calculus Laboratory",
+        "title": "David Kapanadze's Algebraic and Geometric Analysis Laboratory",
         "core_title": "⚠️ Core Principle",
-        "core_text": "David Kapanadze's theory calculates derivatives **without Limits (<span style='font-size:1.2em'>$\lim$</span>)!**",
+        "core_text": "David Kapanadze's theory calculates derivatives **without Limits ($\lim$)!**",
         "core_sub": "We use a pure algebraic method: dividing the remainder by the square.",
+        "bases": ["e (Natural ln)", "10 (Decimal)", "2 (Binary)"],
         # Tab 1
         "t1_header": "Chapter I: How Secant becomes Tangent?",
         "t1_info": "A tangent is a state where two intersection points ($A$ and $B$) merge into a **double root**.",
@@ -148,12 +174,21 @@ translations = {
         "angle": "Angle",
         "slope": "Slope",
         "unit_circle": "Unit Circle",
+        "trig_mode_select": "Select Mode",
+        "trig_standard": "Standard (Angle -> Value)",
+        "trig_inverse": "Inverse (Value -> Angle)",
+        "input_val": "Input Value (x)",
+        "inv_res": "Results (Angles)",
         # Tab 5
         "t5_header": "📈 Exponential & Logarithmic Functions",
         "t5_select_mode": "Select Function",
         "t5_exp_info": "Function $e^x$ is unique: its derivative (slope) equals its value. $f'(x) = e^x$.",
         "t5_log_info": "By Kapanadze's method: $f(x) = \log_a(x) \Rightarrow f'(x) = \\frac{1}{x \\ln(a)}$",
         "value_eq_slope": "Function Value equals Slope!",
+        "base_select": "Select Base",
+        "calc_log": "Calculate (Log)",
+        "residue_analysis": "Remainder Analysis",
+        "graph": "Graph",
         # Tab 6
         "t6_header": "Chapter XIII: Physical Interpretation",
         "t6_info": "According to Kapanadze, the tangent is the line the body would follow if forces acting on it suddenly vanished.",
@@ -178,35 +213,13 @@ translations = {
     }
 }
 
-# --- CSS დიზაინი ---
-st.markdown("""
-<style>
-    .block-container { padding-top: 2rem; }
-    .math-box { 
-        background-color: rgba(46, 134, 193, 0.1); 
-        padding: 15px; 
-        border-radius: 10px; 
-        border-left: 5px solid #2E86C1; 
-        margin-bottom: 10px;
-    }
-    .core-message {
-        background-color: rgba(255, 193, 7, 0.2);
-        border: 1px solid #ffc107;
-        padding: 15px;
-        border-radius: 10px;
-        text-align: center;
-        margin-bottom: 25px;
-    }
-</style>
-""", unsafe_allow_html=True)
-
 # ==========================================
-# ენის არჩევა (Language Selector)
+# ენის არჩევა
 # ==========================================
 st.sidebar.markdown("### 🌐 Language / ენა")
 lang_choice = st.sidebar.radio("", ["ქართული", "English"], horizontal=True)
 lang = "KA" if lang_choice == "ქართული" else "EN"
-txt = translations[lang] # მიმდინარე ენის ტექსტები
+txt = translations[lang]
 
 # ==========================================
 # მათემატიკური ძრავა
@@ -221,7 +234,7 @@ def algebraic_derivative(func_str, x0):
         linear_term = series.coeff(x - x0)
         solution = sp.solve(linear_term, k)
         if not solution:
-            return None, None, "k not found / k ვერ მოიძებნა"
+            return None, None, "k not found"
         k_val = solution[0]
         tangent_eq = f_x0 + k_val * (x - x0)
         return f, k_val, tangent_eq
@@ -250,13 +263,13 @@ tab_selection = st.sidebar.radio("", txt["nav_options"])
 st.title(txt["title"])
 
 # --- მთავარი შეტყობინება ---
-st.markdown(r"""
-<div class="core-message">
-    <h3>{title}</h3>
-    <p>{text}</p>
-    <p style="font-size:0.9em">{sub}</p>
+st.markdown(f"""
+<div class="info-box">
+    <h3>{txt["core_title"]}</h3>
+    <p>{txt["core_text"]}</p>
+    <p style="font-size:0.9em; opacity: 0.8;">{txt["core_sub"]}</p>
 </div>
-""".format(title=txt["core_title"], text=txt["core_text"], sub=txt["core_sub"]), unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
 st.markdown("---")
 
@@ -282,9 +295,9 @@ if tab_selection == txt["nav_options"][0]:
             slope_tangent = float(sp.diff(f, x).subs(x, xA))
             x_range = np.linspace(xA - 2, xB + 2, 500)
             fig = go.Figure()
-            fig.add_trace(go.Scatter(x=x_range, y=f_lamb(x_range), name="f(x)", line=dict(color='#1f77b4', width=3)))
-            fig.add_trace(go.Scatter(x=x_range, y=yA + slope_secant * (x_range - xA), name=txt["secant"], line=dict(color='#ff7f0e', dash='dash')))
-            fig.add_trace(go.Scatter(x=x_range, y=yA + slope_tangent * (x_range - xA), name=txt["tangent"], line=dict(color='#2ca02c', width=2)))
+            fig.add_trace(go.Scatter(x=x_range, y=f_lamb(x_range), name="f(x)", line=dict(color='#2196F3', width=3)))
+            fig.add_trace(go.Scatter(x=x_range, y=yA + slope_secant * (x_range - xA), name=txt["secant"], line=dict(color='#FFC107', dash='dash')))
+            fig.add_trace(go.Scatter(x=x_range, y=yA + slope_tangent * (x_range - xA), name=txt["tangent"], line=dict(color='#4CAF50', width=2)))
             fig.add_trace(go.Scatter(x=[xA, xB], y=[yA, yB], mode='markers+text', text=["A", "B"], marker=dict(size=12, color=['black', 'red'])))
             fig.update_layout(title=txt["viz_title"], height=500)
             st.plotly_chart(fig, use_container_width=True)
@@ -296,13 +309,10 @@ if tab_selection == txt["nav_options"][0]:
 elif tab_selection == txt["nav_options"][1]:
     st.header(txt["t2_header"])
     
-    with st.container():
-        st.markdown(f"""
-        > **{txt['t2_thm_title']}**
-        > {txt['t2_thm_text']}
-        >
-        > *{txt['t2_thm_sub']}*
-        """)
+    with st.container(border=True):
+        st.markdown(f"**{txt['t2_thm_title']}**")
+        st.markdown(txt['t2_thm_text'])
+        st.caption(txt['t2_thm_sub'])
 
     col1, col2 = st.columns([1, 2])
     with col1:
@@ -314,14 +324,10 @@ elif tab_selection == txt["nav_options"][1]:
         with col2:
             func_sym, k_res, tan_sym = algebraic_derivative(f_in, x0_in)
             if func_sym:
-                st.markdown(f"""
-                <div class="math-box">
-                    <strong>{txt['result']}:</strong> {txt['slope_found']} <code>k = {float(k_res):.4f}</code>
-                </div>
-                """, unsafe_allow_html=True)
-                
-                st.latex(rf"f'(x) = {sp.latex(k_res)}")
-                st.latex(rf"\text{{{txt['tan_eq']}}}: y = {sp.latex(tan_sym)}")
+                with st.container(border=True):
+                    st.markdown(f"**{txt['result']}:** {txt['slope_found']} `k = {float(k_res):.4f}`")
+                    st.latex(rf"f'(x) = {sp.latex(k_res)}")
+                    st.latex(rf"\text{{{txt['tan_eq']}}}: y = {sp.latex(tan_sym)}")
                 
                 x_range = np.linspace(x0_in - 2, x0_in + 2, 600)
                 f_lamb, t_lamb = sp.lambdify('x', func_sym, 'numpy'), sp.lambdify('x', tan_sym, 'numpy')
@@ -329,9 +335,9 @@ elif tab_selection == txt["nav_options"][1]:
                 with np.errstate(divide='ignore', invalid='ignore'): remainder = (y_f - y_t) / (x_range - x0_in)**2
                 
                 fig = make_subplots(rows=2, cols=1, subplot_titles=(txt["vis_touch"], txt["proof_title"]))
-                fig.add_trace(go.Scatter(x=x_range, y=y_f, name="f(x)", line=dict(color='#1f77b4')), row=1, col=1)
-                fig.add_trace(go.Scatter(x=x_range, y=y_t, name=txt["tangent"], line=dict(color='#d62728', dash='dash')), row=1, col=1)
-                fig.add_trace(go.Scatter(x=x_range, y=remainder, name=txt["residue"], line=dict(color='#2ca02c', width=2)), row=2, col=1)
+                fig.add_trace(go.Scatter(x=x_range, y=y_f, name="f(x)", line=dict(color='#2196F3')), row=1, col=1)
+                fig.add_trace(go.Scatter(x=x_range, y=y_t, name=txt["tangent"], line=dict(color='#FF5722', dash='dash')), row=1, col=1)
+                fig.add_trace(go.Scatter(x=x_range, y=remainder, name=txt["residue"], line=dict(color='#4CAF50', width=2)), row=2, col=1)
                 fig.update_layout(height=700)
                 st.plotly_chart(fig, use_container_width=True)
                 st.success(txt["success_msg"])
@@ -352,7 +358,9 @@ elif tab_selection == txt["nav_options"][2]:
         with col2:
             func_sym, kx, ky, z0 = solve_kapanadze_3d(f3_str, x0, y0)
             if func_sym:
-                st.markdown(f"<div class='math-box'>{txt['found_partials']}: kx={float(kx):.2f}, ky={float(ky):.2f}</div>", unsafe_allow_html=True)
+                with st.container(border=True):
+                    st.latex(rf"k_x = {float(kx):.4f}, \quad k_y = {float(ky):.4f}")
+                
                 x_v = np.linspace(x0-2, x0+2, 40)
                 X, Y = np.meshgrid(x_v, x_v)
                 x_sym, y_sym = sp.symbols('x y')
@@ -366,63 +374,95 @@ elif tab_selection == txt["nav_options"][2]:
                 st.plotly_chart(fig, use_container_width=True)
 
 # -----------------------------------------------------------------------------
-# TAB 4: ტრიგონომეტრია
+# TAB 4: ტრიგონომეტრია (წრეწირი გასწორებულია!)
 # -----------------------------------------------------------------------------
 elif tab_selection == txt["nav_options"][3]:
     st.header(txt["t4_header"])
     st.info(txt["t4_info"])
+    
+    trig_mode = st.radio(txt["trig_mode_select"], [txt["trig_standard"], txt["trig_inverse"]], horizontal=True)
+    
     col1, col2 = st.columns([1, 2])
-    with col1:
-        angle = st.slider(f"{txt['angle']} (rad):", 0.0, 2*np.pi, 1.0, 0.1)
-        st.markdown(f"**sin(t):** {np.sin(angle):.2f}")
-        st.markdown(f"**cos(t):** {np.cos(angle):.2f} ({txt['slope']})")
-    with col2:
-        t_vals = np.linspace(0, 2*np.pi, 100)
-        circle_x, circle_y = np.cos(t_vals), np.sin(t_vals)
-        P_x, P_y = np.cos(angle), np.sin(angle)
-        tan_x = [P_x - 0.5*(-P_y), P_x + 0.5*(-P_y)]
-        tan_y = [P_y - 0.5*(P_x), P_y + 0.5*(P_x)]
-        fig = make_subplots(rows=1, cols=2, subplot_titles=(txt["unit_circle"], "y = sin(x)"))
-        fig.add_trace(go.Scatter(x=circle_x, y=circle_y, line=dict(color='black')), row=1, col=1)
-        fig.add_trace(go.Scatter(x=tan_x, y=tan_y, line=dict(color='red', width=3)), row=1, col=1)
-        fig.add_trace(go.Scatter(x=[P_x], y=[P_y], mode='markers', marker=dict(color='blue')), row=1, col=1)
-        fig.add_trace(go.Scatter(x=t_vals, y=np.sin(t_vals), line=dict(color='blue')), row=1, col=2)
-        slope_x = np.linspace(angle-0.5, angle+0.5, 10)
-        slope_y = np.sin(angle) + np.cos(angle)*(slope_x-angle)
-        fig.add_trace(go.Scatter(x=slope_x, y=slope_y, line=dict(color='red', width=3)), row=1, col=2)
-        fig.add_trace(go.Scatter(x=[angle], y=[np.sin(angle)], mode='markers', marker=dict(color='blue')), row=1, col=2)
-        fig.update_layout(height=500, showlegend=False)
-        fig.update_xaxes(scaleanchor="y", scaleratio=1, row=1, col=1)
-        st.plotly_chart(fig, use_container_width=True)
+    
+    if trig_mode == txt["trig_standard"]:
+        with col1:
+            angle = st.slider(f"{txt['angle']} (rad):", 0.0, 2*np.pi, 1.0, 0.1)
+            st.markdown(f"**sin(t):** {np.sin(angle):.2f}")
+            st.markdown(f"**cos(t):** {np.cos(angle):.2f} ({txt['slope']})")
+        with col2:
+            t_vals = np.linspace(0, 2*np.pi, 100)
+            circle_x, circle_y = np.cos(t_vals), np.sin(t_vals)
+            P_x, P_y = np.cos(angle), np.sin(angle)
+            tan_x = [P_x - 0.5*(-P_y), P_x + 0.5*(-P_y)]
+            tan_y = [P_y - 0.5*(P_x), P_y + 0.5*(P_x)]
+            fig = make_subplots(rows=1, cols=2, subplot_titles=(txt["unit_circle"], "y = sin(x)"))
+            fig.add_trace(go.Scatter(x=circle_x, y=circle_y, line=dict(color='black')), row=1, col=1)
+            fig.add_trace(go.Scatter(x=tan_x, y=tan_y, line=dict(color='red', width=3)), row=1, col=1)
+            fig.add_trace(go.Scatter(x=[P_x], y=[P_y], mode='markers', marker=dict(color='blue', size=10)), row=1, col=1)
+            fig.add_trace(go.Scatter(x=t_vals, y=np.sin(t_vals), line=dict(color='blue')), row=1, col=2)
+            slope_x = np.linspace(angle-0.5, angle+0.5, 10)
+            slope_y = np.sin(angle) + np.cos(angle)*(slope_x-angle)
+            fig.add_trace(go.Scatter(x=slope_x, y=slope_y, line=dict(color='red', width=3)), row=1, col=2)
+            fig.add_trace(go.Scatter(x=[angle], y=[np.sin(angle)], mode='markers', marker=dict(color='blue', size=10)), row=1, col=2)
+            
+            # FIXED: წრეწირის გეომეტრიის გასწორება (width/height და scaleanchor)
+            fig.update_layout(height=600, width=800, showlegend=False)
+            fig.update_xaxes(range=[-1.5, 1.5], row=1, col=1)
+            fig.update_yaxes(scaleanchor="x", scaleratio=1, range=[-1.5, 1.5], row=1, col=1)
+            
+            st.plotly_chart(fig, use_container_width=True)
+            
+    else:
+        with col1:
+            val = st.slider(txt["input_val"], -1.0, 1.0, 0.5, 0.01)
+            val_tan = val * 5 
+            angle_asin = np.arcsin(val)
+            angle_acos = np.arccos(val)
+            angle_atan = np.arctan(val_tan)
+            
+            with st.container(border=True):
+                st.markdown(f"**{txt['inv_res']}:**")
+                st.latex(rf"\arcsin({val}) = {angle_asin:.2f} \text{{ rad}} \approx {np.degrees(angle_asin):.1f}^\circ")
+                st.latex(rf"\arccos({val}) = {angle_acos:.2f} \text{{ rad}} \approx {np.degrees(angle_acos):.1f}^\circ")
+                st.latex(rf"\arctan({val_tan:.1f}) = {angle_atan:.2f} \text{{ rad}} \approx {np.degrees(angle_atan):.1f}^\circ")
+
+        with col2:
+            x_domain = np.linspace(-1, 1, 100)
+            x_tan_domain = np.linspace(-5, 5, 100)
+            fig = make_subplots(rows=3, cols=1, subplot_titles=("y = arcsin(x)", "y = arccos(x)", "y = arctan(x)"), vertical_spacing=0.1)
+            fig.add_trace(go.Scatter(x=x_domain, y=np.arcsin(x_domain), line=dict(color='blue')), row=1, col=1)
+            fig.add_trace(go.Scatter(x=[val], y=[angle_asin], mode='markers', marker=dict(color='red', size=10)), row=1, col=1)
+            fig.add_trace(go.Scatter(x=x_domain, y=np.arccos(x_domain), line=dict(color='green')), row=2, col=1)
+            fig.add_trace(go.Scatter(x=[val], y=[angle_acos], mode='markers', marker=dict(color='red', size=10)), row=2, col=1)
+            fig.add_trace(go.Scatter(x=x_tan_domain, y=np.arctan(x_tan_domain), line=dict(color='purple')), row=3, col=1)
+            fig.add_trace(go.Scatter(x=[val_tan], y=[angle_atan], mode='markers', marker=dict(color='red', size=10)), row=3, col=1)
+            fig.update_layout(height=800, showlegend=False)
+            st.plotly_chart(fig, use_container_width=True)
 
 # -----------------------------------------------------------------------------
-# TAB 5: მაჩვენებლიანი და ლოგარითმული (UPDATED)
+# TAB 5: მაჩვენებლიანი და ლოგარითმული (Duplicate ID Fixed)
 # -----------------------------------------------------------------------------
 elif tab_selection == txt["nav_options"][4]:
     st.header(txt["t5_header"])
     
     col1, col2 = st.columns([1, 2])
+    
+    # ლოგიკა: ჯერ ვქმნით fig-ს, შემდეგ ვხატავთ
+    fig = None 
+    
     with col1:
-        # ვირჩევთ ფუნქციის ტიპს (e^x თუ log)
         func_mode = st.radio(txt["t5_select_mode"], ["Exponential (e^x)", "Logarithmic (log)"], horizontal=True)
         
         if "Exponential" in func_mode:
             st.info(txt["t5_exp_info"])
             x0_exp = st.number_input(f"{txt['touch_point']}:", value=1.0, step=0.1)
-            
-            # e^x გამოთვლა
             val = np.exp(x0_exp)
-            slope = val # e^x თვისება: f(x) = f'(x)
+            slope = val
+            with st.container(border=True):
+                st.latex(rf"f(x_0) = e^{{{x0_exp}}} \approx {val:.4f}")
+                st.latex(rf"f'(x_0) = e^{{{x0_exp}}} \approx {slope:.4f}")
+                st.caption(txt['value_eq_slope'])
             
-            st.markdown(f"""
-            <div class='math-box'>
-                <b>$f(x_0) = e^{{{x0_exp}}} = {val:.4f}$</b><br>
-                <b>$f'(x_0) = e^{{{x0_exp}}} = {slope:.4f}$</b><br>
-                <span style='color:green'>{txt['value_eq_slope']}</span>
-            </div>
-            """, unsafe_allow_html=True)
-            
-            # გრაფიკი e^x
             x_range = np.linspace(x0_exp - 2, x0_exp + 2, 100)
             y_exp = np.exp(x_range)
             y_tan = val + slope * (x_range - x0_exp)
@@ -430,13 +470,12 @@ elif tab_selection == txt["nav_options"][4]:
             fig = go.Figure()
             fig.add_trace(go.Scatter(x=x_range, y=y_exp, name="e^x", line=dict(color='blue')))
             fig.add_trace(go.Scatter(x=x_range, y=y_tan, name=txt["tangent"], line=dict(color='red', dash='dash')))
-            fig.add_trace(go.Scatter(x=[x0_exp], y=[val], mode='markers+text', text=["P"], textposition="top left", marker=dict(size=10, color='black')))
+            fig.add_trace(go.Scatter(x=[x0_exp], y=[val], mode='markers+text', text=["P"], textposition="top left", marker=dict(size=12, color='black')))
             fig.update_layout(title="y = e^x", height=500)
             
         else:
-            # ლოგარითმული ნაწილი (ძველი კოდიდან)
             st.info(txt["t5_log_info"])
-            base_type = st.selectbox("Base:", txt["bases"])
+            base_type = st.selectbox(f"{txt['base_select']}:", txt["bases"])
             x0_log = st.number_input(f"{txt['touch_point']} (x > 0):", value=1.0, step=0.1, min_value=0.01)
             
             if "e" in base_type:
@@ -446,25 +485,28 @@ elif tab_selection == txt["nav_options"][4]:
             else:
                 log_func_str, display_str = "log(x, 2)", "log_{2}(x)"
             
-            func_sym, k_res, tan_sym = algebraic_derivative(log_func_str, x0_log)
-            
-            if func_sym:
-                st.latex(f"f'({x0_log}) = {sp.latex(k_res)}")
-                x_start = max(0.01, x0_log - 2)
-                x_range = np.linspace(x_start, x0_log + 2, 500)
-                f_lamb = sp.lambdify('x', func_sym, 'numpy')
-                t_lamb = sp.lambdify('x', tan_sym, 'numpy')
-                y_f, y_t = f_lamb(x_range), t_lamb(x_range)
-                fig = go.Figure()
-                fig.add_trace(go.Scatter(x=x_range, y=y_f, name=display_str, line=dict(color='purple')))
-                fig.add_trace(go.Scatter(x=x_range, y=y_t, name=txt["tangent"], line=dict(color='orange', dash='dash')))
-                fig.add_trace(go.Scatter(x=[x0_log], y=[f_lamb(x0_log)], mode='markers', marker=dict(color='black', size=10)))
-                fig.update_layout(title=f"Graph: {display_str}", height=500)
-            else:
-                st.error("Error")
-
+            if st.button(txt["calc_log"], type="primary"):
+                func_sym, k_res, tan_sym = algebraic_derivative(log_func_str, x0_log)
+                if func_sym:
+                    with st.container(border=True):
+                        st.latex(f"f'({x0_log}) = {sp.latex(k_res)}")
+                    
+                    x_start = max(0.01, x0_log - 2)
+                    x_range = np.linspace(x_start, x0_log + 2, 500)
+                    f_lamb = sp.lambdify('x', func_sym, 'numpy')
+                    t_lamb = sp.lambdify('x', tan_sym, 'numpy')
+                    y_f, y_t = f_lamb(x_range), t_lamb(x_range)
+                    fig = go.Figure()
+                    fig.add_trace(go.Scatter(x=x_range, y=y_f, name=display_str, line=dict(color='purple')))
+                    fig.add_trace(go.Scatter(x=x_range, y=y_t, name=txt["tangent"], line=dict(color='orange', dash='dash')))
+                    fig.add_trace(go.Scatter(x=[x0_log], y=[f_lamb(x0_log)], mode='markers', marker=dict(color='black', size=10)))
+                    fig.update_layout(title=f"Graph: {display_str}", height=500)
+                else:
+                    st.error("Error")
+        
     with col2:
-        if "fig" in locals():
+        # FIXED: მხოლოდ ერთი გამოძახება
+        if fig is not None:
             st.plotly_chart(fig, use_container_width=True)
 
 # -----------------------------------------------------------------------------
@@ -496,17 +538,15 @@ elif tab_selection == txt["nav_options"][5]:
         st.plotly_chart(fig, use_container_width=True)
 
 # -----------------------------------------------------------------------------
-# TAB 7: განსაკუთრებული შემთხვევები (UPDATED)
+# TAB 7: განსაკუთრებული შემთხვევები
 # -----------------------------------------------------------------------------
 elif tab_selection == txt["nav_options"][6]:
     st.header(txt["t7_header"])
     st.info(txt["t7_info"])
     col1, col2 = st.columns([1, 2])
     with col1:
-        # ინდექსის მიხედვით არჩევა
         problem_label = st.selectbox(f"{txt['select_case']}:", txt["case_options"])
         
-        # |x| შემთხვევა
         if "Absolute" in problem_label or "მოდული" in problem_label:
             st.markdown(txt["case_abs_text"])
             problem_type = "abs"
@@ -521,31 +561,25 @@ elif tab_selection == txt["nav_options"][6]:
         x = np.linspace(-1, 1, 1000)
         
         if problem_type == "abs":
-            # |x| ვიზუალიზაცია
             y = np.abs(x)
             fig = go.Figure()
             fig.add_trace(go.Scatter(x=x, y=y, name="|x|", line=dict(color='blue')))
-            # მარჯვენა მხები (y=x)
             fig.add_trace(go.Scatter(x=[0, 1], y=[0, 1], name=txt["right_tan"] + " (k=1)", line=dict(color='green', dash='dash')))
-            # მარცხენა მხები (y=-x)
             fig.add_trace(go.Scatter(x=[-1, 0], y=[1, 0], name=txt["left_tan"] + " (k=-1)", line=dict(color='red', dash='dash')))
             fig.add_trace(go.Scatter(x=[0], y=[0], mode='markers', marker=dict(size=12, color='black'), name='Point (0,0)'))
             fig.update_layout(title="y = |x| Corner Point", height=500)
             
         elif problem_type == "1.5":
-            x_pos = np.linspace(0, 1, 500) # მხოლოდ დადებითი რომ ფესვი ამოვიდეს
+            x_pos = np.linspace(0, 1, 500)
             x_neg = np.linspace(-1, 0, 500)
             y_pos = x_pos**1.5
             y_neg = np.abs(x_neg)**1.5
             x_all = np.concatenate([x_neg, x_pos])
             y_all = np.concatenate([y_neg, y_pos])
-            
             tangent = np.zeros_like(x_all)
             fig = go.Figure()
             fig.add_trace(go.Scatter(x=x_all, y=y_all, name="|x|^1.5", line=dict(color='blue')))
             fig.add_trace(go.Scatter(x=x_all, y=tangent, name=txt["tangent"], line=dict(color='red', dash='dash')))
-            
-            # ნაშთი
             with np.errstate(divide='ignore', invalid='ignore'):
                 remainder = y_all / (x_all**2)
             fig.add_trace(go.Scatter(x=x_all, y=remainder, name=txt["residue"], line=dict(color='purple')))
