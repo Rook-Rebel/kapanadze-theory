@@ -21,7 +21,7 @@ translations = {
             "II. ალგებრული კალკულატორი",
             "III. ტოპოლოგია (3D)",
             "IV. ტრიგონომეტრია",
-            "V. ლოგარითმული ანალიზი",
+            "V. მაჩვენებლიანი და ლოგარითმული", # შეცვლილი სათაური
             "VI. ფიზიკა (კინემატიკა)",
             "VII. განსაკუთრებული შემთხვევები"
         ],
@@ -67,14 +67,12 @@ translations = {
         "angle": "კუთხე",
         "slope": "დახრილობა",
         "unit_circle": "ერთეულოვანი წრეწირი",
-        # Tab 5
-        "t5_header": "📈 ლოგარითმული ფუნქციები",
-        "t5_formula": "კაპანაძის მეთოდით: $f(x) = \log_a(x) \Rightarrow f'(x) = \\frac{1}{x \\ln(a)}$",
-        "base_select": "აირჩიეთ ფუძე",
-        "calc_log": "გამოთვლა (Log)",
-        "bases": ["e (ნატურალური ln)", "10 (ათობითი)", "2 (ორობითი)"],
-        "residue_analysis": "ნაშთის ანალიზი",
-        "graph": "გრაფიკი",
+        # Tab 5 (Exponential & Logarithmic)
+        "t5_header": "📈 მაჩვენებლიანი და ლოგარითმული ფუნქციები",
+        "t5_select_mode": "აირჩიეთ ფუნქცია",
+        "t5_exp_info": "ფუნქცია $e^x$ უნიკალურია: მისი წარმოებული (სიჩქარე) ტოლია თავისივე მნიშვნელობის. $f'(x) = e^x$.",
+        "t5_log_info": "კაპანაძის მეთოდით: $f(x) = \log_a(x) \Rightarrow f'(x) = \\frac{1}{x \\ln(a)}$",
+        "value_eq_slope": "ფუნქციის მნიშვნელობა და დახრა ტოლია!",
         # Tab 6
         "t6_header": "თავი XIII: ფიზიკური ინტერპრეტაცია",
         "t6_info": "კაპანაძის მეთოდით, მხები არის ის წრფე, რომელსაც სხეული გაყვებოდა, მასზე მოქმედი ძალები რომ უცებ გამქრალიყო.",
@@ -89,10 +87,13 @@ translations = {
         "t7_header": "🔬 თეორიის გამოყენების არეალი",
         "t7_info": "აქ განხილულია ფუნქციები, სადაც 'ნაშთის კვადრატზე გაყოფის' მეთოდი სპეციფიკურ შედეგს იძლევა.",
         "select_case": "აირჩიეთ შემთხვევა",
-        "case_options": ["|x|^1.5 (ნაკლები სიგლუვე)", "x^2 * sin(1/x) (ოსცილაცია)"],
+        "case_options": ["|x| (მოდული 0-ში)", "|x|^1.5 (ნაკლები სიგლუვე)", "x^2 * sin(1/x) (ოსცილაცია)"],
+        "case_abs_text": "წერტილში $x=0$ ფუნქციას აქვს ორი მხები (მარცხნიდან $-1$, მარჯვნიდან $1$). მხების ერთადერთობა ირღვევა, ამიტომ წარმოებული არ არსებობს.",
         "case_1_text": "ფუნქციას აქვს წარმოებული, მაგრამ ნაშთი არ მცირდება საკმარისად სწრაფად.",
         "case_2_text": "ფუნქცია ირხევა ძალიან სწრაფად, რის გამოც ნაშთი არ სტაბილურდება.",
-        "conclusion": "დასკვნა: ამ კონკრეტულ შემთხვევაში მეთოდი პირდაპირ არ გამოიყენება, რადგან ნაშთი არ აკმაყოფილებს კაპანაძის პირობას."
+        "conclusion": "დასკვნა: ამ კონკრეტულ შემთხვევაში მეთოდი პირდაპირ არ გამოიყენება, რადგან ნაშთი არ აკმაყოფილებს კაპანაძის პირობას.",
+        "left_tan": "მარცხენა მხები",
+        "right_tan": "მარჯვენა მხები"
     },
     "EN": {
         "sidebar_title": "📚 Navigation",
@@ -101,7 +102,7 @@ translations = {
             "II. Algebraic Calculator",
             "III. Topology (3D)",
             "IV. Trigonometry",
-            "V. Logarithmic Analysis",
+            "V. Exponential & Logarithmic",
             "VI. Physics (Kinematics)",
             "VII. Special Cases"
         ],
@@ -148,13 +149,11 @@ translations = {
         "slope": "Slope",
         "unit_circle": "Unit Circle",
         # Tab 5
-        "t5_header": "📈 Logarithmic Functions",
-        "t5_formula": "By Kapanadze's method: $f(x) = \log_a(x) \Rightarrow f'(x) = \\frac{1}{x \\ln(a)}$",
-        "base_select": "Select Base",
-        "calc_log": "Calculate (Log)",
-        "bases": ["e (Natural ln)", "10 (Decimal)", "2 (Binary)"],
-        "residue_analysis": "Remainder Analysis",
-        "graph": "Graph",
+        "t5_header": "📈 Exponential & Logarithmic Functions",
+        "t5_select_mode": "Select Function",
+        "t5_exp_info": "Function $e^x$ is unique: its derivative (slope) equals its value. $f'(x) = e^x$.",
+        "t5_log_info": "By Kapanadze's method: $f(x) = \log_a(x) \Rightarrow f'(x) = \\frac{1}{x \\ln(a)}$",
+        "value_eq_slope": "Function Value equals Slope!",
         # Tab 6
         "t6_header": "Chapter XIII: Physical Interpretation",
         "t6_info": "According to Kapanadze, the tangent is the line the body would follow if forces acting on it suddenly vanished.",
@@ -169,10 +168,13 @@ translations = {
         "t7_header": "🔬 Scope of Theory",
         "t7_info": "Here we examine functions where the 'remainder division by square' method yields specific results.",
         "select_case": "Select Case",
-        "case_options": ["|x|^1.5 (Less Smoothness)", "x^2 * sin(1/x) (Oscillation)"],
+        "case_options": ["|x| (Absolute Value at 0)", "|x|^1.5 (Less Smoothness)", "x^2 * sin(1/x) (Oscillation)"],
+        "case_abs_text": "At $x=0$, the function has two tangents (left $-1$, right $1$). Uniqueness is violated, so derivative doesn't exist.",
         "case_1_text": "The function has a derivative, but the remainder does not decrease fast enough.",
         "case_2_text": "The function oscillates too quickly, so the remainder does not stabilize.",
-        "conclusion": "Conclusion: In this specific case, the method is not directly applicable as the remainder does not satisfy Kapanadze's condition."
+        "conclusion": "Conclusion: In this specific case, the method is not directly applicable as the remainder does not satisfy Kapanadze's condition.",
+        "left_tan": "Left Tangent",
+        "right_tan": "Right Tangent"
     }
 }
 
@@ -243,7 +245,6 @@ def solve_kapanadze_3d(func_str, x0_val, y0_val):
 # ==========================================
 
 st.sidebar.title(txt["sidebar_title"])
-# ნავიგაციის ოფციები ენის მიხედვით
 tab_selection = st.sidebar.radio("", txt["nav_options"])
 
 st.title(txt["title"])
@@ -395,45 +396,76 @@ elif tab_selection == txt["nav_options"][3]:
         st.plotly_chart(fig, use_container_width=True)
 
 # -----------------------------------------------------------------------------
-# TAB 5: ლოგარითმული ანალიზი
+# TAB 5: მაჩვენებლიანი და ლოგარითმული (UPDATED)
 # -----------------------------------------------------------------------------
 elif tab_selection == txt["nav_options"][4]:
     st.header(txt["t5_header"])
-    st.markdown(txt["t5_formula"])
     
     col1, col2 = st.columns([1, 2])
     with col1:
-        base_type = st.selectbox(f"{txt['base_select']}:", txt["bases"])
-        x0_log = st.number_input(f"{txt['touch_point']} (x > 0):", value=1.0, step=0.1, min_value=0.01)
-        # ინდექსის მიხედვით ვიგებთ რომელ ფორმულას ირჩევს, რადგან ტექსტი იცვლება
-        base_index = txt["bases"].index(base_type)
+        # ვირჩევთ ფუნქციის ტიპს (e^x თუ log)
+        func_mode = st.radio(txt["t5_select_mode"], ["Exponential (e^x)", "Logarithmic (log)"], horizontal=True)
         
-        if base_index == 0: # e
-            log_func_str, display_str = "log(x)", "ln(x)"
-        elif base_index == 1: # 10
-            log_func_str, display_str = "log(x, 10)", "log_{10}(x)"
-        else: # 2
-            log_func_str, display_str = "log(x, 2)", "log_{2}(x)"
+        if "Exponential" in func_mode:
+            st.info(txt["t5_exp_info"])
+            x0_exp = st.number_input(f"{txt['touch_point']}:", value=1.0, step=0.1)
             
-        if st.button(txt["calc_log"], type="primary"):
+            # e^x გამოთვლა
+            val = np.exp(x0_exp)
+            slope = val # e^x თვისება: f(x) = f'(x)
+            
+            st.markdown(f"""
+            <div class='math-box'>
+                <b>$f(x_0) = e^{{{x0_exp}}} = {val:.4f}$</b><br>
+                <b>$f'(x_0) = e^{{{x0_exp}}} = {slope:.4f}$</b><br>
+                <span style='color:green'>{txt['value_eq_slope']}</span>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            # გრაფიკი e^x
+            x_range = np.linspace(x0_exp - 2, x0_exp + 2, 100)
+            y_exp = np.exp(x_range)
+            y_tan = val + slope * (x_range - x0_exp)
+            
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(x=x_range, y=y_exp, name="e^x", line=dict(color='blue')))
+            fig.add_trace(go.Scatter(x=x_range, y=y_tan, name=txt["tangent"], line=dict(color='red', dash='dash')))
+            fig.add_trace(go.Scatter(x=[x0_exp], y=[val], mode='markers+text', text=["P"], textposition="top left", marker=dict(size=10, color='black')))
+            fig.update_layout(title="y = e^x", height=500)
+            
+        else:
+            # ლოგარითმული ნაწილი (ძველი კოდიდან)
+            st.info(txt["t5_log_info"])
+            base_type = st.selectbox("Base:", txt["bases"])
+            x0_log = st.number_input(f"{txt['touch_point']} (x > 0):", value=1.0, step=0.1, min_value=0.01)
+            
+            if "e" in base_type:
+                log_func_str, display_str = "log(x)", "ln(x)"
+            elif "10" in base_type:
+                log_func_str, display_str = "log(x, 10)", "log_{10}(x)"
+            else:
+                log_func_str, display_str = "log(x, 2)", "log_{2}(x)"
+            
             func_sym, k_res, tan_sym = algebraic_derivative(log_func_str, x0_log)
+            
             if func_sym:
-                with col2:
-                    st.latex(f"f'({x0_log}) = {sp.latex(k_res)}")
-                    x_start = max(0.01, x0_log - 2)
-                    x_range = np.linspace(x_start, x0_log + 2, 500)
-                    f_lamb = sp.lambdify('x', func_sym, 'numpy')
-                    t_lamb = sp.lambdify('x', tan_sym, 'numpy')
-                    y_f, y_t = f_lamb(x_range), t_lamb(x_range)
-                    with np.errstate(divide='ignore', invalid='ignore'): remainder = (y_f - y_t) / (x_range - x0_log)**2
-                    fig = make_subplots(rows=2, cols=1, subplot_titles=(f"{txt['graph']}: {display_str}", txt['residue_analysis']))
-                    fig.add_trace(go.Scatter(x=x_range, y=y_f, name=display_str, line=dict(color='purple')), row=1, col=1)
-                    fig.add_trace(go.Scatter(x=x_range, y=y_t, name=txt["tangent"], line=dict(color='orange', dash='dash')), row=1, col=1)
-                    fig.add_trace(go.Scatter(x=[x0_log], y=[f_lamb(x0_log)], mode='markers', marker=dict(color='black', size=10), name='Point'), row=1, col=1)
-                    fig.add_trace(go.Scatter(x=x_range, y=remainder, name=txt["residue"], line=dict(color='green')), row=2, col=1)
-                    fig.update_layout(height=800)
-                    st.plotly_chart(fig, use_container_width=True)
-            else: st.error(txt["error_msg"])
+                st.latex(f"f'({x0_log}) = {sp.latex(k_res)}")
+                x_start = max(0.01, x0_log - 2)
+                x_range = np.linspace(x_start, x0_log + 2, 500)
+                f_lamb = sp.lambdify('x', func_sym, 'numpy')
+                t_lamb = sp.lambdify('x', tan_sym, 'numpy')
+                y_f, y_t = f_lamb(x_range), t_lamb(x_range)
+                fig = go.Figure()
+                fig.add_trace(go.Scatter(x=x_range, y=y_f, name=display_str, line=dict(color='purple')))
+                fig.add_trace(go.Scatter(x=x_range, y=y_t, name=txt["tangent"], line=dict(color='orange', dash='dash')))
+                fig.add_trace(go.Scatter(x=[x0_log], y=[f_lamb(x0_log)], mode='markers', marker=dict(color='black', size=10)))
+                fig.update_layout(title=f"Graph: {display_str}", height=500)
+            else:
+                st.error("Error")
+
+    with col2:
+        if "fig" in locals():
+            st.plotly_chart(fig, use_container_width=True)
 
 # -----------------------------------------------------------------------------
 # TAB 6: ფიზიკა
@@ -464,7 +496,7 @@ elif tab_selection == txt["nav_options"][5]:
         st.plotly_chart(fig, use_container_width=True)
 
 # -----------------------------------------------------------------------------
-# TAB 7: განსაკუთრებული შემთხვევები
+# TAB 7: განსაკუთრებული შემთხვევები (UPDATED)
 # -----------------------------------------------------------------------------
 elif tab_selection == txt["nav_options"][6]:
     st.header(txt["t7_header"])
@@ -472,9 +504,13 @@ elif tab_selection == txt["nav_options"][6]:
     col1, col2 = st.columns([1, 2])
     with col1:
         # ინდექსის მიხედვით არჩევა
-        case_idx = 0
         problem_label = st.selectbox(f"{txt['select_case']}:", txt["case_options"])
-        if problem_label == txt["case_options"][0]:
+        
+        # |x| შემთხვევა
+        if "Absolute" in problem_label or "მოდული" in problem_label:
+            st.markdown(txt["case_abs_text"])
+            problem_type = "abs"
+        elif "1.5" in problem_label:
             st.markdown(txt["case_1_text"])
             problem_type = "1.5"
         else:
@@ -482,21 +518,48 @@ elif tab_selection == txt["nav_options"][6]:
             problem_type = "osc"
             
     with col2:
-        x = np.linspace(-0.5, 0.5, 1000)
-        if problem_type == "1.5":
-            y = np.abs(x)**1.5
-            tangent = np.zeros_like(x)
-            with np.errstate(divide='ignore', invalid='ignore'): remainder = y / (x**2)
-        else:
+        x = np.linspace(-1, 1, 1000)
+        
+        if problem_type == "abs":
+            # |x| ვიზუალიზაცია
+            y = np.abs(x)
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(x=x, y=y, name="|x|", line=dict(color='blue')))
+            # მარჯვენა მხები (y=x)
+            fig.add_trace(go.Scatter(x=[0, 1], y=[0, 1], name=txt["right_tan"] + " (k=1)", line=dict(color='green', dash='dash')))
+            # მარცხენა მხები (y=-x)
+            fig.add_trace(go.Scatter(x=[-1, 0], y=[1, 0], name=txt["left_tan"] + " (k=-1)", line=dict(color='red', dash='dash')))
+            fig.add_trace(go.Scatter(x=[0], y=[0], mode='markers', marker=dict(size=12, color='black'), name='Point (0,0)'))
+            fig.update_layout(title="y = |x| Corner Point", height=500)
+            
+        elif problem_type == "1.5":
+            x_pos = np.linspace(0, 1, 500) # მხოლოდ დადებითი რომ ფესვი ამოვიდეს
+            x_neg = np.linspace(-1, 0, 500)
+            y_pos = x_pos**1.5
+            y_neg = np.abs(x_neg)**1.5
+            x_all = np.concatenate([x_neg, x_pos])
+            y_all = np.concatenate([y_neg, y_pos])
+            
+            tangent = np.zeros_like(x_all)
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(x=x_all, y=y_all, name="|x|^1.5", line=dict(color='blue')))
+            fig.add_trace(go.Scatter(x=x_all, y=tangent, name=txt["tangent"], line=dict(color='red', dash='dash')))
+            
+            # ნაშთი
+            with np.errstate(divide='ignore', invalid='ignore'):
+                remainder = y_all / (x_all**2)
+            fig.add_trace(go.Scatter(x=x_all, y=remainder, name=txt["residue"], line=dict(color='purple')))
+            fig.update_layout(title="Analysis", height=600, yaxis=dict(range=[0, 5]))
+            
+        else: # Oscillation
             y = (x**2) * np.sin(1/(x + 1e-9))
             tangent = np.zeros_like(x)
-            with np.errstate(divide='ignore', invalid='ignore'): remainder = np.sin(1/(x + 1e-9))
-        fig = make_subplots(rows=2, cols=1, subplot_titles=(txt["func_label"], txt["residue_analysis"]))
-        fig.add_trace(go.Scatter(x=x, y=y, name="f(x)", line=dict(color='blue')), row=1, col=1)
-        fig.add_trace(go.Scatter(x=x, y=tangent, name=txt["tangent"], line=dict(color='red', dash='dash')), row=1, col=1)
-        fig.add_trace(go.Scatter(x=x, y=remainder, name=txt["residue"], line=dict(color='purple')), row=2, col=1)
-        fig.update_layout(height=600)
-        if problem_type == "osc": fig.update_yaxes(range=[-2, 2], row=2, col=1)
-        else: fig.update_yaxes(range=[0, 20], row=2, col=1)
+            with np.errstate(divide='ignore', invalid='ignore'):
+                remainder = np.sin(1/(x + 1e-9))
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(x=x, y=y, name="f(x)", line=dict(color='blue')))
+            fig.add_trace(go.Scatter(x=x, y=remainder, name=txt["residue"], line=dict(color='purple')))
+            fig.update_layout(title="Oscillation", height=600, yaxis=dict(range=[-2, 2]))
+
         st.plotly_chart(fig, use_container_width=True)
         st.info(txt["conclusion"])
