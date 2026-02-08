@@ -37,7 +37,7 @@ translations = {
             "III. ტოპოლოგია (3D)",
             "IV. ტრიგონომეტრია",
             "V. მაჩვენებლიანი და ლოგარითმული",
-            "VI. ფიზიკა (კინემატიკა)",
+            "VI. კავშირი ნიუტონთან და კოშისთან",
             "VII. განსაკუთრებული შემთხვევები"
         ],
         "title": "დავით კაპანაძის ალგებრული და გეომეტრიული ანალიზის ლაბორატორია",
@@ -98,16 +98,14 @@ translations = {
         "calc_log": "გამოთვლა (Log)",
         "residue_analysis": "ნაშთის ანალიზი",
         "graph": "გრაფიკი",
-        # Tab 6
-        "t6_header": "თავი XIII: ფიზიკური ინტერპრეტაცია",
-        "t6_info": "კაპანაძის მეთოდით, მხები არის ის წრფე, რომელსაც სხეული გაყვებოდა, მასზე მოქმედი ძალები რომ უცებ გამქრალიყო.",
-        "time": "დრო",
-        "velocity_vec": "სიჩქარის ვექტორი",
-        "trajectory": "ტრაექტორია",
-        "body": "სხეული",
-        "inertia": "ინერცია",
-        "ground": "მიწა",
-        "ballistic": "ბალისტიკური მოძრაობა",
+        # Tab 6 (NEWTON/CAUCHY)
+        "t6_header": "თავი XIII: კავშირი ნიუტონთან და კოშისთან",
+        "t6_info": "ჩვენი თეორიით გავდივართ ნიუტონთან. ჩვენ მას კი არ ვეწინააღმდეგებით, არამედ სხვა გზით მივდივართ იქამდე. კაპანაძესთან წარმოებული არის **ზღვრული წრფე**.",
+        "delta_x_label": "არგუმენტის ნაზრდი (Δx)",
+        "delta_f": "ფუნქციის ნაზრდი (ΔF)",
+        "d_f": "დიფერენციალი (dF)",
+        "diff_val": "სხვაობა (ΔF - dF)",
+        "kapanadze_limit_text": "თუ სხვაობა $\Delta F - dF$ ისე მცირდება, რომ კაპანაძის პირობას აკმაყოფილებს, მაშინ ვიღებთ **ზღვრულ წრფეს** (წარმოებულს).",
         # Tab 7
         "t7_header": "🔬 თეორიის გამოყენების არეალი",
         "t7_info": "აქ განხილულია ფუნქციები, სადაც 'ნაშთის კვადრატზე გაყოფის' მეთოდი სპეციფიკურ შედეგს იძლევა.",
@@ -128,7 +126,7 @@ translations = {
             "III. Topology (3D)",
             "IV. Trigonometry",
             "V. Exponential & Logarithmic",
-            "VI. Physics (Kinematics)",
+            "VI. Connection with Newton & Cauchy",
             "VII. Special Cases"
         ],
         "title": "David Kapanadze's Algebraic and Geometric Analysis Laboratory",
@@ -190,15 +188,13 @@ translations = {
         "residue_analysis": "Remainder Analysis",
         "graph": "Graph",
         # Tab 6
-        "t6_header": "Chapter XIII: Physical Interpretation",
-        "t6_info": "According to Kapanadze, the tangent is the line the body would follow if forces acting on it suddenly vanished.",
-        "time": "Time",
-        "velocity_vec": "Velocity Vector",
-        "trajectory": "Trajectory",
-        "body": "Body",
-        "inertia": "Inertia",
-        "ground": "Ground",
-        "ballistic": "Ballistic Motion",
+        "t6_header": "Chapter XIII: Connection with Newton & Cauchy",
+        "t6_info": "We arrive at Newton's result via a different path. We do not oppose them. For Kapanadze, the derivative is the **Limiting Line**.",
+        "delta_x_label": "Argument Increment (Δx)",
+        "delta_f": "Function Increment (ΔF)",
+        "d_f": "Differential (dF)",
+        "diff_val": "Difference (ΔF - dF)",
+        "kapanadze_limit_text": "If the difference $\Delta F - dF$ decreases such that it satisfies Kapanadze's condition, we get the **Limiting Line**.",
         # Tab 7
         "t7_header": "🔬 Scope of Theory",
         "t7_info": "Here we examine functions where the 'remainder division by square' method yields specific results.",
@@ -374,7 +370,7 @@ elif tab_selection == txt["nav_options"][2]:
                 st.plotly_chart(fig, use_container_width=True)
 
 # -----------------------------------------------------------------------------
-# TAB 4: ტრიგონომეტრია (წრეწირი გასწორებულია!)
+# TAB 4: ტრიგონომეტრია
 # -----------------------------------------------------------------------------
 elif tab_selection == txt["nav_options"][3]:
     st.header(txt["t4_header"])
@@ -405,7 +401,6 @@ elif tab_selection == txt["nav_options"][3]:
             fig.add_trace(go.Scatter(x=slope_x, y=slope_y, line=dict(color='red', width=3)), row=1, col=2)
             fig.add_trace(go.Scatter(x=[angle], y=[np.sin(angle)], mode='markers', marker=dict(color='blue', size=10)), row=1, col=2)
             
-            # FIXED: წრეწირის გეომეტრიის გასწორება (width/height და scaleanchor)
             fig.update_layout(height=600, width=800, showlegend=False)
             fig.update_xaxes(range=[-1.5, 1.5], row=1, col=1)
             fig.update_yaxes(scaleanchor="x", scaleratio=1, range=[-1.5, 1.5], row=1, col=1)
@@ -440,15 +435,14 @@ elif tab_selection == txt["nav_options"][3]:
             st.plotly_chart(fig, use_container_width=True)
 
 # -----------------------------------------------------------------------------
-# TAB 5: მაჩვენებლიანი და ლოგარითმული (Duplicate ID Fixed)
+# TAB 5: მაჩვენებლიანი და ლოგარითმული
 # -----------------------------------------------------------------------------
 elif tab_selection == txt["nav_options"][4]:
     st.header(txt["t5_header"])
     
     col1, col2 = st.columns([1, 2])
     
-    # ლოგიკა: ჯერ ვქმნით fig-ს, შემდეგ ვხატავთ
-    fig = None 
+    fig = None # Initialize
     
     with col1:
         func_mode = st.radio(txt["t5_select_mode"], ["Exponential (e^x)", "Logarithmic (log)"], horizontal=True)
@@ -505,38 +499,142 @@ elif tab_selection == txt["nav_options"][4]:
                     st.error("Error")
         
     with col2:
-        # FIXED: მხოლოდ ერთი გამოძახება
         if fig is not None:
             st.plotly_chart(fig, use_container_width=True)
 
 # -----------------------------------------------------------------------------
-# TAB 6: ფიზიკა
+# TAB 6: კავშირი ნიუტონთან და კოშისთან (განახლებული დავითის ნახაზის მიხედვით)
 # -----------------------------------------------------------------------------
 elif tab_selection == txt["nav_options"][5]:
     st.header(txt["t6_header"])
-    st.info(txt["t6_info"])
+    
+    st.markdown(f"""
+    <div style="background-color:rgba(0, 128, 0, 0.1); padding:15px; border-radius:10px; border-left:5px solid green;">
+    {txt['t6_info']}
+    </div>
+    """, unsafe_allow_html=True)
+    
     col1, col2 = st.columns([1, 2])
     with col1:
-        t = st.slider(f"{txt['time']} (t):", 0.0, 2.0, 0.5, 0.05)
-        x_val = t
-        y_val = -(t**2) + 2
-        vy = -2 * t
-        st.markdown(f"**{txt['velocity_vec']}:** (1, {vy:.2f})")
-    with col2:
-        t_range = np.linspace(0, 2, 100)
-        x_traj = t_range
-        y_traj = -(t_range**2) + 2
-        slope = vy / 1
-        x_tan = np.linspace(x_val, x_val + 0.5, 10)
-        y_tan = y_val + slope * (x_tan - x_val)
-        fig = go.Figure()
-        fig.add_trace(go.Scatter(x=x_traj, y=y_traj, name=txt["trajectory"], line=dict(color='blue')))
-        fig.add_trace(go.Scatter(x=[x_val], y=[y_val], mode='markers', marker=dict(size=15, color='black'), name=txt["body"]))
-        fig.add_trace(go.Scatter(x=x_tan, y=y_tan, name=txt["inertia"], line=dict(color='red', width=3), mode='lines+markers', marker=dict(symbol='arrow', size=10)))
-        fig.add_trace(go.Scatter(x=[0, 2], y=[-2, -2], line=dict(color='green', width=5), name=txt["ground"]))
-        fig.update_layout(title=txt["ballistic"], height=500, yaxis=dict(range=[-2.5, 2.5], scaleanchor="x", scaleratio=1))
-        st.plotly_chart(fig, use_container_width=True)
+        # პარამეტრები
+        f_str = "x^2" # მარტივი მაგალითისთვის
+        x0 = st.number_input("x0:", value=1.0, step=0.1)
+        dx = st.slider(txt["delta_x_label"], 0.01, 2.0, 1.0, 0.01)
+        
+        # გამოთვლები
+        x = sp.symbols('x')
+        f = sp.sympify(f_str)
+        f_lamb = sp.lambdify(x, f, 'numpy')
+        
+        # მნიშვნელობები
+        y0 = f_lamb(x0)
+        y_next = f_lamb(x0 + dx)
+        
+        # ნაზრდი (Delta F) -> მონაკვეთი BC
+        delta_F = y_next - y0
+        
+        # წარმოებული და დიფერენციალი (dF) -> მონაკვეთი BN
+        k = float(sp.diff(f, x).subs(x, x0))
+        dF = k * dx
+        
+        diff_val = delta_F - dF
+        
+        with st.container(border=True):
+            st.metric(txt["delta_f"] + " (BC)", f"{delta_F:.4f}")
+            st.metric(txt["d_f"] + " (BN)", f"{dF:.4f}")
+            st.metric(txt["diff_val"] + " (NC)", f"{diff_val:.4f}", delta_color="normal")
+            
+        st.info(txt["kapanadze_limit_text"])
 
+    with col2:
+        # გრაფიკის აგება
+        x_range = np.linspace(max(0, x0 - 0.5), x0 + dx + 0.5, 100)
+        y_curve = f_lamb(x_range)
+        y_tan = y0 + k * (x_range - x0)
+        
+        fig = go.Figure()
+        
+        # 1. ფუნქციის მრუდი (F(x))
+        fig.add_trace(go.Scatter(x=x_range, y=y_curve, name="F(x)", line=dict(color='blue')))
+        
+        # 2. მხები წრფე (Tangent)
+        fig.add_trace(go.Scatter(x=x_range, y=y_tan, name="Tangent", line=dict(color='red', dash='dash')))
+        
+        # --- წერტილების კოორდინატები (დავითის ნახაზის მიხედვით) ---
+        point_A = (x0, y0)
+        point_B = (x0 + dx, y0)
+        point_C = (x0 + dx, y_next)
+        point_N = (x0 + dx, y0 + dF)
+        point_D = (x0 + dx, 0)
+        point_x0_axis = (x0, 0)
+
+        # 3. მონაკვეთი AB (Δx)
+        fig.add_trace(go.Scatter(
+            x=[point_A[0], point_B[0]], 
+            y=[point_A[1], point_B[1]], 
+            mode='lines+text', 
+            line=dict(color='black', dash='dot'), 
+            name="Δx (AB)", 
+            text=["", "Δx"], 
+            textposition="bottom center"
+        ))
+
+        # 4. მონაკვეთი BN (dF - დიფერენციალი)
+        fig.add_trace(go.Scatter(
+            x=[point_B[0], point_N[0]], 
+            y=[point_B[1], point_N[1]], 
+            mode='lines+text', 
+            name="dF (BN)", 
+            text=["", "dF"], 
+            textposition="middle right",
+            line=dict(color='green', width=3)
+        ))
+        
+        # 5. მონაკვეთი BC (ΔF - ფუნქციის ნაზრდი)
+        # ოდნავ გადავწიოთ მარჯვნივ, რომ dF-ს არ დაეფაროს, როგორც წინა ვერსიაში
+        fig.add_trace(go.Scatter(
+            x=[point_B[0] + 0.03, point_C[0] + 0.03], 
+            y=[point_B[1], point_C[1]], 
+            mode='lines+text', 
+            name="ΔF (BC)", 
+            text=["", "ΔF"], 
+            textposition="middle right",
+            line=dict(color='orange', width=3)
+        ))
+        
+        # 6. დამხმარე ვერტიკალური ხაზები (პროექციები)
+        # ხაზი C -> D
+        fig.add_trace(go.Scatter(x=[point_C[0], point_D[0]], y=[point_C[1], point_D[1]], mode='lines', line=dict(color='gray', dash='dash', width=1), showlegend=False))
+        # ხაზი A -> x0 ღერძზე
+        fig.add_trace(go.Scatter(x=[point_A[0], point_x0_axis[0]], y=[point_A[1], point_x0_axis[1]], mode='lines', line=dict(color='gray', dash='dash', width=1), showlegend=False))
+
+        # 7. ყველა წერტილის (A, B, C, D, N) დატანა და წარწერა
+        labels = ["A", "B", "C", "N", "D"]
+        x_coords = [point_A[0], point_B[0], point_C[0], point_N[0], point_D[0]]
+        y_coords = [point_A[1], point_B[1], point_C[1], point_N[1], point_D[1]]
+        
+        fig.add_trace(go.Scatter(
+            x=x_coords,
+            y=y_coords,
+            mode='markers+text',
+            text=labels,
+            textposition=["top left", "bottom right", "top right", "top left", "bottom right"],
+            marker=dict(size=10, color='black'),
+            name="Points (A,B,C,N,D)"
+        ))
+
+        # 8. ღერძების გაფორმება
+        fig.add_annotation(x=x0, y=0, text="x₀", showarrow=False, yshift=-15)
+        fig.add_annotation(x=x0 + dx, y=0, text="x₀ + Δx", showarrow=False, yshift=-15)
+        fig.add_hline(y=0, line_color="black", line_width=1) # X ღერძის ხაზგასმა
+
+        fig.update_layout(
+            title="ΔF vs dF ვიზუალიზაცია (ბატონი დავითის ნახაზით)", 
+            height=600,
+            xaxis_title="X",
+            yaxis_title="Y"
+        )
+        st.plotly_chart(fig, use_container_width=True)
 # -----------------------------------------------------------------------------
 # TAB 7: განსაკუთრებული შემთხვევები
 # -----------------------------------------------------------------------------
