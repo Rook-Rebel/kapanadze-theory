@@ -102,9 +102,9 @@ translations = {
         "t6_header": "თავი XIII: კავშირი ნიუტონთან და კოშისთან",
         "t6_info": "ჩვენი თეორიით გავდივართ ნიუტონთან. ჩვენ მას კი არ ვეწინააღმდეგებით, არამედ სხვა გზით მივდივართ იქამდე. კაპანაძესთან წარმოებული არის **ზღვრული წრფე**.",
         "delta_x_label": "არგუმენტის ნაზრდი (Δx)",
-        "delta_f": "ფუნქციის ნაზრდი (ΔF)",
-        "d_f": "დიფერენციალი (dF)",
-        "diff_val": "სხვაობა (ΔF - dF)",
+        "delta_f": "ფუნქციის ნაზრდი (ΔF = BC)",
+        "d_f": "დიფერენციალი (dF = BN)",
+        "diff_val": "სხვაობა (NC)",
         "kapanadze_limit_text": "თუ სხვაობა $\Delta F - dF$ ისე მცირდება, რომ კაპანაძის პირობას აკმაყოფილებს, მაშინ ვიღებთ **ზღვრულ წრფეს** (წარმოებულს).",
         # Tab 7
         "t7_header": "🔬 თეორიის გამოყენების არეალი",
@@ -191,9 +191,9 @@ translations = {
         "t6_header": "Chapter XIII: Connection with Newton & Cauchy",
         "t6_info": "We arrive at Newton's result via a different path. We do not oppose them. For Kapanadze, the derivative is the **Limiting Line**.",
         "delta_x_label": "Argument Increment (Δx)",
-        "delta_f": "Function Increment (ΔF)",
-        "d_f": "Differential (dF)",
-        "diff_val": "Difference (ΔF - dF)",
+        "delta_f": "Function Increment (ΔF = BC)",
+        "d_f": "Differential (dF = BN)",
+        "diff_val": "Difference (NC)",
         "kapanadze_limit_text": "If the difference $\Delta F - dF$ decreases such that it satisfies Kapanadze's condition, we get the **Limiting Line**.",
         # Tab 7
         "t7_header": "🔬 Scope of Theory",
@@ -442,7 +442,7 @@ elif tab_selection == txt["nav_options"][4]:
     
     col1, col2 = st.columns([1, 2])
     
-    fig = None # Initialize
+    fig = None 
     
     with col1:
         func_mode = st.radio(txt["t5_select_mode"], ["Exponential (e^x)", "Logarithmic (log)"], horizontal=True)
@@ -503,7 +503,7 @@ elif tab_selection == txt["nav_options"][4]:
             st.plotly_chart(fig, use_container_width=True)
 
 # -----------------------------------------------------------------------------
-# TAB 6: კავშირი ნიუტონთან და კოშისთან (განახლებული დავითის ნახაზის მიხედვით)
+# TAB 6: კავშირი ნიუტონთან და კოშისთან (დავითის ნახაზის ზუსტი ასლი)
 # -----------------------------------------------------------------------------
 elif tab_selection == txt["nav_options"][5]:
     st.header(txt["t6_header"])
@@ -517,7 +517,7 @@ elif tab_selection == txt["nav_options"][5]:
     col1, col2 = st.columns([1, 2])
     with col1:
         # პარამეტრები
-        f_str = "x^2" # მარტივი მაგალითისთვის
+        f_str = "x^2" 
         x0 = st.number_input("x0:", value=1.0, step=0.1)
         dx = st.slider(txt["delta_x_label"], 0.01, 2.0, 1.0, 0.01)
         
@@ -547,94 +547,103 @@ elif tab_selection == txt["nav_options"][5]:
         st.info(txt["kapanadze_limit_text"])
 
     with col2:
-        # გრაფიკის აგება
+        # გრაფიკი
         x_range = np.linspace(max(0, x0 - 0.5), x0 + dx + 0.5, 100)
         y_curve = f_lamb(x_range)
         y_tan = y0 + k * (x_range - x0)
         
         fig = go.Figure()
         
-        # 1. ფუნქციის მრუდი (F(x))
+        # 1. ფუნქციის მრუდი
         fig.add_trace(go.Scatter(x=x_range, y=y_curve, name="F(x)", line=dict(color='blue')))
         
-        # 2. მხები წრფე (Tangent)
+        # 2. მხები წრფე
         fig.add_trace(go.Scatter(x=x_range, y=y_tan, name="Tangent", line=dict(color='red', dash='dash')))
         
-        # --- წერტილების კოორდინატები (დავითის ნახაზის მიხედვით) ---
-        point_A = (x0, y0)
-        point_B = (x0 + dx, y0)
-        point_C = (x0 + dx, y_next)
-        point_N = (x0 + dx, y0 + dF)
-        point_D = (x0 + dx, 0)
-        point_x0_axis = (x0, 0)
+        # --- წერტილები (დავითის ნახაზის მიხედვით) ---
+        # A(x0, y0)
+        # B(x0+dx, y0) - მართი კუთხე
+        # C(x0+dx, y_next) - ფუნქციაზე
+        # N(x0+dx, y0+dF) - მხებზე
+        
+        pt_A = [x0, y0]
+        pt_B = [x0 + dx, y0]
+        pt_C = [x0 + dx, y_next]
+        pt_N = [x0 + dx, y0 + dF]
+        pt_D = [x0 + dx, 0] # X ღერძზე
+        pt_x0_ax = [x0, 0] # X ღერძზე
 
-        # 3. მონაკვეთი AB (Δx)
+        # 3. ჰორიზონტალური კათეტი AB (Delta X)
         fig.add_trace(go.Scatter(
-            x=[point_A[0], point_B[0]], 
-            y=[point_A[1], point_B[1]], 
-            mode='lines+text', 
+            x=[pt_A[0], pt_B[0]], 
+            y=[pt_A[1], pt_B[1]], 
+            mode='lines', 
             line=dict(color='black', dash='dot'), 
-            name="Δx (AB)", 
-            text=["", "Δx"], 
-            textposition="bottom center"
+            name="Δx (AB)"
         ))
 
-        # 4. მონაკვეთი BN (dF - დიფერენციალი)
+        # 4. ვერტიკალური მონაკვეთი B -> C (სრული ნაზრდი)
         fig.add_trace(go.Scatter(
-            x=[point_B[0], point_N[0]], 
-            y=[point_B[1], point_N[1]], 
-            mode='lines+text', 
-            name="dF (BN)", 
-            text=["", "dF"], 
-            textposition="middle right",
-            line=dict(color='green', width=3)
+            x=[pt_B[0], pt_C[0]], 
+            y=[pt_B[1], pt_C[1]], 
+            mode='lines', 
+            line=dict(color='black'), # შავი ფერი, როგორც ნახაზზეა ძირითადი კარკასი
+            name="ΔF (BC)"
         ))
-        
-        # 5. მონაკვეთი BC (ΔF - ფუნქციის ნაზრდი)
-        # ოდნავ გადავწიოთ მარჯვნივ, რომ dF-ს არ დაეფაროს, როგორც წინა ვერსიაში
-        fig.add_trace(go.Scatter(
-            x=[point_B[0] + 0.03, point_C[0] + 0.03], 
-            y=[point_B[1], point_C[1]], 
-            mode='lines+text', 
-            name="ΔF (BC)", 
-            text=["", "ΔF"], 
-            textposition="middle right",
-            line=dict(color='orange', width=3)
-        ))
-        
-        # 6. დამხმარე ვერტიკალური ხაზები (პროექციები)
-        # ხაზი C -> D
-        fig.add_trace(go.Scatter(x=[point_C[0], point_D[0]], y=[point_C[1], point_D[1]], mode='lines', line=dict(color='gray', dash='dash', width=1), showlegend=False))
-        # ხაზი A -> x0 ღერძზე
-        fig.add_trace(go.Scatter(x=[point_A[0], point_x0_axis[0]], y=[point_A[1], point_x0_axis[1]], mode='lines', line=dict(color='gray', dash='dash', width=1), showlegend=False))
 
-        # 7. ყველა წერტილის (A, B, C, D, N) დატანა და წარწერა
+        # 5. დამხმარე წყვეტილი ხაზები (პროექციები)
+        # C -> D
+        fig.add_trace(go.Scatter(x=[pt_C[0], pt_D[0]], y=[pt_C[1], pt_D[1]], mode='lines', line=dict(color='gray', dash='dash', width=1), showlegend=False))
+        # A -> x0 ღერძზე
+        fig.add_trace(go.Scatter(x=[pt_A[0], pt_x0_ax[0]], y=[pt_A[1], pt_x0_ax[1]], mode='lines', line=dict(color='gray', dash='dash', width=1), showlegend=False))
+
+        # 6. წარწერები წერტილებზე (A, B, C, N, D)
         labels = ["A", "B", "C", "N", "D"]
-        x_coords = [point_A[0], point_B[0], point_C[0], point_N[0], point_D[0]]
-        y_coords = [point_A[1], point_B[1], point_C[1], point_N[1], point_D[1]]
+        x_coords = [pt_A[0], pt_B[0], pt_C[0], pt_N[0], pt_D[0]]
+        y_coords = [pt_A[1], pt_B[1], pt_C[1], pt_N[1], pt_D[1]]
+        text_pos = ["top left", "bottom right", "top right", "top left", "bottom right"]
         
         fig.add_trace(go.Scatter(
             x=x_coords,
             y=y_coords,
             mode='markers+text',
             text=labels,
-            textposition=["top left", "bottom right", "top right", "top left", "bottom right"],
+            textposition=text_pos,
             marker=dict(size=10, color='black'),
-            name="Points (A,B,C,N,D)"
+            name="Points"
         ))
 
-        # 8. ღერძების გაფორმება
+        # 7. ტექსტური ანოტაციები (df, Delta f, Delta x)
+        # dF (B-სა და N-ს შორის)
+        fig.add_annotation(
+            x=x0 + dx, y=(y0 + y0 + dF)/2,
+            text="dF", showarrow=False, xshift=15, font=dict(color="green")
+        )
+        # Delta F (C-სთან ახლოს, ან შუაში)
+        fig.add_annotation(
+            x=x0 + dx, y=(y0 + y_next)/2,
+            text="ΔF", showarrow=False, xshift=35, font=dict(color="blue")
+        )
+        # Delta X (A-სა და B-ს შორის)
+        fig.add_annotation(
+            x=(x0 + x0 + dx)/2, y=y0,
+            text="Δx", showarrow=False, yshift=-15
+        )
+
+        # 8. ღერძების წარწერები
         fig.add_annotation(x=x0, y=0, text="x₀", showarrow=False, yshift=-15)
         fig.add_annotation(x=x0 + dx, y=0, text="x₀ + Δx", showarrow=False, yshift=-15)
-        fig.add_hline(y=0, line_color="black", line_width=1) # X ღერძის ხაზგასმა
+        fig.add_hline(y=0, line_color="black", line_width=1)
 
         fig.update_layout(
-            title="ΔF vs dF ვიზუალიზაცია (ბატონი დავითის ნახაზით)", 
+            title="Newton-Cauchy Connection (David's Diagram)", 
             height=600,
             xaxis_title="X",
-            yaxis_title="Y"
+            yaxis_title="Y",
+            showlegend=False
         )
         st.plotly_chart(fig, use_container_width=True)
+
 # -----------------------------------------------------------------------------
 # TAB 7: განსაკუთრებული შემთხვევები
 # -----------------------------------------------------------------------------
