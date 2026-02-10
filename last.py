@@ -6,204 +6,247 @@ from plotly.subplots import make_subplots
 
 # --- გვერდის კონფიგურაცია ---
 st.set_page_config(
-    page_title="Kapanadze Analytical Laboratory",
+    page_title="Derivative Analysis Model",
     page_icon="📐",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# --- CSS დიზაინი ---
+# --- CSS დიზაინი (აკადემიური სტილი) ---
 st.markdown("""
 <style>
-    h1 { font-size: 2.2rem !important; font-weight: 700 !important; }
-    h2 { font-size: 1.8rem !important; }
-    .info-box {
+    /* ფონტების და ფერების აკადემიური სტილი */
+    h1 { 
+        font-size: 2.0rem !important; 
+        font-weight: 600 !important; 
+        font-family: 'Times New Roman', Times, serif; 
+        color: #2c3e50;
+    }
+    h2, h3, h4 { 
+        font-family: 'Times New Roman', Times, serif; 
+        color: #34495e;
+    }
+    
+    /* ტექსტური ბლოკები */
+    .academic-box {
         padding: 20px;
-        border-radius: 10px;
-        background-color: rgba(255, 193, 7, 0.15);
-        border-left: 5px solid #ffc107;
+        border-radius: 5px;
+        background-color: #f8f9fa; /* ღია ნაცრისფერი/თეთრი */
+        border-left: 4px solid #2c3e50; /* მუქი ლურჯი */
         margin-bottom: 20px;
+        font-family: 'Georgia', serif;
+        color: #212529;
+        line-height: 1.6;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    
+    .stApp {
+        background-color: #ffffff;
+    }
+    
+    /* ღილაკების სტილი */
+    .stButton>button {
+        background-color: #2c3e50;
+        color: white;
+        border-radius: 5px;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# --- თარგმანების ლექსიკონი ---
+# --- თარგმანების ლექსიკონი (ნუმერაციის გარეშე) ---
 translations = {
     "KA": {
-        "sidebar_title": "ნავიგაცია",
+        "sidebar_title": "სარჩევი",
         "nav_options": [
-            "I. გეომეტრიული არსი",
-            "II. ალგებრული კალკულატორი",
-            "III. ტოპოლოგია (3D)",
-            "IV. ტრიგონომეტრია",
-            "V. მაჩვენებლიანი და ლოგარითმული",
-            "VI. კავშირი ნიუტონთან და კოშისთან",
-            "VII. განსაკუთრებული შემთხვევები"
+            "გეომეტრიული არსი",
+            "ალგებრული კრიტერიუმი",
+            "სივრცითი (ტოპოლოგიური) განზოგადება",
+            "ტრიგონომეტრიული ანალიზი",
+            "მაჩვენებლიანი და ლოგარითმული",
+            "კავშირი ნიუტონთან და კოშისთან",
+            "მეთოდის გამოყენების საზღვრები"
         ],
-        "title": "დავით კაპანაძის ალგებრული და გეომეტრიული ანალიზის ლაბორატორია",
-        "core_title": "⚠️ რევოლუციური პრინციპი",
-        "core_text": "ბატონი დავითის თეორია ითვლის წარმოებულს **ზღვრების ($\lim$) გარეშე!**",
-        "core_sub": "ჩვენ ვიყენებთ სუფთა ალგებრულ მეთოდს: ნაშთის კვადრატზე გაყოფას.",
+        "title": "ინტერაქტიული მოდელი წარმოებულის გეომეტრიული და ალგებრული ინტერპრეტაციისათვის",
         "bases": ["e (ნატურალური ln)", "10 (ათობითი)", "2 (ორობითი)"],
+        
         # Tab 1
-        "t1_header": "თავი I: როგორ იქცევა მკვეთი მხებად?",
-        "t1_info": "მხები არის მდგომარეობა, როდესაც ორი წერტილი ($A$ და $B$) ერთიანდება **ორჯერად ფესვად**.",
-        "func_label": "ფუნქცია",
-        "point_a": "წერტილი A",
-        "point_b_dist": "წერტილი B-ს დაშორება (h)",
-        "secant": "მკვეთი",
-        "tangent": "მხები",
-        "viz_title": "ნახაზის ვიზუალიზაცია",
+        "t1_header": "მკვეთი წრფის თანმიმდევრული მიახლოება შემხებ წრფასთან",
+        "t1_info": "შემხები წრფა განისაზღვრება როგორც მკვეთი წრფის ლიმიტური შემთხვევა, როდესაც მეორე წერტილი თანმიმდევრულად უახლოვდება ფიქსირებულ წერტილს ფუნქციის გრაფიკზე.",
+        "func_label": "ფუნქცია f(x)",
+        "point_a": "ფიქსირებული წერტილი (A)",
+        "point_b_dist": "მეორე წერტილის დაშორება (h)",
+        "secant": "მკვეთი წრფე",
+        "tangent": "შემხები წრფე",
+        "viz_title": "გეომეტრიული ვიზუალიზაცია",
+        
         # Tab 2
-        "t2_header": "თავი II: ნაშთის კვადრატზე გაყოფის მეთოდი",
-        "t2_thm_title": "კაპანაძის მთავარი თეორემა:",
-        "t2_thm_text": "წრფე $y = k(x-x_0) + f(x_0)$ არის მხები **მაშინ და მხოლოდ მაშინ**, თუ სხვაობა ფუნქციასა და წრფეს შორის იყოფა $(x-x_0)^2$-ზე.",
-        "t2_thm_sub": "ეს ნიშნავს, რომ ნაშთის გრაფიკი $x_0$-თან ახლოს არ უნდა გარბოდეს უსასრულობაში.",
+        "t2_header": "ნაშთის კვადრატზე გაყოფის ალგებრული მეთოდი",
+        "t2_thm_title": "ალგებრული კრიტერიუმი შემხები წრფისათვის",
+        "t2_thm_text": "წრფე $y = k(x-x_0) + f(x_0)$ არის ფუნქციის $f(x)$ შემხები წრფე წერტილში $x_0$ მაშინ და მხოლოდ მაშინ, როდესაც ფუნქციისა და აღნიშნული წრფის სხვაობა იყოფა $(x-x_0)^2$-ზე. ანუ, არსებობს ისეთი ფუნქცია $\phi(x)$, რომ: $$f(x) - [k(x-x_0) + f(x_0)] = (x-x_0)^2 \phi(x)$$",
+        "t2_thm_sub": "ეს პირობა ნიშნავს, რომ ფუნქციისა და მისი შემხები წრფის სხვაობა $x_0$-ის მახლობლად არის მეორე რიგის უსასრულოდ მცირე სიდიდე. შესაბამისად, ნაშთის გრაფიკი არ ავლენს უსასრულოდ ზრდად ქცევას შეხების წერტილის მახლობლად.",
         "touch_point": "შეხების წერტილი x0",
-        "calc_btn": "გამოთვლა და დამტკიცება",
+        "calc_btn": "გამოთვლა და ანალიზი",
         "result": "შედეგი",
-        "slope_found": "ნაპოვნია დახრილობა",
-        "tan_eq": "მხების განტოლება",
-        "proof_title": "მტკიცებულება: ნაშთი / (x-x0)²",
-        "vis_touch": "ვიზუალური შეხება",
-        "residue": "ნაშთი",
-        "success_msg": "✔ თეორია დამტკიცდა: მწვანე ხაზი უწყვეტია (არ მიდის უსასრულობაში).",
+        "slope_found": "დახრილობის კოეფიციენტი (k)",
+        "tan_eq": "შემხები წრფის განტოლება",
+        "proof_title": "ნაშთის ანალიზი: R(x) / (x-x0)²",
+        "vis_touch": "ფუნქცია და შემხები",
+        "residue": "ნაშთი (Remainder)",
+        "success_msg": "✔ კრიტერიუმი შესრულდა: ნაშთი არის სასრული (მეორე რიგის მცირე).",
         "error_msg": "შეცდომა",
+        
         # Tab 3
-        "t3_header": "თავი III: კაპანაძის თეორია სივრცეში",
-        "t3_info": "3D-ში ვეძებთ მხებ სიბრტყეს, რომელთანაც სხვაობა კვადრატული რიგის მცირეა.",
-        "surface_label": "ზედაპირი",
-        "build_3d": "აგება 3D",
-        "found_partials": "ნაპოვნია",
+        "t3_header": "კაპანაძის მიდგომის სივრცითი (ტოპოლოგიური) განზოგადება",
+        "t3_info": "სამგანზომილებიან სივრცეში შემხები სიბრტყე განისაზღვრება იმ პირობით, რომ ფუნქციისა და სიბრტყის სხვაობა მოცემული წერტილის მახლობლად არის მეორე რიგის უსასრულოდ მცირე სიდიდე. ეს მიდგომა იძლევა ტოპოლოგიურ–გეომეტრიულ ინტერპრეტაციას, რომელიც არ საჭიროებს ზღვრის ცნების საწყის ეტაპზე გამოყენებას.",
+        "surface_label": "ზედაპირი z = f(x,y)",
+        "build_3d": "3D მოდელის აგება",
+        "found_partials": "ნაპოვნი კოეფიციენტები",
         "surface": "ზედაპირი",
-        "tan_plane": "მხები სიბრტყე",
+        "tan_plane": "შემხები სიბრტყე",
+        
         # Tab 4
-        "t4_header": "თავი XII: ტრიგონომეტრიული ფუნქციები",
-        "t4_info": "სინუსის 'სიჩქარე' (წარმოებული) არის კოსინუსი. ეს ჩანს ერთეულოვან წრეწირზე მოძრაობისას.",
-        "angle": "კუთხე",
-        "slope": "დახრილობა",
+        "t4_header": "ტრიგონომეტრიული ფუნქციების გეომეტრიულ–ალგებრული ანალიზი",
+        "t4_info": "წარმოდგენილი მიდგომა ეფუძნება ტრიგონომეტრიული ფუნქციების წარმოებულების გეომეტრიულ და ალგებრულ ინტერპრეტაციას. ანალიზი ხორციელდება ერთეულოვან წრეწირზე მოძრაობის გეომეტრიული მოდელის გამოყენებით. ტრიგონომეტრიული ფუნქციების ეს გეომეტრიულ–ალგებრული წარმოდგენა ბუნებრივად უკავშირებს ერთეულოვან წრეწირს, ფუნქციის ცვლილების სიჩქარესა და წარმოებულის ცნებას.",
+        "angle": "კუთხე (რადიანებში)",
+        "slope": "დახრილობა (cos)",
         "unit_circle": "ერთეულოვანი წრეწირი",
-        "trig_mode_select": "აირჩიეთ რეჟიმი",
-        "trig_standard": "ჩვეულებრივი (კუთხე -> მნიშვნელობა)",
-        "trig_inverse": "შებრუნებული (მნიშვნელობა -> კუთხე)",
-        "input_val": "შეიყვანეთ მნიშვნელობა (x)",
+        "trig_mode_select": "ვიზუალიზაციის რეჟიმი",
+        "trig_standard": "ტრიგონომეტრიული წრეწირი (sin/cos)",
+        "trig_inverse": "შებრუნებული ფუნქციები (arcsin/arccos/arctan)",
+        "input_val": "არგუმენტის მნიშვნელობა (x)",
         "inv_res": "შედეგები (კუთხეები)",
+        "inv_info": "შებრუნებული ტრიგონომეტრიული ფუნქციების ეს გეომეტრიულ–ალგებრული წარმოდგენა უზრუნველყოფს წარმოებულის ცნების კონცეპტუალურ გააზრებას მოძრაობის, დახრილობისა და ფუნქციური დამოკიდებულების საფუძველზე.",
+        
         # Tab 5
-        "t5_header": "📈 მაჩვენებლიანი და ლოგარითმული ფუნქციები",
-        "t5_select_mode": "აირჩიეთ ფუნქცია",
-        "t5_exp_info": "ფუნქცია $e^x$ უნიკალურია: მისი წარმოებული (სიჩქარე) ტოლია თავისივე მნიშვნელობის. $f'(x) = e^x$.",
-        "t5_log_info": "კაპანაძის მეთოდით: $f(x) = \log_a(x) \Rightarrow f'(x) = \\frac{1}{x \\ln(a)}$",
-        "value_eq_slope": "ფუნქციის მნიშვნელობა და დახრა ტოლია!",
+        "t5_header": "მაჩვენებლიანი და ლოგარითმული ფუნქციების გეომეტრიულ–ალგებრული ანალიზი",
+        "t5_intro": "მოცემულ თავში განიხილება მაჩვენებლიანი და ლოგარითმული ფუნქციები კაპანაძის გეომეტრიულ–ალგებრული მიდგომის ფარგლებში.",
+        "t5_select_mode": "ფუნქციის ტიპი",
+        "t5_exp_info": "მაჩვენებლიანი ფუნქცია $e^x$ გამოირჩევა განსაკუთრებული თვისებით: მისი წარმოებული ყველა წერტილში ტოლია თავად ფუნქციის მნიშვნელობისა. $f'(x) = e^x$. ეს ფაქტი წარმოადგენს მაჩვენებლიანი ფუნქციის ფუნდამენტურ გეომეტრიულ თვისებას.",
+        "t5_log_info": "კაპანაძის მეთოდის მიხედვით, ლოგარითმული ფუნქციის $f(x) = \log_a(x)$ წარმოებული მიიღება ალგებრული კრიტერიუმის გამოყენებით: $f'(x) = \\frac{1}{x \\ln(a)}$.",
+        "value_eq_slope": "ფუნქციის მნიშვნელობა და დახრის კოეფიციენტი ემთხვევა.",
         "base_select": "აირჩიეთ ფუძე",
-        "calc_log": "გამოთვლა (Log)",
-        "residue_analysis": "ნაშთის ანალიზი",
+        "calc_log": "ანალიზი",
+        "residue_analysis": "ნაშთის ქცევა",
         "graph": "გრაფიკი",
-        # Tab 6 (NEWTON/CAUCHY)
-        "t6_header": "თავი XIII: კავშირი ნიუტონთან და კოშისთან",
-        "t6_info": "ჩვენი თეორიით გავდივართ ნიუტონთან. ჩვენ მას კი არ ვეწინააღმდეგებით, არამედ სხვა გზით მივდივართ იქამდე. კაპანაძესთან წარმოებული არის **ზღვრული წრფე**.",
+        
+        # Tab 6 (Newton + Physics)
+        "t6_header": "კავშირი ნიუტონისა და კოშის კლასიკურ მიდგომებთან",
+        "t6_info": "მოცემულ თავში განიხილება კაპანაძის ალგებრული–გეომეტრიული მიდგომის კავშირი ნიუტონისა და კოშის მიერ ჩამოყალიბებულ კლასიკურ კონცეფციებთან. წარმოდგენილი მეთოდი არ ეწინააღმდეგება კლასიკურ ანალიზს; პირიქით, იგი წარმოადგენს ალტერნატიულ გზას. კაპანაძის მიდგომაში წარმოებული განიხილება როგორც **ზღვრული გეომეტრიული ობიექტი** — შემხები წრფე.",
         "delta_x_label": "არგუმენტის ნაზრდი (Δx)",
-        "delta_f": "ფუნქციის ნაზრდი (ΔF = BC)",
-        "d_f": "დიფერენციალი (dF = BN)",
-        "diff_val": "სხვაობა (NC)",
-        "kapanadze_limit_text": "თუ სხვაობა $\Delta F - dF$ ისე მცირდება, რომ კაპანაძის პირობას აკმაყოფილებს, მაშინ ვიღებთ **ზღვრულ წრფეს** (წარმოებულს).",
+        "delta_f": "ფუნქციის ნაზრდი (ΔF)",
+        "d_f": "დიფერენციალი (dF)",
+        "diff_val": "სხვაობა (NC = ΔF - dF)",
+        "kapanadze_limit_text": "თუ სხვაობა $\Delta F - dF$ არგუმენტის ნაზრდის შემცირებისას მცირდება ისე, რომ აკმაყოფილებს კაპანაძის ალგებრულ კრიტერიუმს (წარმოადგენს მეორე რიგის უსასრულოდ მცირე სიდიდეს), მაშინ შემხები წრფე მიიღება როგორც ზღვრული ობიექტი.",
+        
+        "t8_header": "ფიზიკური ინტერპრეტაცია (კინემატიკა)",
+        "t8_info": "ფიზიკურ კონტექსტში, შემხები წრფე (წარმოებული) წარმოადგენს სხეულის მომენტალურ სიჩქარეს ან ტრაექტორიას, რომელსაც სხეული გაყვებოდა, მასზე მოქმედი ძალები რომ უცებ გამქრალიყო (ინერციით მოძრაობა).",
+        "time": "დრო (t)",
+        "velocity_vec": "სიჩქარის ვექტორი",
+        "trajectory": "ტრაექტორია",
+        "body": "სხეული",
+        "inertia": "ინერცია (შემხები)",
+        "ground": "ზედაპირი",
+        "ballistic": "ბალისტიკური მოძრაობის სიმულაცია",
+
         # Tab 7
-        "t7_header": "🔬 თეორიის გამოყენების არეალი",
-        "t7_info": "აქ განხილულია ფუნქციები, სადაც 'ნაშთის კვადრატზე გაყოფის' მეთოდი სპეციფიკურ შედეგს იძლევა.",
+        "t7_header": "მეთოდის გამოყენების საზღვრები (განსაკუთრებული შემთხვევები)",
+        "t7_info": "წარმოდგენილ ქვეთავში განიხილება ისეთი ფუნქციები, რომელთა შემთხვევაში ნაშთის კვადრატზე გაყოფის ალგებრული კრიტერიუმი იძლევა სპეციფიკურ შედეგს და ნათლად ავლენს მეთოდის გამოყენების საზღვრებს.",
         "select_case": "აირჩიეთ შემთხვევა",
         "case_options": ["|x| (მოდული 0-ში)", "|x|^1.5 (ნაკლები სიგლუვე)", "x^2 * sin(1/x) (ოსცილაცია)"],
-        "case_abs_text": "წერტილში $x=0$ ფუნქციას აქვს ორი მხები (მარცხნიდან $-1$, მარჯვნიდან $1$). მხების ერთადერთობა ირღვევა, ამიტომ წარმოებული არ არსებობს.",
+        "case_abs_text": "წერტილში $x=0$ ფუნქციას $f(x)=|x|$ გააჩნია ორი განსხვავებული შემხები წრფე (მარცხნიდან $k=-1$, მარჯვნიდან $k=1$). ამგვარად, მოცემულ წერტილში შემხები წრფის უნიკალურობა ირღვევა.",
         "case_1_text": "ფუნქციას აქვს წარმოებული, მაგრამ ნაშთი არ მცირდება საკმარისად სწრაფად.",
         "case_2_text": "ფუნქცია ირხევა ძალიან სწრაფად, რის გამოც ნაშთი არ სტაბილურდება.",
-        "conclusion": "დასკვნა: ამ კონკრეტულ შემთხვევაში მეთოდი პირდაპირ არ გამოიყენება, რადგან ნაშთი არ აკმაყოფილებს კაპანაძის პირობას.",
-        "left_tan": "მარცხენა მხები",
-        "right_tan": "მარჯვენა მხები"
+        "conclusion": "მოცემულ განსაკუთრებულ შემთხვევაში კაპანაძის ალგებრული კრიტერიუმი ცალსახად მიუთითებს, რომ წარმოებული არ არსებობს.",
+        "left_tan": "მარცხენა შემხები",
+        "right_tan": "მარჯვენა შემხები"
     },
     "EN": {
-        "sidebar_title": "Navigation",
+        "sidebar_title": "Contents",
         "nav_options": [
-            "I. Geometric Essence",
-            "II. Algebraic Calculator",
-            "III. Topology (3D)",
-            "IV. Trigonometry",
-            "V. Exponential & Logarithmic",
-            "VI. Connection with Newton & Cauchy",
-            "VII. Special Cases"
+            "Geometric Essence",
+            "Algebraic Criterion",
+            "Spatial Generalization (3D)",
+            "Trigonometric Analysis",
+            "Exponential & Logarithmic",
+            "Connection with Newton & Cauchy",
+            "Limits of Applicability"
         ],
-        "title": "David Kapanadze's Algebraic and Geometric Analysis Laboratory",
-        "core_title": "⚠️ Core Principle",
-        "core_text": "David Kapanadze's theory calculates derivatives **without Limits ($\lim$)!**",
-        "core_sub": "We use a pure algebraic method: dividing the remainder by the square.",
+        "title": "Interactive Model for Geometric and Algebraic Interpretation of the Derivative",
         "bases": ["e (Natural ln)", "10 (Decimal)", "2 (Binary)"],
-        # Tab 1
-        "t1_header": "Chapter I: How Secant becomes Tangent?",
-        "t1_info": "A tangent is a state where two intersection points ($A$ and $B$) merge into a **double root**.",
-        "func_label": "Function",
-        "point_a": "Point A",
-        "point_b_dist": "Distance to Point B (h)",
-        "secant": "Secant",
-        "tangent": "Tangent",
-        "viz_title": "Visualization",
-        # Tab 2
-        "t2_header": "Chapter II: Method of Dividing Remainder by Square",
-        "t2_thm_title": "Kapanadze's Main Theorem:",
-        "t2_thm_text": "The line $y = k(x-x_0) + f(x_0)$ is a tangent **if and only if** the difference between the function and the line is divisible by $(x-x_0)^2$.",
-        "t2_thm_sub": "This means the remainder graph near $x_0$ must not fly off to infinity.",
-        "touch_point": "Touch Point x0",
-        "calc_btn": "Calculate & Prove",
+        "t1_header": "Successive Approximation of the Secant to the Tangent",
+        "t1_info": "The tangent line is defined as the limiting case of the secant line when the second point successively approaches a fixed point on the function graph.",
+        "func_label": "Function f(x)",
+        "point_a": "Fixed Point (A)",
+        "point_b_dist": "Distance to Second Point (h)",
+        "secant": "Secant Line",
+        "tangent": "Tangent Line",
+        "viz_title": "Geometric Visualization",
+        "t2_header": "Algebraic Method of Dividing Remainder by Square",
+        "t2_thm_title": "Algebraic Criterion for the Tangent Line",
+        "t2_thm_text": "The line $y = k(x-x_0) + f(x_0)$ is the tangent to $f(x)$ at $x_0$ if and only if the difference represents an infinitesimal of the second order. $$f(x) - [k(x-x_0) + f(x_0)] = (x-x_0)^2 \phi(x)$$",
+        "t2_thm_sub": "This condition implies that the graph of the remainder does not exhibit infinite growth near the point of tangency.",
+        "touch_point": "Point of Tangency x0",
+        "calc_btn": "Calculate and Analyze",
         "result": "Result",
-        "slope_found": "Slope found",
+        "slope_found": "Slope Coefficient (k)",
         "tan_eq": "Tangent Equation",
-        "proof_title": "Proof: Remainder / (x-x0)²",
-        "vis_touch": "Visual Touch",
+        "proof_title": "Remainder Analysis: R(x) / (x-x0)²",
+        "vis_touch": "Function and Tangent",
         "residue": "Remainder",
-        "success_msg": "✔ Theory Proven: Green line is continuous (finite).",
+        "success_msg": "✔ Criterion met: Remainder is finite (second order infinitesimal).",
         "error_msg": "Error",
-        # Tab 3
-        "t3_header": "Chapter III: Kapanadze's Theory in Space",
-        "t3_info": "In 3D, we look for a tangent plane where the difference is of quadratic order smallness.",
-        "surface_label": "Surface",
-        "build_3d": "Build 3D",
-        "found_partials": "Found",
+        "t3_header": "Spatial (Topological) Generalization",
+        "t3_info": "In 3D space, the tangent plane is defined by the condition that the difference between the function and the plane is an infinitesimal of the second order near the given point.",
+        "surface_label": "Surface z = f(x,y)",
+        "build_3d": "Build 3D Model",
+        "found_partials": "Found Coefficients",
         "surface": "Surface",
         "tan_plane": "Tangent Plane",
-        # Tab 4
-        "t4_header": "Chapter XII: Trigonometric Functions",
-        "t4_info": "The 'velocity' (derivative) of Sine is Cosine. This is visible when moving on a unit circle.",
-        "angle": "Angle",
-        "slope": "Slope",
+        "t4_header": "Geometric-Algebraic Analysis of Trigonometric Functions",
+        "t4_info": "The presented approach is based on the geometric and algebraic interpretation of derivatives of trigonometric functions using the unit circle model.",
+        "angle": "Angle (radians)",
+        "slope": "Slope (cos)",
         "unit_circle": "Unit Circle",
-        "trig_mode_select": "Select Mode",
-        "trig_standard": "Standard (Angle -> Value)",
-        "trig_inverse": "Inverse (Value -> Angle)",
-        "input_val": "Input Value (x)",
+        "trig_mode_select": "Visualization Mode",
+        "trig_standard": "Trigonometric Circle (sin/cos)",
+        "trig_inverse": "Inverse Functions (arcsin/arccos/arctan)",
+        "input_val": "Argument Value (x)",
         "inv_res": "Results (Angles)",
-        # Tab 5
-        "t5_header": "📈 Exponential & Logarithmic Functions",
-        "t5_select_mode": "Select Function",
-        "t5_exp_info": "Function $e^x$ is unique: its derivative (slope) equals its value. $f'(x) = e^x$.",
-        "t5_log_info": "By Kapanadze's method: $f(x) = \log_a(x) \Rightarrow f'(x) = \\frac{1}{x \\ln(a)}$",
-        "value_eq_slope": "Function Value equals Slope!",
+        "inv_info": "This geometric-algebraic representation of inverse trigonometric functions ensures a conceptual understanding of the derivative based on motion, slope, and functional dependence.",
+        "t5_header": "Analysis of Exponential and Logarithmic Functions",
+        "t5_intro": "This chapter examines exponential and logarithmic functions within the framework of Kapanadze's geometric-algebraic approach.",
+        "t5_select_mode": "Function Type",
+        "t5_exp_info": "The exponential function $e^x$ is distinguished by the property that its derivative at any point equals the function value itself.",
+        "t5_log_info": "For the logarithmic function $f(x) = \log_a(x)$, the derivative is obtained via the algebraic criterion.",
+        "value_eq_slope": "Function value and slope coefficient coincide.",
         "base_select": "Select Base",
-        "calc_log": "Calculate (Log)",
-        "residue_analysis": "Remainder Analysis",
+        "calc_log": "Analyze",
+        "residue_analysis": "Remainder Behavior",
         "graph": "Graph",
-        # Tab 6
-        "t6_header": "Chapter XIII: Connection with Newton & Cauchy",
-        "t6_info": "We arrive at Newton's result via a different path. We do not oppose them. For Kapanadze, the derivative is the **Limiting Line**.",
+        "t6_header": "Connection with Classical Approaches of Newton and Cauchy",
+        "t6_info": "This chapter discusses the connection of Kapanadze's approach with the concepts of Newton and Cauchy. Here, the derivative is viewed as a **limiting geometric object** — the tangent line.",
         "delta_x_label": "Argument Increment (Δx)",
         "delta_f": "Function Increment (ΔF = BC)",
         "d_f": "Differential (dF = BN)",
-        "diff_val": "Difference (NC)",
-        "kapanadze_limit_text": "If the difference $\Delta F - dF$ decreases such that it satisfies Kapanadze's condition, we get the **Limiting Line**.",
-        # Tab 7
-        "t7_header": "🔬 Scope of Theory",
-        "t7_info": "Here we examine functions where the 'remainder division by square' method yields specific results.",
+        "diff_val": "Difference (NC = ΔF - dF)",
+        "kapanadze_limit_text": "If the difference $\Delta F - dF$ decreases such that it satisfies the algebraic criterion, the tangent line is obtained as a limiting object.",
+        "t8_header": "Physical Interpretation (Kinematics)",
+        "t8_info": "In a physical context, the tangent line (derivative) represents the instantaneous velocity of a body, or the trajectory the body would follow if forces acting on it suddenly vanished (inertial motion).",
+        "time": "Time (t)",
+        "velocity_vec": "Velocity Vector",
+        "trajectory": "Trajectory",
+        "body": "Body",
+        "inertia": "Inertia (Tangent)",
+        "ground": "Ground",
+        "ballistic": "Ballistic Motion Simulation",
+        "t7_header": "Limits of Applicability (Special Cases)",
+        "t7_info": "We examine functions where the algebraic criterion yields specific results, revealing the boundaries of the method.",
         "select_case": "Select Case",
         "case_options": ["|x| (Absolute Value at 0)", "|x|^1.5 (Less Smoothness)", "x^2 * sin(1/x) (Oscillation)"],
-        "case_abs_text": "At $x=0$, the function has two tangents (left $-1$, right $1$). Uniqueness is violated, so derivative doesn't exist.",
+        "case_abs_text": "At $x=0$, the function $f(x)=|x|$ has two different tangents (left $k=-1$, right $k=1$). Uniqueness is violated, thus the derivative does not exist.",
         "case_1_text": "The function has a derivative, but the remainder does not decrease fast enough.",
         "case_2_text": "The function oscillates too quickly, so the remainder does not stabilize.",
-        "conclusion": "Conclusion: In this specific case, the method is not directly applicable as the remainder does not satisfy Kapanadze's condition.",
+        "conclusion": "In this case, Kapanadze's criterion clearly indicates that the derivative (unique tangent) does not exist.",
         "left_tan": "Left Tangent",
         "right_tan": "Right Tangent"
     }
@@ -258,14 +301,7 @@ tab_selection = st.sidebar.radio("", txt["nav_options"])
 
 st.title(txt["title"])
 
-# --- მთავარი შეტყობინება ---
-st.markdown(f"""
-<div class="info-box">
-    <h3>{txt["core_title"]}</h3>
-    <p>{txt["core_text"]}</p>
-    <p style="font-size:0.9em; opacity: 0.8;">{txt["core_sub"]}</p>
-</div>
-""", unsafe_allow_html=True)
+# --- მთავარი შეტყობინება ამოღებულია ---
 
 st.markdown("---")
 
@@ -276,8 +312,8 @@ if tab_selection == txt["nav_options"][0]:
     st.header(txt["t1_header"])
     col1, col2 = st.columns([1, 2])
     with col1:
-        st.info(txt["t1_info"])
-        func_input = st.text_input(f"{txt['func_label']} f(x):", "x^2", key="geom_func")
+        st.markdown(f"<div class='academic-box'>{txt['t1_info']}</div>", unsafe_allow_html=True)
+        func_input = st.text_input(f"{txt['func_label']}:", "x^2", key="geom_func")
         x_a = st.number_input(f"{txt['point_a']}:", value=1.0, step=0.1)
         h = st.slider(f"{txt['point_b_dist']}:", 0.01, 2.0, 1.0, 0.01)
     with col2:
@@ -295,7 +331,7 @@ if tab_selection == txt["nav_options"][0]:
             fig.add_trace(go.Scatter(x=x_range, y=yA + slope_secant * (x_range - xA), name=txt["secant"], line=dict(color='#FFC107', dash='dash')))
             fig.add_trace(go.Scatter(x=x_range, y=yA + slope_tangent * (x_range - xA), name=txt["tangent"], line=dict(color='#4CAF50', width=2)))
             fig.add_trace(go.Scatter(x=[xA, xB], y=[yA, yB], mode='markers+text', text=["A", "B"], marker=dict(size=12, color=['black', 'red'])))
-            fig.update_layout(title=txt["viz_title"], height=500)
+            fig.update_layout(title=txt["viz_title"], height=500, template="plotly_white")
             st.plotly_chart(fig, use_container_width=True)
         except Exception as e: st.error(e)
 
@@ -305,14 +341,17 @@ if tab_selection == txt["nav_options"][0]:
 elif tab_selection == txt["nav_options"][1]:
     st.header(txt["t2_header"])
     
-    with st.container(border=True):
-        st.markdown(f"**{txt['t2_thm_title']}**")
-        st.markdown(txt['t2_thm_text'])
-        st.caption(txt['t2_thm_sub'])
+    st.markdown(f"""
+    <div class='academic-box'>
+        <h4>{txt['t2_thm_title']}</h4>
+        <p>{txt['t2_thm_text']}</p>
+        <p><i>{txt['t2_thm_sub']}</i></p>
+    </div>
+    """, unsafe_allow_html=True)
 
     col1, col2 = st.columns([1, 2])
     with col1:
-        f_in = st.text_input(f"{txt['func_label']} f(x):", "sin(x) * exp(0.5*x)", key="alg_func")
+        f_in = st.text_input(f"{txt['func_label']}:", "sin(x) * exp(0.5*x)", key="alg_func")
         x0_in = st.number_input(f"{txt['touch_point']}:", value=1.0, step=0.1)
         calc_btn = st.button(txt["calc_btn"], type="primary")
         
@@ -320,10 +359,9 @@ elif tab_selection == txt["nav_options"][1]:
         with col2:
             func_sym, k_res, tan_sym = algebraic_derivative(f_in, x0_in)
             if func_sym:
-                with st.container(border=True):
-                    st.markdown(f"**{txt['result']}:** {txt['slope_found']} `k = {float(k_res):.4f}`")
-                    st.latex(rf"f'(x) = {sp.latex(k_res)}")
-                    st.latex(rf"\text{{{txt['tan_eq']}}}: y = {sp.latex(tan_sym)}")
+                st.markdown(f"**{txt['result']}:** {txt['slope_found']} `k = {float(k_res):.4f}`")
+                st.latex(rf"f'(x) = {sp.latex(k_res)}")
+                st.latex(rf"\text{{{txt['tan_eq']}}}: y = {sp.latex(tan_sym)}")
                 
                 x_range = np.linspace(x0_in - 2, x0_in + 2, 600)
                 f_lamb, t_lamb = sp.lambdify('x', func_sym, 'numpy'), sp.lambdify('x', tan_sym, 'numpy')
@@ -334,7 +372,7 @@ elif tab_selection == txt["nav_options"][1]:
                 fig.add_trace(go.Scatter(x=x_range, y=y_f, name="f(x)", line=dict(color='#2196F3')), row=1, col=1)
                 fig.add_trace(go.Scatter(x=x_range, y=y_t, name=txt["tangent"], line=dict(color='#FF5722', dash='dash')), row=1, col=1)
                 fig.add_trace(go.Scatter(x=x_range, y=remainder, name=txt["residue"], line=dict(color='#4CAF50', width=2)), row=2, col=1)
-                fig.update_layout(height=700)
+                fig.update_layout(height=700, template="plotly_white")
                 st.plotly_chart(fig, use_container_width=True)
                 st.success(txt["success_msg"])
             else: st.error(f"{txt['error_msg']}: {tan_sym}")
@@ -344,18 +382,17 @@ elif tab_selection == txt["nav_options"][1]:
 # -----------------------------------------------------------------------------
 elif tab_selection == txt["nav_options"][2]:
     st.header(txt["t3_header"])
-    st.info(txt["t3_info"])
+    st.markdown(f"<div class='academic-box'>{txt['t3_info']}</div>", unsafe_allow_html=True)
     col1, col2 = st.columns([1, 3])
     with col1:
-        f3_str = st.text_input(f"{txt['surface_label']} z = f(x,y):", "x^2 + y^2 - 0.5*x*y")
+        f3_str = st.text_input(f"{txt['surface_label']}:", "x^2 + y^2 - 0.5*x*y")
         x0, y0 = st.number_input("x0:", 0.0), st.number_input("y0:", 0.0)
         btn_3d = st.button(txt["build_3d"], type="primary")
     if btn_3d:
         with col2:
             func_sym, kx, ky, z0 = solve_kapanadze_3d(f3_str, x0, y0)
             if func_sym:
-                with st.container(border=True):
-                    st.latex(rf"k_x = {float(kx):.4f}, \quad k_y = {float(ky):.4f}")
+                st.latex(rf"k_x = {float(kx):.4f}, \quad k_y = {float(ky):.4f}")
                 
                 x_v = np.linspace(x0-2, x0+2, 40)
                 X, Y = np.meshgrid(x_v, x_v)
@@ -365,8 +402,8 @@ elif tab_selection == txt["nav_options"][2]:
                 fig = go.Figure()
                 fig.add_trace(go.Surface(z=Z, x=X, y=Y, colorscale='Viridis', opacity=0.8, name=txt["surface"]))
                 fig.add_trace(go.Surface(z=Z_plane, x=X, y=Y, colorscale=[[0,'red'],[1,'red']], opacity=0.5, showscale=False, name=txt["tan_plane"]))
-                fig.add_trace(go.Scatter3d(x=[x0], y=[y0], z=[float(z0)], mode='markers', marker=dict(size=10, color='black')))
-                fig.update_layout(height=700)
+                fig.add_trace(go.Scatter3d(x=[x0], y=[y0], z=[float(z0)], mode='markers', marker=dict(size=5, color='black')))
+                fig.update_layout(height=700, template="plotly_white")
                 st.plotly_chart(fig, use_container_width=True)
 
 # -----------------------------------------------------------------------------
@@ -374,7 +411,7 @@ elif tab_selection == txt["nav_options"][2]:
 # -----------------------------------------------------------------------------
 elif tab_selection == txt["nav_options"][3]:
     st.header(txt["t4_header"])
-    st.info(txt["t4_info"])
+    st.markdown(f"<div class='academic-box'>{txt['t4_info']}</div>", unsafe_allow_html=True)
     
     trig_mode = st.radio(txt["trig_mode_select"], [txt["trig_standard"], txt["trig_inverse"]], horizontal=True)
     
@@ -382,7 +419,7 @@ elif tab_selection == txt["nav_options"][3]:
     
     if trig_mode == txt["trig_standard"]:
         with col1:
-            angle = st.slider(f"{txt['angle']} (rad):", 0.0, 2*np.pi, 1.0, 0.1)
+            angle = st.slider(f"{txt['angle']}:", 0.0, 2*np.pi, 1.0, 0.1)
             st.markdown(f"**sin(t):** {np.sin(angle):.2f}")
             st.markdown(f"**cos(t):** {np.cos(angle):.2f} ({txt['slope']})")
         with col2:
@@ -400,26 +437,22 @@ elif tab_selection == txt["nav_options"][3]:
             slope_y = np.sin(angle) + np.cos(angle)*(slope_x-angle)
             fig.add_trace(go.Scatter(x=slope_x, y=slope_y, line=dict(color='red', width=3)), row=1, col=2)
             fig.add_trace(go.Scatter(x=[angle], y=[np.sin(angle)], mode='markers', marker=dict(color='blue', size=10)), row=1, col=2)
-            
-            fig.update_layout(height=600, width=800, showlegend=False)
+            fig.update_layout(height=600, width=800, showlegend=False, template="plotly_white")
             fig.update_xaxes(range=[-1.5, 1.5], row=1, col=1)
             fig.update_yaxes(scaleanchor="x", scaleratio=1, range=[-1.5, 1.5], row=1, col=1)
-            
             st.plotly_chart(fig, use_container_width=True)
-            
     else:
+        st.markdown(f"<div class='academic-box'>{txt['inv_info']}</div>", unsafe_allow_html=True)
         with col1:
             val = st.slider(txt["input_val"], -1.0, 1.0, 0.5, 0.01)
             val_tan = val * 5 
             angle_asin = np.arcsin(val)
             angle_acos = np.arccos(val)
             angle_atan = np.arctan(val_tan)
-            
-            with st.container(border=True):
-                st.markdown(f"**{txt['inv_res']}:**")
-                st.latex(rf"\arcsin({val}) = {angle_asin:.2f} \text{{ rad}} \approx {np.degrees(angle_asin):.1f}^\circ")
-                st.latex(rf"\arccos({val}) = {angle_acos:.2f} \text{{ rad}} \approx {np.degrees(angle_acos):.1f}^\circ")
-                st.latex(rf"\arctan({val_tan:.1f}) = {angle_atan:.2f} \text{{ rad}} \approx {np.degrees(angle_atan):.1f}^\circ")
+            st.markdown(f"**{txt['inv_res']}:**")
+            st.latex(rf"\arcsin({val}) = {angle_asin:.2f} \text{{ rad}} \approx {np.degrees(angle_asin):.1f}^\circ")
+            st.latex(rf"\arccos({val}) = {angle_acos:.2f} \text{{ rad}} \approx {np.degrees(angle_acos):.1f}^\circ")
+            st.latex(rf"\arctan({val_tan:.1f}) = {angle_atan:.2f} \text{{ rad}} \approx {np.degrees(angle_atan):.1f}^\circ")
 
         with col2:
             x_domain = np.linspace(-1, 1, 100)
@@ -431,7 +464,7 @@ elif tab_selection == txt["nav_options"][3]:
             fig.add_trace(go.Scatter(x=[val], y=[angle_acos], mode='markers', marker=dict(color='red', size=10)), row=2, col=1)
             fig.add_trace(go.Scatter(x=x_tan_domain, y=np.arctan(x_tan_domain), line=dict(color='purple')), row=3, col=1)
             fig.add_trace(go.Scatter(x=[val_tan], y=[angle_atan], mode='markers', marker=dict(color='red', size=10)), row=3, col=1)
-            fig.update_layout(height=800, showlegend=False)
+            fig.update_layout(height=800, showlegend=False, template="plotly_white")
             st.plotly_chart(fig, use_container_width=True)
 
 # -----------------------------------------------------------------------------
@@ -439,6 +472,7 @@ elif tab_selection == txt["nav_options"][3]:
 # -----------------------------------------------------------------------------
 elif tab_selection == txt["nav_options"][4]:
     st.header(txt["t5_header"])
+    st.markdown(f"<div class='academic-box'>{txt['t5_intro']}</div>", unsafe_allow_html=True)
     
     col1, col2 = st.columns([1, 2])
     
@@ -448,14 +482,13 @@ elif tab_selection == txt["nav_options"][4]:
         func_mode = st.radio(txt["t5_select_mode"], ["Exponential (e^x)", "Logarithmic (log)"], horizontal=True)
         
         if "Exponential" in func_mode:
-            st.info(txt["t5_exp_info"])
+            st.markdown(f"<div class='academic-box'>{txt['t5_exp_info']}</div>", unsafe_allow_html=True)
             x0_exp = st.number_input(f"{txt['touch_point']}:", value=1.0, step=0.1)
             val = np.exp(x0_exp)
             slope = val
-            with st.container(border=True):
-                st.latex(rf"f(x_0) = e^{{{x0_exp}}} \approx {val:.4f}")
-                st.latex(rf"f'(x_0) = e^{{{x0_exp}}} \approx {slope:.4f}")
-                st.caption(txt['value_eq_slope'])
+            st.latex(rf"f(x_0) = e^{{{x0_exp}}} \approx {val:.4f}")
+            st.latex(rf"f'(x_0) = e^{{{x0_exp}}} \approx {slope:.4f}")
+            st.caption(txt['value_eq_slope'])
             
             x_range = np.linspace(x0_exp - 2, x0_exp + 2, 100)
             y_exp = np.exp(x_range)
@@ -465,10 +498,10 @@ elif tab_selection == txt["nav_options"][4]:
             fig.add_trace(go.Scatter(x=x_range, y=y_exp, name="e^x", line=dict(color='blue')))
             fig.add_trace(go.Scatter(x=x_range, y=y_tan, name=txt["tangent"], line=dict(color='red', dash='dash')))
             fig.add_trace(go.Scatter(x=[x0_exp], y=[val], mode='markers+text', text=["P"], textposition="top left", marker=dict(size=12, color='black')))
-            fig.update_layout(title="y = e^x", height=500)
+            fig.update_layout(title="y = e^x", height=500, template="plotly_white")
             
         else:
-            st.info(txt["t5_log_info"])
+            st.markdown(f"<div class='academic-box'>{txt['t5_log_info']}</div>", unsafe_allow_html=True)
             base_type = st.selectbox(f"{txt['base_select']}:", txt["bases"])
             x0_log = st.number_input(f"{txt['touch_point']} (x > 0):", value=1.0, step=0.1, min_value=0.01)
             
@@ -482,9 +515,7 @@ elif tab_selection == txt["nav_options"][4]:
             if st.button(txt["calc_log"], type="primary"):
                 func_sym, k_res, tan_sym = algebraic_derivative(log_func_str, x0_log)
                 if func_sym:
-                    with st.container(border=True):
-                        st.latex(f"f'({x0_log}) = {sp.latex(k_res)}")
-                    
+                    st.latex(f"f'({x0_log}) = {sp.latex(k_res)}")
                     x_start = max(0.01, x0_log - 2)
                     x_range = np.linspace(x_start, x0_log + 2, 500)
                     f_lamb = sp.lambdify('x', func_sym, 'numpy')
@@ -494,7 +525,7 @@ elif tab_selection == txt["nav_options"][4]:
                     fig.add_trace(go.Scatter(x=x_range, y=y_f, name=display_str, line=dict(color='purple')))
                     fig.add_trace(go.Scatter(x=x_range, y=y_t, name=txt["tangent"], line=dict(color='orange', dash='dash')))
                     fig.add_trace(go.Scatter(x=[x0_log], y=[f_lamb(x0_log)], mode='markers', marker=dict(color='black', size=10)))
-                    fig.update_layout(title=f"Graph: {display_str}", height=500)
+                    fig.update_layout(title=f"Graph: {display_str}", height=500, template="plotly_white")
                 else:
                     st.error("Error")
         
@@ -503,145 +534,89 @@ elif tab_selection == txt["nav_options"][4]:
             st.plotly_chart(fig, use_container_width=True)
 
 # -----------------------------------------------------------------------------
-# TAB 6: კავშირი ნიუტონთან და კოშისთან (დავითის ნახაზის ზუსტი ასლი)
+# TAB 6: კავშირი ნიუტონთან და კოშისთან (დავითის ნახაზის ზუსტი ასლი + ფიზიკა)
 # -----------------------------------------------------------------------------
 elif tab_selection == txt["nav_options"][5]:
     st.header(txt["t6_header"])
-    
-    st.markdown(f"""
-    <div style="background-color:rgba(0, 128, 0, 0.1); padding:15px; border-radius:10px; border-left:5px solid green;">
-    {txt['t6_info']}
-    </div>
-    """, unsafe_allow_html=True)
-    
+    st.markdown(f"<div class='academic-box'>{txt['t6_info']}</div>", unsafe_allow_html=True)
     col1, col2 = st.columns([1, 2])
     with col1:
-        # პარამეტრები
         f_str = "x^2" 
         x0 = st.number_input("x0:", value=1.0, step=0.1)
         dx = st.slider(txt["delta_x_label"], 0.01, 2.0, 1.0, 0.01)
-        
-        # გამოთვლები
         x = sp.symbols('x')
         f = sp.sympify(f_str)
         f_lamb = sp.lambdify(x, f, 'numpy')
-        
-        # მნიშვნელობები
         y0 = f_lamb(x0)
         y_next = f_lamb(x0 + dx)
-        
-        # ნაზრდი (Delta F) -> მონაკვეთი BC
         delta_F = y_next - y0
-        
-        # წარმოებული და დიფერენციალი (dF) -> მონაკვეთი BN
         k = float(sp.diff(f, x).subs(x, x0))
         dF = k * dx
-        
         diff_val = delta_F - dF
         
-        with st.container(border=True):
-            st.metric(txt["delta_f"] + " (BC)", f"{delta_F:.4f}")
-            st.metric(txt["d_f"] + " (BN)", f"{dF:.4f}")
-            st.metric(txt["diff_val"] + " (NC)", f"{diff_val:.4f}", delta_color="normal")
-            
+        st.metric(txt["delta_f"] + " (BC)", f"{delta_F:.4f}")
+        st.metric(txt["d_f"] + " (BN)", f"{dF:.4f}")
+        st.metric(txt["diff_val"] + " (NC)", f"{diff_val:.4f}", delta_color="normal")
         st.info(txt["kapanadze_limit_text"])
 
     with col2:
-        # გრაფიკი
         x_range = np.linspace(max(0, x0 - 0.5), x0 + dx + 0.5, 100)
         y_curve = f_lamb(x_range)
         y_tan = y0 + k * (x_range - x0)
-        
         fig = go.Figure()
-        
-        # 1. ფუნქციის მრუდი
         fig.add_trace(go.Scatter(x=x_range, y=y_curve, name="F(x)", line=dict(color='blue')))
-        
-        # 2. მხები წრფე
         fig.add_trace(go.Scatter(x=x_range, y=y_tan, name="Tangent", line=dict(color='red', dash='dash')))
         
-        # --- წერტილები (დავითის ნახაზის მიხედვით) ---
-        # A(x0, y0)
-        # B(x0+dx, y0) - მართი კუთხე
-        # C(x0+dx, y_next) - ფუნქციაზე
-        # N(x0+dx, y0+dF) - მხებზე
-        
-        pt_A = [x0, y0]
-        pt_B = [x0 + dx, y0]
-        pt_C = [x0 + dx, y_next]
-        pt_N = [x0 + dx, y0 + dF]
-        pt_D = [x0 + dx, 0] # X ღერძზე
-        pt_x0_ax = [x0, 0] # X ღერძზე
+        pt_A, pt_B = [x0, y0], [x0 + dx, y0]
+        pt_C, pt_N = [x0 + dx, y_next], [x0 + dx, y0 + dF]
+        pt_D, pt_x0_ax = [x0 + dx, 0], [x0, 0]
 
-        # 3. ჰორიზონტალური კათეტი AB (Delta X)
-        fig.add_trace(go.Scatter(
-            x=[pt_A[0], pt_B[0]], 
-            y=[pt_A[1], pt_B[1]], 
-            mode='lines', 
-            line=dict(color='black', dash='dot'), 
-            name="Δx (AB)"
-        ))
-
-        # 4. ვერტიკალური მონაკვეთი B -> C (სრული ნაზრდი)
-        fig.add_trace(go.Scatter(
-            x=[pt_B[0], pt_C[0]], 
-            y=[pt_B[1], pt_C[1]], 
-            mode='lines', 
-            line=dict(color='black'), # შავი ფერი, როგორც ნახაზზეა ძირითადი კარკასი
-            name="ΔF (BC)"
-        ))
-
-        # 5. დამხმარე წყვეტილი ხაზები (პროექციები)
-        # C -> D
+        fig.add_trace(go.Scatter(x=[pt_A[0], pt_B[0]], y=[pt_A[1], pt_B[1]], mode='lines', line=dict(color='black', dash='dot'), name="Δx (AB)"))
+        fig.add_trace(go.Scatter(x=[pt_B[0], pt_C[0]], y=[pt_B[1], pt_C[1]], mode='lines', line=dict(color='black'), name="ΔF (BC)"))
         fig.add_trace(go.Scatter(x=[pt_C[0], pt_D[0]], y=[pt_C[1], pt_D[1]], mode='lines', line=dict(color='gray', dash='dash', width=1), showlegend=False))
-        # A -> x0 ღერძზე
         fig.add_trace(go.Scatter(x=[pt_A[0], pt_x0_ax[0]], y=[pt_A[1], pt_x0_ax[1]], mode='lines', line=dict(color='gray', dash='dash', width=1), showlegend=False))
 
-        # 6. წარწერები წერტილებზე (A, B, C, N, D)
-        labels = ["A", "B", "C", "N", "D"]
-        x_coords = [pt_A[0], pt_B[0], pt_C[0], pt_N[0], pt_D[0]]
-        y_coords = [pt_A[1], pt_B[1], pt_C[1], pt_N[1], pt_D[1]]
+        labels, x_coords, y_coords = ["A", "B", "C", "N", "D"], [pt_A[0], pt_B[0], pt_C[0], pt_N[0], pt_D[0]], [pt_A[1], pt_B[1], pt_C[1], pt_N[1], pt_D[1]]
         text_pos = ["top left", "bottom right", "top right", "top left", "bottom right"]
-        
-        fig.add_trace(go.Scatter(
-            x=x_coords,
-            y=y_coords,
-            mode='markers+text',
-            text=labels,
-            textposition=text_pos,
-            marker=dict(size=10, color='black'),
-            name="Points"
-        ))
+        fig.add_trace(go.Scatter(x=x_coords, y=y_coords, mode='markers+text', text=labels, textposition=text_pos, marker=dict(size=10, color='black'), name="Points"))
 
-        # 7. ტექსტური ანოტაციები (df, Delta f, Delta x)
-        # dF (B-სა და N-ს შორის)
-        fig.add_annotation(
-            x=x0 + dx, y=(y0 + y0 + dF)/2,
-            text="dF", showarrow=False, xshift=15, font=dict(color="green")
-        )
-        # Delta F (C-სთან ახლოს, ან შუაში)
-        fig.add_annotation(
-            x=x0 + dx, y=(y0 + y_next)/2,
-            text="ΔF", showarrow=False, xshift=35, font=dict(color="blue")
-        )
-        # Delta X (A-სა და B-ს შორის)
-        fig.add_annotation(
-            x=(x0 + x0 + dx)/2, y=y0,
-            text="Δx", showarrow=False, yshift=-15
-        )
-
-        # 8. ღერძების წარწერები
+        fig.add_annotation(x=x0 + dx, y=(y0 + y0 + dF)/2, text="dF", showarrow=False, xshift=15, font=dict(color="green"))
+        fig.add_annotation(x=x0 + dx, y=(y0 + y_next)/2, text="ΔF", showarrow=False, xshift=35, font=dict(color="blue"))
+        fig.add_annotation(x=(x0 + x0 + dx)/2, y=y0, text="Δx", showarrow=False, yshift=-15)
         fig.add_annotation(x=x0, y=0, text="x₀", showarrow=False, yshift=-15)
         fig.add_annotation(x=x0 + dx, y=0, text="x₀ + Δx", showarrow=False, yshift=-15)
         fig.add_hline(y=0, line_color="black", line_width=1)
 
-        fig.update_layout(
-            title="Newton-Cauchy Connection (David's Diagram)", 
-            height=600,
-            xaxis_title="X",
-            yaxis_title="Y",
-            showlegend=False
-        )
+        fig.update_layout(title="Newton-Cauchy Connection (Geometry)", height=600, xaxis_title="X", yaxis_title="Y", showlegend=False, template="plotly_white")
+        st.plotly_chart(fig, use_container_width=True)
+
+    # --- ფიზიკის ქვეკატეგორია ---
+    st.markdown("---")
+    st.header(txt["t8_header"])
+    st.markdown(f"<div class='academic-box'>{txt['t8_info']}</div>", unsafe_allow_html=True)
+    
+    col1, col2 = st.columns([1, 2])
+    with col1:
+        t = st.slider(f"{txt['time']}:", 0.0, 2.0, 0.5, 0.05)
+        x_val = t
+        y_val = -(t**2) + 2
+        vy = -2 * t
+        st.markdown(f"**{txt['velocity_vec']}:** (1, {vy:.2f})")
+        
+    with col2:
+        t_range = np.linspace(0, 2, 100)
+        x_traj = t_range
+        y_traj = -(t_range**2) + 2
+        slope = vy / 1
+        x_tan = np.linspace(x_val, x_val + 0.5, 10)
+        y_tan = y_val + slope * (x_tan - x_val)
+        
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=x_traj, y=y_traj, name=txt["trajectory"], line=dict(color='blue')))
+        fig.add_trace(go.Scatter(x=[x_val], y=[y_val], mode='markers', marker=dict(size=15, color='black'), name=txt["body"]))
+        fig.add_trace(go.Scatter(x=x_tan, y=y_tan, name=txt["inertia"], line=dict(color='red', width=3), mode='lines+markers', marker=dict(symbol='arrow', size=10)))
+        fig.add_trace(go.Scatter(x=[0, 2], y=[-2, -2], line=dict(color='green', width=5), name=txt["ground"]))
+        fig.update_layout(title=txt["ballistic"], height=500, yaxis=dict(range=[-2.5, 2.5], scaleanchor="x", scaleratio=1), template="plotly_white")
         st.plotly_chart(fig, use_container_width=True)
 
 # -----------------------------------------------------------------------------
@@ -649,11 +624,10 @@ elif tab_selection == txt["nav_options"][5]:
 # -----------------------------------------------------------------------------
 elif tab_selection == txt["nav_options"][6]:
     st.header(txt["t7_header"])
-    st.info(txt["t7_info"])
+    st.markdown(f"<div class='academic-box'>{txt['t7_info']}</div>", unsafe_allow_html=True)
     col1, col2 = st.columns([1, 2])
     with col1:
         problem_label = st.selectbox(f"{txt['select_case']}:", txt["case_options"])
-        
         if "Absolute" in problem_label or "მოდული" in problem_label:
             st.markdown(txt["case_abs_text"])
             problem_type = "abs"
@@ -666,7 +640,6 @@ elif tab_selection == txt["nav_options"][6]:
             
     with col2:
         x = np.linspace(-1, 1, 1000)
-        
         if problem_type == "abs":
             y = np.abs(x)
             fig = go.Figure()
@@ -674,33 +647,27 @@ elif tab_selection == txt["nav_options"][6]:
             fig.add_trace(go.Scatter(x=[0, 1], y=[0, 1], name=txt["right_tan"] + " (k=1)", line=dict(color='green', dash='dash')))
             fig.add_trace(go.Scatter(x=[-1, 0], y=[1, 0], name=txt["left_tan"] + " (k=-1)", line=dict(color='red', dash='dash')))
             fig.add_trace(go.Scatter(x=[0], y=[0], mode='markers', marker=dict(size=12, color='black'), name='Point (0,0)'))
-            fig.update_layout(title="y = |x| Corner Point", height=500)
-            
+            fig.update_layout(title="y = |x| Corner Point", height=500, template="plotly_white")
         elif problem_type == "1.5":
-            x_pos = np.linspace(0, 1, 500)
-            x_neg = np.linspace(-1, 0, 500)
-            y_pos = x_pos**1.5
-            y_neg = np.abs(x_neg)**1.5
+            x_pos, x_neg = np.linspace(0, 1, 500), np.linspace(-1, 0, 500)
+            y_pos, y_neg = x_pos**1.5, np.abs(x_neg)**1.5
             x_all = np.concatenate([x_neg, x_pos])
             y_all = np.concatenate([y_neg, y_pos])
             tangent = np.zeros_like(x_all)
             fig = go.Figure()
             fig.add_trace(go.Scatter(x=x_all, y=y_all, name="|x|^1.5", line=dict(color='blue')))
             fig.add_trace(go.Scatter(x=x_all, y=tangent, name=txt["tangent"], line=dict(color='red', dash='dash')))
-            with np.errstate(divide='ignore', invalid='ignore'):
-                remainder = y_all / (x_all**2)
+            with np.errstate(divide='ignore', invalid='ignore'): remainder = y_all / (x_all**2)
             fig.add_trace(go.Scatter(x=x_all, y=remainder, name=txt["residue"], line=dict(color='purple')))
-            fig.update_layout(title="Analysis", height=600, yaxis=dict(range=[0, 5]))
-            
+            fig.update_layout(title="Analysis", height=600, yaxis=dict(range=[0, 5]), template="plotly_white")
         else: # Oscillation
             y = (x**2) * np.sin(1/(x + 1e-9))
             tangent = np.zeros_like(x)
-            with np.errstate(divide='ignore', invalid='ignore'):
-                remainder = np.sin(1/(x + 1e-9))
+            with np.errstate(divide='ignore', invalid='ignore'): remainder = np.sin(1/(x + 1e-9))
             fig = go.Figure()
             fig.add_trace(go.Scatter(x=x, y=y, name="f(x)", line=dict(color='blue')))
             fig.add_trace(go.Scatter(x=x, y=remainder, name=txt["residue"], line=dict(color='purple')))
-            fig.update_layout(title="Oscillation", height=600, yaxis=dict(range=[-2, 2]))
+            fig.update_layout(title="Oscillation", height=600, yaxis=dict(range=[-2, 2]), template="plotly_white")
 
         st.plotly_chart(fig, use_container_width=True)
         st.info(txt["conclusion"])
