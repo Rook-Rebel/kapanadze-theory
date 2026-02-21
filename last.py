@@ -16,55 +16,97 @@ st.set_page_config(
 # --- CSS დიზაინი (აკადემიური სტილი) ---
 st.markdown("""
 <style>
-    /* აკადემიური ტიპოგრაფია */
+    /* Journal-style layout */
     .main .block-container {
         max-width: 1100px;
         margin: 0 auto;
-        padding-top: 1.6rem;
-        padding-bottom: 2rem;
+        padding-top: 2rem;
+        padding-bottom: 3rem;
+        padding-left: 1.8rem;
+        padding-right: 1.8rem;
     }
     
     .stApp {
-        background-color: #f3f4f6;
+        background-color: #ffffff;
         color: #1f2937;
     }
 
+    p, li, label, div, span {
+        font-family: 'Georgia', serif;
+        line-height: 1.78;
+    }
+
     h1 { 
-        font-size: 2.0rem !important; 
-        font-weight: 600 !important; 
+        font-size: 2.05rem !important; 
+        font-weight: 650 !important; 
         font-family: 'Times New Roman', Times, serif; 
         color: #1f2937;
+        letter-spacing: 0.1px;
     }
     h2, h3, h4 { 
         font-family: 'Times New Roman', Times, serif; 
-        color: #283548;
+        color: #202a36;
+        font-weight: 600 !important;
     }
     
-    /* ტექსტური ბლოკები */
-    .academic-box {
-        padding: 1rem 1.1rem;
-        border-radius: 8px;
-        background-color: #f8f9fb;
-        border: 1px solid #d7dbe2;
-        border-left: 4px solid #4b5563;
-        margin-bottom: 1rem;
+    /* Academic box via markdown blockquote (LaTeX-safe) */
+    blockquote {
+        margin: 0.85rem 0 1.15rem 0 !important;
+        padding: 0.95rem 1.1rem !important;
+        border-radius: 12px !important;
+        background: #fbfbfc !important;
+        border: 1px solid #e7e8ec !important;
+        border-left: 4px solid #2f3a46 !important;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05) !important;
         font-family: 'Georgia', serif;
         color: #1f2937;
-        line-height: 1.6;
-        box-shadow: 0 2px 8px rgba(17, 24, 39, 0.06);
+        line-height: 1.8;
+    }
+    blockquote p {
+        margin: 0.2rem 0 !important;
     }
     
-    /* ღილაკების სტილი */
+    hr {
+        border: none;
+        border-top: 1px solid #e8eaef;
+        margin-top: 1.2rem;
+        margin-bottom: 1.25rem;
+    }
+
+    /* Sidebar */
+    [data-testid="stSidebar"] {
+        background: #f7f8fa;
+        border-right: 1px solid #e3e6eb;
+    }
+    [data-testid="stSidebar"] * {
+        font-family: 'Georgia', serif;
+    }
+    [data-testid="stSidebar"] h1,
+    [data-testid="stSidebar"] h2,
+    [data-testid="stSidebar"] h3 {
+        font-family: 'Times New Roman', Times, serif !important;
+        color: #1f2937 !important;
+    }
+
+    /* Buttons */
     .stButton>button {
-        background-color: #374151;
+        background-color: #1f2a36;
         color: white;
-        border-radius: 6px;
-        border: 1px solid #374151;
+        border-radius: 8px;
+        border: 1px solid #1f2a36;
         font-family: 'Times New Roman', Times, serif;
+        padding: 0.45rem 0.95rem;
+        transition: all 0.2s ease;
     }
     .stButton>button:hover {
-        background-color: #1f2937;
-        border-color: #1f2937;
+        background-color: #18212b;
+        border-color: #18212b;
+        box-shadow: 0 2px 6px rgba(17, 24, 39, 0.15);
+    }
+
+    /* Hide Streamlit chrome */
+    #MainMenu, footer, header {
+        visibility: hidden;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -203,112 +245,140 @@ translations = {
     },
     "EN": {
         "sidebar_title": "Structure (Research)",
-        "nav_options": ["I. Geometric Origin", "II. Algebraic Criterion", "III. Spatial Generalization", "IV. Trigonometric Functions", "V. Exp & Log Functions", "VI. Connection with Classical Analysis", "VII. Limits of Applicability"],
+        "nav_options": [
+            "I. Geometric Origin of the Tangent Line",
+            "II. Algebraic Criterion",
+            "III. Spatial Generalization",
+            "IV. Trigonometric Functions",
+            "V. Exponential and Logarithmic Functions",
+            "VI. Connection with Classical Analysis",
+            "VII. Limits of Method Applicability"
+        ],
         "title": "Interactive Model for Geometric and Algebraic Interpretation of the Derivative",
         "bases": ["e (Natural ln)", "10 (Decimal)", "2 (Binary)"],
-        # Content mirrors KA... (omitted for brevity as user requested Georgian specifically)
-        "t1_header": "Successive Approximation",
-        "t1_info": "...",
+        
+        # Tab 1
+        "t1_header": "Successive Approximation of the Secant Line to the Tangent Line",
+        "t1_info": "The tangent line is considered as the limiting case of the secant line, when the moving point successively approaches a fixed point on the graph of the function.",
         "func_label": "Function",
-        "point_a": "Point",
-        "point_b_dist": "Dist",
+        "point_a": "Fixed point (A)",
+        "point_b_dist": "Distance to second point (h)",
         "secant": "Secant",
         "tangent": "Tangent",
         "viz_title": "Visualization",
+        
+        # Tab 2
         "t2_header": "Algebraic Method",
-        "t2_thm_title": "Algebraic Criterion",
-        "t2_thm_text": "...",
-        "t2_thm_sub": "...",
-        "touch_point": "Point",
-        "calc_btn": "Calculate",
+        "t2_thm_title": "Algebraic Criterion for the Tangent Line",
+        "t2_thm_text": "A line is a tangent to the function at a given point if and only if the difference between the function and the line is divisible by the square of the increment.",
+        "t2_thm_sub": "This condition means that the difference between the function and its tangent line near $x_0$ is an infinitesimal quantity of second order. Consequently, the remainder graph does not exhibit infinitely increasing behavior near the touching point.",
+        "touch_point": "Point of tangency",
+        "calc_btn": "Compute and Analyze",
         "result": "Result",
-        "slope_found": "Slope",
-        "tan_eq": "Tangent",
-        "proof_title": "Analysis",
-        "vis_touch": "Visual",
+        "slope_found": "Slope coefficient (k)",
+        "tan_eq": "Tangent line equation",
+        "proof_title": "Remainder Analysis",
+        "vis_touch": "Function and Tangent",
         "residue": "Residue",
-        "success_msg": "Success",
+        "success_msg": "✔ Criterion satisfied: the residue meets the algebraic criterion and is an infinitesimal quantity of second order, confirming the existence of the tangent line.",
         "error_msg": "Error",
+        
+        # Tab 3
         "t3_header": "Spatial Generalization",
-        "t3_intro": "...",
-        "t3_info": "...",
+        "t3_intro": "Analogous to the one-dimensional case, in three-dimensional space we consider the surface:",
+        "t3_info": "The tangent plane is determined by the condition that the difference between the function and the corresponding plane near the given point is an infinitesimal quantity of second order. This algebraic criterion ensures the existence and uniqueness of the tangent plane and provides a natural interpretation of differential geometry, without direct use of the limit concept at the initial stage.",
         "surface_label": "Surface",
-        "build_3d": "Build",
-        "found_partials": "Partials",
+        "build_3d": "Build 3D Model",
+        "found_partials": "Slope coefficients",
         "surface": "Surface",
         "tan_plane": "Tangent Plane",
-        "t3_res_text": "...",
+        "t3_res_text": "This means that, at the given point, the tangent plane is parallel to the $xy$-plane and represents the local linear approximation of the surface.",
+        
+        # Tab 4
         "t4_header": "Trigonometric Analysis",
-        "t4_intro_long": "...",
+        "t4_intro_long": """
+        The presented model is based on geometric and algebraic interpretations of derivatives of trigonometric functions. The analysis is carried out using a model of point motion on the unit circle, which provides a geometric understanding of the relationship between the angle and corresponding function values.
+        
+        During motion on the unit circle, sine and cosine functions are considered as coordinate projections, while the cosine value is interpreted as the slope coefficient of the tangent line to the sine function.
+        
+        Thus, the geometric–algebraic representation of trigonometric functions naturally connects the unit circle, the rate of function change, and the concept of derivative.
+        """,
         "angle": "Angle",
         "slope": "Slope",
         "unit_circle": "Unit Circle",
-        "trig_mode_select": "Mode",
-        "trig_standard": "Std",
-        "trig_inverse": "Inv",
-        "input_val": "Input",
-        "inv_res": "Res",
-        "inv_info": "...",
+        "trig_mode_select": "Visualization Mode",
+        "trig_standard": "Trigonometric Circle",
+        "trig_inverse": "Inverse Functions",
+        "input_val": "Input value",
+        "inv_res": "Results",
+        "inv_info": "This geometric–algebraic representation of inverse trigonometric functions provides a conceptual understanding of the derivative based on motion, slope, and functional dependence.",
         "t4_conc": "Conclusion",
-        "t4_conc_text": "...",
-        "t5_header": "Exp & Log",
-        "t5_intro": "...",
-        "t5_select_mode": "Mode",
-        "t5_exp_desc": "...",
-        "t5_log_desc": "...",
-        "value_eq_slope": "...",
+        "t4_conc_text": "The presented model of trigonometric and inverse trigonometric functions provides a conceptual understanding of the derivative based on motion, slope, and functional dependence. This approach creates a natural transitional step to formal definitions in classical mathematical analysis.",
+        
+        # Tab 5
+        "t5_header": "Geometric–Algebraic Analysis of Exponential and Logarithmic Functions",
+        "t5_intro": "In this chapter, exponential and logarithmic functions are considered within Kapanadze’s geometric–algebraic approach. The analysis is based on the algebraic criterion of the tangent line and the idea of local linear approximation.",
+        "t5_select_mode": "Function Type",
+        "t5_exp_desc": "The exponential function $e^x$ is characterized by the property that its derivative at every point equals the value of the function itself:",
+        "t5_log_desc": "Within Kapanadze’s method, the derivative of the logarithmic function is obtained using the algebraic criterion:",
+        "value_eq_slope": "Thus, at the given point, the function value and the corresponding tangent line slope coefficient coincide, which is a fundamental geometric property of $e^x$.",
         "base_select": "Base",
-        "calc_log": "Calc",
-        "residue_analysis": "Residue",
+        "calc_log": "Analyze",
+        "residue_analysis": "Remainder behavior",
         "graph": "Graph",
         "t5_conc": "Conclusion",
-        "t5_conc_text": "...",
+        "t5_conc_text": "The presented geometric–algebraic analysis of exponential and logarithmic functions shows that their derivatives are determined by the algebraic criterion of the tangent line and interpreted as the slope of local linear approximation. This approach creates a natural connection between geometric intuition and formal results of classical analysis.",
+        
+        # Tab 6
         "t6_header": "Connection with Classical Analysis",
-        "t6_intro": "...",
-        "t6_sec_incr": "Increment",
-        "t6_fixed": "Fixed",
-        "t6_arg_incr": "Arg Incr",
-        "t6_func_incr": "Func Incr",
-        "t6_geom_bc": "...",
-        "t6_diff": "Diff",
-        "t6_geom_bn": "...",
-        "t6_rem": "Rem",
-        "t6_geom_nc": "...",
-        "t6_sec_alg": "Alg Criterion",
-        "t6_alg_text": "...",
+        "t6_intro": "In Kapanadze’s approach, the derivative is initially considered as a limiting geometric object — a tangent line constructed on the graph of a function, obtained through fulfillment of an algebraic criterion and later given a limit-based analytical interpretation.",
+        "t6_sec_incr": "Function Increment and Differential",
+        "t6_fixed": "Fixed point:",
+        "t6_arg_incr": "Argument increment:",
+        "t6_func_incr": "Function increment:",
+        "t6_geom_bc": "which geometrically corresponds to segment $BC$.",
+        "t6_diff": "Differential:",
+        "t6_geom_bn": "which geometrically corresponds to segment $BN$.",
+        "t6_rem": "Remainder (difference):",
+        "t6_geom_nc": "which is represented by segment $NC$.",
+        "t6_sec_alg": "Algebraic Criterion",
+        "t6_alg_text": "If the difference $\Delta F - dF$ decreases as the argument increment shrinks so that it represents an infinitesimal quantity of second order, then Kapanadze’s algebraic criterion is satisfied. Thus, the limit process is not used as the initial definition, but appears as an analytical formalization of an already constructed geometric–algebraic structure.",
         "t8_header": "Physical Interp",
-        "t8_info": "...",
+        "t8_info": "In a physical context, the derivative is viewed as an instantaneous characteristic of motion. In particular, the tangent line constructed on the trajectory describes the instantaneous direction the body would follow at that moment if external forces ceased (principle of inertial motion).",
         "time": "Time",
-        "velocity_vec": "Velocity",
+        "velocity_vec": "Instantaneous velocity vector",
         "trajectory": "Trajectory",
         "body": "Body",
         "inertia": "Inertia",
         "ground": "Ground",
         "ballistic": "Ballistic",
         "t6_conc": "Conclusion",
-        "t6_conc_text": "...",
+        "t6_conc_text": "Kapanadze’s algebraic–geometric approach creates a natural conceptual bridge to Cauchy’s limit formalism. Here, the derivative is not defined directly by a limit formula; it is obtained through a geometrically and algebraically justified construction, while the limit interpretation serves as the analytical formalization of this construction.",
+        
+        # Tab 7
         "t7_header": "Limits",
-        "t7_info": "...",
-        "t7_intro_main": "...",
+        "t7_info": "Kapanadze’s algebraic–geometric approach.",
+        "t7_intro_main": "This subsection considers functions for which the algebraic criterion of division by the square of the increment yields specific outcomes and clearly reveals the limits of method applicability.",
         "select_case": "Case",
-        "case_options": ["..."],
-        "case_abs_title": "...",
-        "case_abs_text": "...",
-        "t7_alg_interp_title": "...",
-        "t7_alg_interp_text": "...",
-        "t7_conc_title": "...",
-        "t7_conc_text": "...",
-        "case_1_text": "...",
-        "case_2_text": "...",
+        "case_options": ["|x| (modulus at 0)", "|x|^1.5 (lower smoothness)", "x^2 * sin(1/x) (oscillation)"],
+        "case_abs_title": "Modulus Function at Point $x=0$",
+        "case_abs_text": "At point $x=0$, the function graph has two different tangent lines: from the left side, the slope coefficient equals $-1$, and from the right side, it equals $1$. Thus, uniqueness of the tangent line is violated at this point, which does not satisfy the necessary condition for the existence of a derivative.",
+        "t7_alg_interp_title": "Algebraic Interpretation",
+        "t7_alg_interp_text": "According to Kapanadze’s algebraic criterion, existence of the derivative is connected to the condition that the difference between the function and the corresponding linear approximation is an infinitesimal quantity of second order. For the function $f(x)=|x|$, this condition is not satisfied at point $x=0$, because the behavior of the remainder differs from the left and right sides.",
+        "t7_conc_title": "Conclusion",
+        "t7_conc_text": "In this special case, Kapanadze’s algebraic criterion clearly indicates that the derivative does not exist. This example confirms that the method is effective not only for determining the existence of a derivative, but also for diagnosing its non-existence.",
+        "case_1_text": "The function has a derivative, but the remainder does not decrease fast enough.",
+        "case_2_text": "The function oscillates too rapidly, causing the remainder not to stabilize.",
         "left_tan": "Left",
         "right_tan": "Right"
     }
 }
 
 # ==========================================
-# ენის არჩევა (მხოლოდ ქართული)
+# ენის არჩევა
 # ==========================================
-txt = translations["KA"]
+is_english = st.sidebar.toggle("English", value=False)
+txt = translations["EN"] if is_english else translations["KA"]
 
 ROMAN_PREFIX_RE = re.compile(r"^\s*[IVXLCDM]+\.\s*")
 DIV_TAG_RE = re.compile(r"</?div[^>]*>", re.IGNORECASE)
@@ -323,7 +393,9 @@ def sanitize_text(text):
 
 
 def academic_box(text):
-    st.markdown(f"<div class='academic-box'>{sanitize_text(text)}</div>", unsafe_allow_html=True)
+    cleaned = sanitize_text(text)
+    quoted = "\n".join([f"> {line}" if line.strip() else ">" for line in cleaned.splitlines()])
+    st.markdown(quoted)
 
 # ==========================================
 # მათემატიკური ძრავა
