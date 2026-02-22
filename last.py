@@ -1,3 +1,4 @@
+# pyright: reportMissingImports=false
 import streamlit as st
 import sympy as sp
 import numpy as np
@@ -20,46 +21,46 @@ st.markdown("""
     .main .block-container {
         max-width: 1100px;
         margin: 0 auto;
-        padding-top: 2rem;
-        padding-bottom: 3rem;
+        padding-top: 1.8rem;
+        padding-bottom: 2.8rem;
         padding-left: 1.8rem;
         padding-right: 1.8rem;
     }
     
     .stApp {
-        background-color: #ffffff;
-        color: #1f2937;
+        background: linear-gradient(to bottom, #f8f9fb 0%, #ffffff 120px);
+        color: #1f2a36;
     }
 
-    p, li, label, div, span {
+    p, li, label {
         font-family: 'Georgia', serif;
-        line-height: 1.78;
+        line-height: 1.8;
     }
 
     h1 { 
         font-size: 2.05rem !important; 
         font-weight: 650 !important; 
         font-family: 'Times New Roman', Times, serif; 
-        color: #1f2937;
+        color: #1e2833;
         letter-spacing: 0.1px;
     }
     h2, h3, h4 { 
         font-family: 'Times New Roman', Times, serif; 
-        color: #202a36;
+        color: #243241;
         font-weight: 600 !important;
     }
     
     /* Academic box via markdown blockquote (LaTeX-safe) */
     blockquote {
         margin: 0.85rem 0 1.15rem 0 !important;
-        padding: 0.95rem 1.1rem !important;
+        padding: 1rem 1.15rem !important;
         border-radius: 12px !important;
         background: #fbfbfc !important;
-        border: 1px solid #e7e8ec !important;
-        border-left: 4px solid #2f3a46 !important;
-        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05) !important;
+        border: 1px solid #e4e7ec !important;
+        border-left: 4px solid #334155 !important;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.045) !important;
         font-family: 'Georgia', serif;
-        color: #1f2937;
+        color: #1f2a36;
         line-height: 1.8;
     }
     blockquote p {
@@ -68,24 +69,81 @@ st.markdown("""
     
     hr {
         border: none;
-        border-top: 1px solid #e8eaef;
-        margin-top: 1.2rem;
-        margin-bottom: 1.25rem;
+        border-top: 1px solid #e6e9ef;
+        margin-top: 1.15rem;
+        margin-bottom: 1.15rem;
     }
 
     /* Sidebar */
     [data-testid="stSidebar"] {
-        background: #f7f8fa;
-        border-right: 1px solid #e3e6eb;
+        background: #f5f7fa;
+        border-right: 1px solid #dfe4ea;
     }
-    [data-testid="stSidebar"] * {
+    [data-testid="stSidebar"] {
+        color: #111827 !important;
+    }
+    [data-testid="stSidebar"] p,
+    [data-testid="stSidebar"] label,
+    [data-testid="stSidebar"] li,
+    [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] {
         font-family: 'Georgia', serif;
+        color: #111827 !important;
     }
     [data-testid="stSidebar"] h1,
     [data-testid="stSidebar"] h2,
     [data-testid="stSidebar"] h3 {
         font-family: 'Times New Roman', Times, serif !important;
-        color: #1f2937 !important;
+        color: #1e2833 !important;
+    }
+    [data-testid="stSidebar"] [role="radiogroup"] label {
+        padding-top: 0.15rem;
+        padding-bottom: 0.15rem;
+    }
+    [data-testid="stSidebar"] [role="radiogroup"] label p {
+        color: #111827 !important;
+        opacity: 1 !important;
+        font-size: 0.98rem !important;
+        line-height: 1.45 !important;
+        margin: 0 !important;
+        display: block !important;
+        visibility: visible !important;
+    }
+    [data-testid="stSidebar"] [role="radiogroup"] {
+        gap: 0.25rem;
+    }
+    [data-testid="stSidebar"] [role="radiogroup"] label [data-testid="stMarkdownContainer"] {
+        width: 100%;
+    }
+    [data-testid="stSidebar"] [role="radiogroup"] label div[data-checked="true"] {
+        background-color: #f97316 !important;
+        border-color: #f97316 !important;
+    }
+
+    /* Sidebar collapse/expand buttons (orange) */
+    [data-testid="stSidebarCollapseButton"] button,
+    [data-testid="stSidebarCollapsedControl"] button {
+        background: #f97316 !important;
+        color: #ffffff !important;
+        border: 1px solid #ea580c !important;
+        border-radius: 999px !important;
+        width: 2.1rem !important;
+        height: 2.1rem !important;
+        box-shadow: 0 2px 8px rgba(249, 115, 22, 0.28) !important;
+    }
+    [data-testid="stSidebarCollapseButton"] button:hover,
+    [data-testid="stSidebarCollapsedControl"] button:hover {
+        background: #ea580c !important;
+        border-color: #c2410c !important;
+    }
+    [data-testid="stSidebarCollapseButton"] button span,
+    [data-testid="stSidebarCollapsedControl"] button span {
+        font-family: "Material Symbols Rounded", "Material Symbols Outlined", sans-serif !important;
+        font-size: 1.15rem !important;
+        line-height: 1 !important;
+    }
+    [data-testid="stSidebarCollapsedControl"] {
+        top: 0.8rem !important;
+        left: 0.8rem !important;
     }
 
     /* Buttons */
@@ -103,10 +161,50 @@ st.markdown("""
         border-color: #18212b;
         box-shadow: 0 2px 6px rgba(17, 24, 39, 0.15);
     }
+    .stButton>button:focus {
+        outline: 2px solid #334155;
+        outline-offset: 1px;
+    }
 
-    /* Hide Streamlit chrome */
-    #MainMenu, footer, header {
-        visibility: hidden;
+    /* Form controls: remove dark widget background */
+    .stTextInput [data-baseweb="input"],
+    .stNumberInput [data-baseweb="input"],
+    .stSelectbox [data-baseweb="select"],
+    .stTextInput input,
+    .stNumberInput input {
+        background: #ffffff !important;
+        color: #1f2a36 !important;
+        border-color: #d6dbe3 !important;
+        border-radius: 8px !important;
+    }
+
+    .stTextInput [data-baseweb="input"] > div,
+    .stNumberInput [data-baseweb="input"] > div,
+    .stSelectbox [data-baseweb="select"] > div {
+        background: #ffffff !important;
+        color: #1f2a36 !important;
+    }
+
+    .stNumberInput button {
+        background: #f4f6f9 !important;
+        color: #1f2a36 !important;
+    }
+
+    .stTextInput input::placeholder,
+    .stNumberInput input::placeholder {
+        color: #6b7280 !important;
+    }
+
+    .stPlotlyChart {
+        border: 1px solid #e7ebf0;
+        border-radius: 10px;
+        padding: 0.2rem 0.3rem 0.1rem 0.3rem;
+        background: #ffffff;
+    }
+
+    /* Hide Streamlit chrome (keep header for sidebar toggle) */
+    #MainMenu, footer {
+        display: none !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -212,7 +310,7 @@ translations = {
         "t6_rem": "ნაშთი (სხვაობა):",
         "t6_geom_nc": "რაც წარმოდგენილია მონაკვეთის $NC$ სახით.",
         "t6_sec_alg": "ალგებრული კრიტერიუმი",
-        "t6_alg_text": "თუ სხვაობა $\Delta F - dF$ არგუმენტის ნაზრდის შემცირებისას მცირდება ისე, რომ წარმოადგენს მეორე რიგის უსასრულოდ მცირე სიდიდეს, მაშინ შესრულებულია კაპანაძის ალგებრული კრიტერიუმი. ამგვარად, ზღვრული პროცესი არ გამოიყენება საწყის განსაზღვრებად, არამედ ჩნდება, როგორც უკვე აგებული გეომეტრიულ–ალგებრული კონსტრუქციის ანალიტიკური ფორმალიზაცია.",
+        "t6_alg_text": "თუ სხვაობა $\\Delta F - dF$ არგუმენტის ნაზრდის შემცირებისას მცირდება ისე, რომ წარმოადგენს მეორე რიგის უსასრულოდ მცირე სიდიდეს, მაშინ შესრულებულია კაპანაძის ალგებრული კრიტერიუმი. ამგვარად, ზღვრული პროცესი არ გამოიყენება საწყის განსაზღვრებად, არამედ ჩნდება, როგორც უკვე აგებული გეომეტრიულ–ალგებრული კონსტრუქციის ანალიტიკური ფორმალიზაცია.",
         
         "t8_header": "ფიზიკური ინტერპრეტაცია (კინემატიკა)",
         "t8_info": "ფიზიკურ კონტექსტში წარმოებული განიხილება, როგორც მოძრაობის მომენტალური მახასიათებელი. კერძოდ, ტრაექტორიაზე აგებული შემხები წრფე აღწერს სხეულის იმ მომენტალურ მიმართულებას, რომელსაც იგი გაყვებოდა მოცემულ მომენტში, თუ მასზე მოქმედი გარე ძალები შეწყდებოდა (ინერციული მოძრაობის პრინციპი).",
@@ -342,7 +440,7 @@ translations = {
         "t6_rem": "Remainder (difference):",
         "t6_geom_nc": "which is represented by segment $NC$.",
         "t6_sec_alg": "Algebraic Criterion",
-        "t6_alg_text": "If the difference $\Delta F - dF$ decreases as the argument increment shrinks so that it represents an infinitesimal quantity of second order, then Kapanadze’s algebraic criterion is satisfied. Thus, the limit process is not used as the initial definition, but appears as an analytical formalization of an already constructed geometric–algebraic structure.",
+        "t6_alg_text": "If the difference $\\Delta F - dF$ decreases as the argument increment shrinks so that it represents an infinitesimal quantity of second order, then Kapanadze’s algebraic criterion is satisfied. Thus, the limit process is not used as the initial definition, but appears as an analytical formalization of an already constructed geometric–algebraic structure.",
         "t8_header": "Physical Interp",
         "t8_info": "In a physical context, the derivative is viewed as an instantaneous characteristic of motion. In particular, the tangent line constructed on the trajectory describes the instantaneous direction the body would follow at that moment if external forces ceased (principle of inertial motion).",
         "time": "Time",
@@ -397,6 +495,10 @@ def academic_box(text):
     quoted = "\n".join([f"> {line}" if line.strip() else ">" for line in cleaned.splitlines()])
     st.markdown(quoted)
 
+
+def plot_chart(fig, **kwargs):
+    st.plotly_chart(fig, width="stretch", theme=None, **kwargs)
+
 # ==========================================
 # მათემატიკური ძრავა
 # ==========================================
@@ -438,7 +540,7 @@ st.sidebar.markdown(f"## {txt['title']}")
 st.sidebar.markdown("---")
 st.sidebar.title(txt["sidebar_title"])
 nav_options_clean = [strip_roman_prefix(option) for option in txt["nav_options"]]
-selected_nav = st.sidebar.radio("", nav_options_clean)
+selected_nav = st.sidebar.radio("Navigation", nav_options_clean, label_visibility="collapsed")
 tab_selection = txt["nav_options"][nav_options_clean.index(selected_nav)]
 
 # -----------------------------------------------------------------------------
@@ -450,11 +552,11 @@ if tab_selection == txt["nav_options"][0]:
     with col1:
         academic_box(txt["t1_info"])
         st.latex(r"f(x)")
-        func_input = st.text_input("", "x^2", key="geom_func")
+        func_input = st.text_input("Function input", "x^2", key="geom_func", label_visibility="collapsed")
         st.latex(r"A \text{ (Point)}")
-        x_a = st.number_input("", value=1.0, step=0.1, format="%g", key="num_a")
+        x_a = st.number_input("Point A", value=1.0, step=0.1, format="%g", key="num_a", label_visibility="collapsed")
         st.latex(r"h \text{ (Distance)}")
-        h = st.slider("", 0.01, 2.0, 1.0, 0.01, format="%g", key="slider_h")
+        h = st.slider("Distance h", 0.01, 2.0, 1.0, 0.01, format="%g", key="slider_h", label_visibility="collapsed")
     with col2:
         x = sp.symbols('x')
         try:
@@ -471,7 +573,7 @@ if tab_selection == txt["nav_options"][0]:
             fig.add_trace(go.Scatter(x=x_range, y=yA + slope_tangent * (x_range - xA), name=txt["tangent"], line=dict(color='#4CAF50', width=2)))
             fig.add_trace(go.Scatter(x=[xA, xB], y=[yA, yB], mode='markers+text', text=["A", "B"], marker=dict(size=12, color=['black', 'red'])))
             fig.update_layout(title=txt["viz_title"], height=500, template="plotly_white")
-            st.plotly_chart(fig, use_container_width=True)
+            plot_chart(fig)
         except Exception as e: st.error(e)
 
 # -----------------------------------------------------------------------------
@@ -490,9 +592,9 @@ elif tab_selection == txt["nav_options"][1]:
     col1, col2 = st.columns([1, 2])
     with col1:
         st.latex(r"f(x)")
-        f_in = st.text_input("", "sin(x) * exp(0.5*x)", key="alg_func")
+        f_in = st.text_input("Function input", "sin(x) * exp(0.5*x)", key="alg_func", label_visibility="collapsed")
         st.latex(r"x_0")
-        x0_in = st.number_input("", value=1.0, step=0.1, format="%g", key="num_x0")
+        x0_in = st.number_input("x0", value=1.0, step=0.1, format="%g", key="num_x0", label_visibility="collapsed")
         calc_btn = st.button(txt["calc_btn"], type="primary")
         
     if calc_btn:
@@ -517,7 +619,7 @@ elif tab_selection == txt["nav_options"][1]:
                 fig.add_trace(go.Scatter(x=x_range, y=y_t, name=txt["tangent"], line=dict(color='#FF5722', dash='dash')), row=1, col=1)
                 fig.add_trace(go.Scatter(x=x_range, y=remainder, name=txt["residue"], line=dict(color='#4CAF50', width=2)), row=2, col=1)
                 fig.update_layout(height=700, template="plotly_white")
-                st.plotly_chart(fig, use_container_width=True)
+                plot_chart(fig)
                 st.success(txt["success_msg"])
             else: st.error(f"{txt['error_msg']}: {tan_sym}")
 
@@ -535,7 +637,7 @@ elif tab_selection == txt["nav_options"][2]:
     with col1:
         st.write(txt["surface_label"])
         st.latex(r"f(x,y)")
-        f3_str = st.text_input("", "x^2 + y^2 - 0.5*x*y", key="3d_func")
+        f3_str = st.text_input("Surface function", "x^2 + y^2 - 0.5*x*y", key="3d_func", label_visibility="collapsed")
         st.latex(r"(x_0, y_0)")
         x0 = st.number_input("x0", 0.0, format="%g")
         y0 = st.number_input("y0", 0.0, format="%g")
@@ -558,7 +660,7 @@ elif tab_selection == txt["nav_options"][2]:
                 fig.add_trace(go.Surface(z=Z_plane, x=X, y=Y, colorscale=[[0,'red'],[1,'red']], opacity=0.5, showscale=False, name=txt["tan_plane"]))
                 fig.add_trace(go.Scatter3d(x=[x0], y=[y0], z=[float(z0)], mode='markers', marker=dict(size=5, color='black')))
                 fig.update_layout(height=700, template="plotly_white")
-                st.plotly_chart(fig, use_container_width=True)
+                plot_chart(fig)
 
 # -----------------------------------------------------------------------------
 # TAB 4: ტრიგონომეტრია
@@ -575,7 +677,7 @@ elif tab_selection == txt["nav_options"][3]:
     if trig_mode == txt["trig_standard"]:
         with col1:
             st.latex(r"\theta \text{ (rad)}")
-            angle = st.slider("", 0.0, 2*np.pi, 1.0, 0.1, format="%g")
+            angle = st.slider("Angle", 0.0, 2*np.pi, 1.0, 0.1, format="%g", label_visibility="collapsed")
             st.latex(rf"\sin(t) \approx {np.sin(angle):.2f}")
             st.latex(rf"\cos(t) \approx {np.cos(angle):.2f}")
         with col2:
@@ -596,12 +698,12 @@ elif tab_selection == txt["nav_options"][3]:
             fig.update_layout(height=600, width=800, showlegend=False, template="plotly_white")
             fig.update_xaxes(range=[-1.5, 1.5], row=1, col=1)
             fig.update_yaxes(scaleanchor="x", scaleratio=1, range=[-1.5, 1.5], row=1, col=1)
-            st.plotly_chart(fig, use_container_width=True)
+            plot_chart(fig)
     else:
         academic_box(txt["inv_info"])
         with col1:
             st.latex(r"x \in [-1, 1]")
-            val = st.slider("", -1.0, 1.0, 0.5, 0.01, format="%g")
+            val = st.slider("Input", -1.0, 1.0, 0.5, 0.01, format="%g", label_visibility="collapsed")
             val_tan = val * 5 
             angle_asin = np.arcsin(val)
             angle_acos = np.arccos(val)
@@ -627,7 +729,7 @@ elif tab_selection == txt["nav_options"][3]:
             fig.add_trace(go.Scatter(x=x_tan_domain, y=np.arctan(x_tan_domain), line=dict(color='purple')), row=3, col=1)
             fig.add_trace(go.Scatter(x=[val_tan], y=[angle_atan], mode='markers', marker=dict(color='red', size=10)), row=3, col=1)
             fig.update_layout(height=800, showlegend=False, template="plotly_white")
-            st.plotly_chart(fig, use_container_width=True)
+            plot_chart(fig)
             
     # დასკვნა ბოლოში
     st.markdown("---")
@@ -652,7 +754,7 @@ elif tab_selection == txt["nav_options"][4]:
             
             st.markdown("**შეხების წერტილი:**")
             st.latex(r"x_0")
-            x0_exp = st.number_input("", value=1.0, step=0.1, format="%g", key="x0_exp")
+            x0_exp = st.number_input("x0", value=1.0, step=0.1, format="%g", key="x0_exp", label_visibility="collapsed")
             val = np.exp(x0_exp)
             slope = val
             
@@ -672,18 +774,18 @@ elif tab_selection == txt["nav_options"][4]:
             fig.update_layout(title=r"$y = e^x$", height=500, template="plotly_white")
             
             with col2:
-                st.plotly_chart(fig, use_container_width=True, key="chart_exp")
+                plot_chart(fig, key="chart_exp")
             
         else:
             st.markdown(f"{txt['t5_log_desc']}")
             st.latex(r"f'(x) = \frac{1}{x \ln(a)}")
             
             st.write(txt['base_select'])
-            base_type = st.selectbox("", txt["bases"])
+            base_type = st.selectbox("Base selection", txt["bases"], label_visibility="collapsed")
             
             st.markdown("**განხილული წერტილი:**")
             st.latex(r"x_0 (>0)")
-            x0_log = st.number_input("", value=1.0, step=0.1, min_value=0.01, format="%g", key="x0_log")
+            x0_log = st.number_input("x0", value=1.0, step=0.1, min_value=0.01, format="%g", key="x0_log", label_visibility="collapsed")
             
             if "e" in base_type:
                 log_func_str, display_str = "log(x)", "ln(x)"
@@ -710,7 +812,7 @@ elif tab_selection == txt["nav_options"][4]:
                     fig.update_layout(title=f"Graph: {display_str}", height=500, template="plotly_white")
                     
                     with col2:
-                        st.plotly_chart(fig, use_container_width=True, key="chart_log")
+                        plot_chart(fig, key="chart_log")
                 else:
                     st.error("Error")
     
@@ -730,10 +832,10 @@ elif tab_selection == txt["nav_options"][5]:
         st.subheader(txt["t6_sec_incr"])
         st.write(txt["t6_fixed"])
         st.latex(r"x_0")
-        x0 = st.number_input("", value=1.0, step=0.1, format="%g", key="nc_x0")
+        x0 = st.number_input("x0", value=1.0, step=0.1, format="%g", key="nc_x0", label_visibility="collapsed")
         st.write(txt["t6_arg_incr"])
         st.latex(r"\Delta x")
-        dx = st.slider("", 0.01, 2.0, 1.0, 0.01, format="%g", key="nc_dx")
+        dx = st.slider("dx", 0.01, 2.0, 1.0, 0.01, format="%g", key="nc_dx", label_visibility="collapsed")
         
         x = sp.symbols('x')
         f = sp.sympify("x^2")
@@ -793,7 +895,7 @@ elif tab_selection == txt["nav_options"][5]:
         fig.add_hline(y=0, line_color="black", line_width=1)
 
         fig.update_layout(title="Newton-Cauchy Connection (Geometry)", height=600, xaxis_title="X", yaxis_title="Y", showlegend=False, template="plotly_white")
-        st.plotly_chart(fig, use_container_width=True)
+        plot_chart(fig)
 
     # --- ფიზიკური ინტერპრეტაცია (ქვეთავი) ---
     st.markdown("---")
@@ -803,7 +905,7 @@ elif tab_selection == txt["nav_options"][5]:
     col1, col2 = st.columns([1, 2])
     with col1:
         st.write(txt['time'])
-        t = st.slider("", 0.0, 2.0, 0.5, 0.05, format="%g", key="phys_time")
+        t = st.slider("Time", 0.0, 2.0, 0.5, 0.05, format="%g", key="phys_time", label_visibility="collapsed")
         x_val = t
         y_val = -(t**2) + 2
         vy = -2 * t
@@ -824,7 +926,7 @@ elif tab_selection == txt["nav_options"][5]:
         fig.add_trace(go.Scatter(x=x_tan, y=y_tan, name=txt["inertia"], line=dict(color='red', width=3), mode='lines+markers', marker=dict(symbol='arrow', size=10)))
         fig.add_trace(go.Scatter(x=[0, 2], y=[-2, -2], line=dict(color='green', width=5), name=txt["ground"]))
         fig.update_layout(title=txt["ballistic"], height=500, yaxis=dict(range=[-2.5, 2.5], scaleanchor="x", scaleratio=1), template="plotly_white")
-        st.plotly_chart(fig, use_container_width=True, key="phys_chart")
+        plot_chart(fig, key="phys_chart")
     
     # დასკვნა ბოლოში
     st.markdown("---")
@@ -890,7 +992,7 @@ elif tab_selection == txt["nav_options"][6]:
             fig.add_trace(go.Scatter(x=x, y=remainder, name=txt["residue"], line=dict(color='purple')))
             fig.update_layout(title="Oscillation", height=600, yaxis=dict(range=[-2, 2]), template="plotly_white")
 
-        st.plotly_chart(fig, use_container_width=True)
+        plot_chart(fig)
     
     # დასკვნა ბოლოში
     st.markdown("---")
