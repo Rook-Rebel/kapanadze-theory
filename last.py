@@ -36,6 +36,9 @@ st.markdown("""
         font-family: 'Georgia', serif;
         line-height: 1.8;
     }
+    .stMarkdown p, .stMarkdown li {
+        color: #1f2a36;
+    }
 
     h1 { 
         font-size: 2.05rem !important; 
@@ -78,8 +81,6 @@ st.markdown("""
     [data-testid="stSidebar"] {
         background: #f5f7fa;
         border-right: 1px solid #dfe4ea;
-    }
-    [data-testid="stSidebar"] {
         color: #111827 !important;
     }
     [data-testid="stSidebar"] p,
@@ -195,6 +196,25 @@ st.markdown("""
         color: #6b7280 !important;
     }
 
+    /* Radio labels visibility fix */
+    .stRadio label,
+    .stRadio label p,
+    .stRadio [data-testid="stMarkdownContainer"] p {
+        color: #1f2a36 !important;
+        opacity: 1 !important;
+    }
+    .stRadio [role="radiogroup"] label {
+        background: transparent !important;
+    }
+
+    /* Keep sidebar radio text clearly visible */
+    [data-testid="stSidebar"] .stRadio label,
+    [data-testid="stSidebar"] .stRadio label p,
+    [data-testid="stSidebar"] .stRadio [data-testid="stMarkdownContainer"] p {
+        color: #111827 !important;
+        opacity: 1 !important;
+    }
+
     .stPlotlyChart {
         border: 1px solid #e7ebf0;
         border-radius: 10px;
@@ -205,6 +225,13 @@ st.markdown("""
     /* Hide Streamlit chrome (keep header for sidebar toggle) */
     #MainMenu, footer {
         display: none !important;
+    }
+
+    @media (max-width: 900px) {
+        .main .block-container {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
     }
 </style>
 """, unsafe_allow_html=True)
@@ -878,6 +905,7 @@ elif tab_selection == txt["nav_options"][5]:
         pt_C, pt_N = [x0 + dx, y_next], [x0 + dx, y0 + dF]
         pt_D, pt_x0_ax = [x0 + dx, 0], [x0, 0]
 
+        fig.add_trace(go.Scatter(x=[pt_A[0], pt_C[0]], y=[pt_A[1], pt_C[1]], mode='lines', line=dict(color='red', dash='dash'), name="AC"))
         fig.add_trace(go.Scatter(x=[pt_A[0], pt_B[0]], y=[pt_A[1], pt_B[1]], mode='lines', line=dict(color='black', dash='dot'), name="Δx (AB)"))
         fig.add_trace(go.Scatter(x=[pt_B[0], pt_C[0]], y=[pt_B[1], pt_C[1]], mode='lines', line=dict(color='black'), name="ΔF (BC)"))
         fig.add_trace(go.Scatter(x=[pt_C[0], pt_D[0]], y=[pt_C[1], pt_D[1]], mode='lines', line=dict(color='gray', dash='dash', width=1), showlegend=False))
